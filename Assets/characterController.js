@@ -3,6 +3,7 @@
 private var speedX:float = 2.0f;
 private var speedY:float = 0.0f;
 private var grounded:boolean = false;
+private var canJump:boolean = false;
 var Manager:GameObject;
 private var script:theChosen;
 var floor:float;
@@ -20,14 +21,17 @@ function Update () {
 	
 	if (transform.position.y > floor) speedY -= 9.8f*Time.deltaTime;
 	else {
+		canJump=true;
 		if (Mathf.Abs(floor - transform.position.y) > 0.1f) speedY = 5.0f*Mathf.Abs(floor - transform.position.y);
 		else {
 			speedY = 0.0f;
 			transform.position.y = floor;
 		}
 	}
-	if (Mathf.Abs(floor - transform.position.y) < 0.1f && Input.GetKeyDown("z")) speedY = 5.0f;
-	
+	if (canJump && Input.GetKeyDown("z")){
+		speedY = 5.0f;
+		canJump= false;
+	}
 	transform.rotation.z = Mathf.Sin(transform.position.x)*0.15f;
 	
 	//Debug.Log(transform.position.y);
