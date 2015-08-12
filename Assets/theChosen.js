@@ -3,7 +3,7 @@
 private var lvl:int = 0;
 private var dist:float = 0.5f;
 private var height:float = 0.25f;
-private var i:int = 0;
+private var i:int = -20;
 
 var stepU:GameObject;
 var stepD:GameObject;
@@ -23,6 +23,24 @@ private var pPlayerStep:int;
 private var playerPos:float;
 private var stepsInScene:int = 50;
 
+var stamina:int = 3;
+private var score:int = 0;
+
+function OnGUI (){
+    if (GUI.Button(Rect (20,40,80,20), "::")) {
+    	Debug.Log("sd");
+    }
+    /*GUI.Box (Rect (0,0,100,50), "Top-left");
+    GUI.Box (Rect (Screen.width - 100,0,100,50), "Top-right");
+    GUI.Box (Rect (0,Screen.height - 50,100,50), "Bottom-left");
+    GUI.Box (Rect (Screen.width - 100,Screen.height - 50,100,50), "Bottom-right");*/
+    //GUIStyle(GUI.skin.label).alignment = TextAnchor.UpperCenter;
+    GUI.Label (new Rect (Screen.width/2, 25, 100, 30), ""+score);
+    stamina = GUI.HorizontalSlider (Rect (Screen.width - 100, 25, 100, 30), stamina, 0.0, 3.0);
+}
+
+
+
 /*
 0_ forat
 1_ Pla
@@ -31,6 +49,7 @@ private var stepsInScene:int = 50;
 */
 
 function returnFloor(pos:float) {
+	score = pos;
 	var posR:float = pos+width/2.0f;
 	marker1.transform.position.x = posR;
 	var posL:float = pos-width/2.0f;
@@ -62,10 +81,16 @@ function returnFloor(pos:float) {
 				realFloorL = stepArray[k].transform.position.y - 0.25f;
 			}
 		}
+		
 	}
 	realFloor = (realFloorL >= realFloorR) ? realFloorL:realFloorR;
 	//Debug.Log(realFloorR);
 }
+
+function Stamina(ammount:int){
+	stamina+=ammount;
+}
+	
 
 function randomGenerator(g:int) {
 	var rand:int = Random.Range(0, 100);
@@ -85,7 +110,7 @@ function randomGenerator(g:int) {
 		else down = false;
 		if (stepArray[prevArray[0]].tag == "GroundU" || stepArray[prevArray[1]].tag == "GroundU" || stepArray[prevArray[2]].tag == "GroundU") up = true;
 		else up = false;
-		Debug.Log(down);
+		//Debug.Log(down);
 	}
 	Destroy(stepArray[g]);
 	if (lvl == 0) {

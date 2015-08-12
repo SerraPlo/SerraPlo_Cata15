@@ -8,5 +8,5 @@ function Start () {
 
 function Update () {
 	transform.position.x = player.transform.position.x;
-	transform.LookAt(player.transform);
+	//transform.LookAt(player.transform);
 }
