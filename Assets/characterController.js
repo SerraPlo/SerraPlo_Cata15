@@ -53,10 +53,10 @@ function Update () {
 	}
 		//visual Charge
 		if (charging) transform.FindChild("Plane").gameObject.GetComponent.<Renderer>().material.color = Color.red;
-		else transform.FindChild("Plane").gameObject.GetComponent.<Renderer>().material.color = Color.black;
+		else transform.FindChild("Plane").gameObject.GetComponent.<Renderer>().material.color = Color.white;
 		
 	//rotacio
-	transform.rotation.z = Mathf.Sin(transform.position.x)*0.15f;
+	transform.rotation.z = Mathf.Sin(Time.time*2.5)*0.1f;
 }
 
 function Charge(){
