@@ -1,21 +1,19 @@
 ﻿#pragma strict
 
-private var lvl:int = 0;
-private var dist:float = 0.5f;
-private var height:float = 0.25f;
-private var i:int = -20;
+private var lvl:int = 0;			//nivell del terra
+private var dist:float = 0.5f;		//distancia en x entre terra i terra
+private var height:float = 0.25f;	//distancia en y entre terra i terra
+private var i:int = -20;			//posicio del nou terra a colocar
 
-var stepU:GameObject;
-var stepD:GameObject;
-var stepG:GameObject;
-var marker1:GameObject;
-var marker2:GameObject;
+var stepU:GameObject;				//prefab de l'esglao cap amunt
+var stepD:GameObject;				//prefab de l'esglao cap avall
+var stepG:GameObject;				//prefab de l'esglao pla
 
 var realFloor:float;
-var realFloorR:float;
-var realFloorL:float;
+private var realFloorR:float;
+private var realFloorL:float;
 
-private var width:float = 0.9f; //<------------------------ aqui ta lamplada del jugador
+private var width:float = 0.8f; //<------------------------ aqui ta lamplada del jugador
 private var stepArray:GameObject[];
 private var prevArray:int[];
 private var playerStep:int;
@@ -25,6 +23,11 @@ private var stepsInScene:int = 50;
 
 var stamina:int = 3;
 private var score:int = 0;
+
+//---------markers----------
+var marker1:GameObject;
+var marker2:GameObject;
+//--------------------------
 
 function OnGUI (){
     if (GUI.Button(Rect (20,40,80,20), "::")) {
@@ -38,7 +41,6 @@ function OnGUI (){
     GUI.Label (new Rect (Screen.width/2, 25, 100, 30), ""+score);
     stamina = GUI.HorizontalSlider (Rect (Screen.width - 100, 25, 100, 30), stamina, 0.0, 3.0);
 }
-
 
 
 /*
@@ -60,37 +62,23 @@ function returnFloor(pos:float) {
 			playerPos = pos;
 		}
 		if (posR >= stepArray[k].transform.position.x && posR < stepArray[k].transform.position.x + 0.5f) {
-			if (stepArray[k].tag == "GroundG") {
-				realFloorR = stepArray[k].transform.position.y;
-			}
-			else if (stepArray[k].tag == "GroundU") {
-				realFloorR = stepArray[k].transform.position.y + 0.25f;
-			}
-			else if (stepArray[k].tag == "GroundD") {
-				realFloorR = stepArray[k].transform.position.y - 0.25f;
-			}
+			if (stepArray[k].tag == "GroundG") realFloorR = stepArray[k].transform.position.y;
+			else if (stepArray[k].tag == "GroundU") realFloorR = stepArray[k].transform.position.y + 0.25f;
+			else if (stepArray[k].tag == "GroundD") realFloorR = stepArray[k].transform.position.y - 0.25f;
 		}
 		if (posL >= stepArray[k].transform.position.x && posL < stepArray[k].transform.position.x + 0.5f) {
-			if (stepArray[k].tag == "GroundG") {
-				realFloorL = stepArray[k].transform.position.y;
-			}
-			else if (stepArray[k].tag == "GroundU") {
-				realFloorL = stepArray[k].transform.position.y + 0.25f;
-			}
-			else if (stepArray[k].tag == "GroundD") {
-				realFloorL = stepArray[k].transform.position.y - 0.25f;
-			}
+			if (stepArray[k].tag == "GroundG") realFloorL = stepArray[k].transform.position.y;
+			else if (stepArray[k].tag == "GroundU") realFloorL = stepArray[k].transform.position.y + 0.25f;
+			else if (stepArray[k].tag == "GroundD") realFloorL = stepArray[k].transform.position.y - 0.25f;
 		}
-		
 	}
 	realFloor = (realFloorL >= realFloorR) ? realFloorL:realFloorR;
-	//Debug.Log(realFloorR);
+	return realFloor;
 }
 
 function Stamina(ammount:int){
 	stamina+=ammount;
 }
-	
 
 function randomGenerator(g:int) {
 	var rand:int = Random.Range(0, 100);
@@ -154,7 +142,7 @@ function randomGenerator(g:int) {
 
 function Start () {
 	stepArray = new GameObject[stepsInScene];
-	for (var g = 0; g<stepsInScene; g++){	//  <---------------------------------------------------------     falta random
+	for (var g = 0; g<stepsInScene; g++){
 		randomGenerator(g);
 	}
 	pPlayerStep=0;
@@ -169,7 +157,6 @@ function Update () {
 			if(g ==-1) g=stepsInScene-1;
 			if(stepArray[g].transform.position.x < playerPos) backSteps++;
 			if(backSteps>25){
-				//  <----------------------------------------------------------------     falta random
 				randomGenerator(g);
 				break;
 			}			
