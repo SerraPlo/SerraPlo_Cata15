@@ -21,6 +21,9 @@ private var charging:boolean = false;		//condicio de si el player esta fent char
 private var rotating:boolean = false;		//condicio de si l'sprite esta rotant positivament
 private var reversing:boolean = false;		//condicio de si l'sprite esta rotant negativament
 
+private var bJump:boolean = false;
+private var bCharge:boolean = false;
+
 private var stepUpLimit:float = 0.08f;		//distancia llindar entre la posicio del player i el terra
 
 private var floor:float;					//posicio del jugador respecte el terra
@@ -34,6 +37,19 @@ var Manager:GameObject;						//sprite del jugador
 var markerJump:GameObject;
 var markerCharge:GameObject;
 //--------------------------
+
+//---------GUIstyles---------
+var controlsGuiStyle:GUIStyle;
+//---------GUI---------
+function OnGUI (){
+    //controls
+    if (GUI.Button(Rect (0,0,Screen.width/2,Screen.height), "", controlsGuiStyle)){
+    	if(canJump) bJump = true;
+    }
+    if (GUI.Button(Rect (Screen.width/2,0,Screen.width/2,Screen.height), "", controlsGuiStyle)){
+    	if(!charging) bCharge = true;
+    }
+}
 
 function Start () {
 	script = Manager.GetComponent("theChosen") as theChosen;
@@ -72,7 +88,8 @@ function Update () {
 	}
 	
 	//jump
-	if (canJump && Input.GetKeyDown('z')){
+	if (canJump && (Input.GetKeyDown('z')||bJump)){
+		bJump=false;
 		transform.position.y = floor;
 		speedY = impulseY;
 		canJump= false;
@@ -83,7 +100,8 @@ function Update () {
 		else  rendJump.material.color = Color.red;
 	
 	//charge
-	if (!charging && !rotating && !reversing && stamina > 0 && Input.GetKeyDown('x')){
+	if (!charging && !rotating && !reversing && stamina > 0 && (Input.GetKeyDown('x')||bCharge)){
+		bCharge=false;
 		charging = true;
 		rotating = true;
 		initTimeRotation = Time.time;
@@ -133,4 +151,3 @@ function SwapSprite(){
 		Debug.Log("reversing");
 	}
 }
-

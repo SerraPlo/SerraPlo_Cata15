@@ -24,31 +24,42 @@ private var stepsInScene:int = 50;
 var stamina:int = 3;
 private var score:int = 0;
 
+private var pause:boolean = false;
+
 //---------markers----------
 var marker1:GameObject;
 var marker2:GameObject;
 //--------------------------
 
+//---------GUIstyles---------
+var pauseGuiStyle:GUIStyle;
+var scoreGuiStyle:GUIStyle;
+var staminaGuiStyle:GUIStyle;
+var pauseBGGuiStyle:GUIStyle;
+var pauseBoxGuiStyle:GUIStyle;
+//---------GUI---------
 function OnGUI (){
-    if (GUI.Button(Rect (20,40,80,20), "::")) {
-    	Debug.Log("sd");
+	//pause
+    if (GUI.Button(Rect (Screen.height/20,Screen.height/20,Screen.height/10,Screen.height/10), "", pauseGuiStyle)) {
+    	if(!pause){
+    		Time.timeScale = 0.0;
+    		pause = true;
+    	}else{
+    		Time.timeScale = 1.0;
+    		pause = false;
+    	}
     }
-    /*GUI.Box (Rect (0,0,100,50), "Top-left");
-    GUI.Box (Rect (Screen.width - 100,0,100,50), "Top-right");
-    GUI.Box (Rect (0,Screen.height - 50,100,50), "Bottom-left");
-    GUI.Box (Rect (Screen.width - 100,Screen.height - 50,100,50), "Bottom-right");*/
-    //GUIStyle(GUI.skin.label).alignment = TextAnchor.UpperCenter;
-    GUI.Label (new Rect (Screen.width/2, 25, 100, 30), ""+score);
-    stamina = GUI.HorizontalSlider (Rect (Screen.width - 100, 25, 100, 30), stamina, 0.0, 3.0);
+    scoreGuiStyle.fontSize = Screen.height/15;
+    GUI.Label (new Rect (Screen.width/2, Screen.height/15, 1, 1), ""+score, scoreGuiStyle);
+    for(var s = 1; s<=stamina;s++){
+    	GUI.Box(Rect (Screen.width/20*(15+s)+(Screen.width/80*s),Screen.height/20,Screen.height/10,Screen.height/10), "", staminaGuiStyle);
+    }
+    stamina = GUI.HorizontalSlider (Rect (Screen.width/20, (Screen.height/20)*19, Screen.width/5, Screen.height/20), stamina, 0.0, 3.0);
+	if(pause){
+		GUI.Box(Rect(0,0,Screen.width,Screen.height), "", pauseBGGuiStyle);
+		GUI.Box(Rect(Screen.width/2-Screen.width/6,Screen.height/2-Screen.height/6,Screen.width/3,Screen.height/3), "", pauseBoxGuiStyle);
+	}
 }
-
-
-/*
-0_ forat
-1_ Pla
-2_ +
-3_ -
-*/
 
 function returnFloor(pos:float) {
 	score = pos;
