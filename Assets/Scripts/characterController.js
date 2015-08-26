@@ -21,25 +21,27 @@ private var charging:boolean = false;		//condicio de si el player esta fent char
 private var rotating:boolean = false;		//condicio de si l'sprite esta rotant positivament
 private var reversing:boolean = false;		//condicio de si l'sprite esta rotant negativament
 
-private var bJump:boolean = false;
-private var bCharge:boolean = false;
+private var bJump:boolean = false;			//condicio de clic en pantalla per saltar
+private var bCharge:boolean = false;		//condicio de clic en pantalla per fer charge
 
 private var stepUpLimit:float = 0.08f;		//distancia llindar entre la posicio del player i el terra
 
 private var floor:float;					//posicio del jugador respecte el terra
 private var stamina:int;					//quantitat de cargues a fer
 private var playerSprite:Transform;			//sprite del jugador
-private var script:theChosen;				//script del manager
 
-var Manager:GameObject;						//sprite del jugador
+private var ManagerScript:theChosenRunner;
+private var TerrainGeneratorScript:terrainGenerator;
+
+var Manager:GameObject;
 
 //---------markers----------
 var markerJump:GameObject;
 var markerCharge:GameObject;
-//--------------------------
 
 //---------GUIstyles---------
 var controlsGuiStyle:GUIStyle;
+
 //---------GUI---------
 function OnGUI (){
     //controls
@@ -52,7 +54,8 @@ function OnGUI (){
 }
 
 function Start () {
-	script = Manager.GetComponent("theChosen") as theChosen;
+	ManagerScript = Manager.GetComponent("theChosenRunner") as theChosenRunner;
+	TerrainGeneratorScript = Manager.GetComponent("terrainGenerator") as terrainGenerator;
 	playerSprite = transform.FindChild("PlayerSprite");
 	speedX = constSpeedX;
 	speedY = 0.0f;
@@ -64,9 +67,9 @@ function Update () {
 	transform.position.y += speedY*Time.deltaTime;
 	
 	//send actualitza variable floor al manager i floor el recull
-	Manager.SendMessage("returnFloor", transform.position.x);
-	floor = script.realFloor;
-	stamina = script.stamina;
+	Manager.SendMessage("SetRealFloor", transform.position.x);
+	floor = TerrainGeneratorScript.GetRealFloor();
+	stamina = ManagerScript.GetStamina();
 	
 	//friccio en x
 	if (speedX > constSpeedX) speedX -= friction;
@@ -120,8 +123,8 @@ function Update () {
 }
 
 function Charge(){
-	speedX = impulseX;	speedY -= 1.0f;
-	Manager.SendMessage("Stamina", -1);
+	speedX = impulseX;	speedY -= 0.5f;
+	Manager.SendMessage("SetStamina", -1);
 	//yield WaitForSeconds(waitCharge);
 	//charging = false;
 	//Debug.Log("charge done, stamina:" + stamina);

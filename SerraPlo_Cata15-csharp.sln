@@ -1,29 +1,19 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2008
 
-Project("{9802D3BF-D3D6-1554-ECF3-678441069408}") = "SerraPlo_Cata15", "Assembly-CSharp-firstpass-vs.csproj", "{A24A3B9A-9743-03CF-3D29-F7BC640993F5}"
-EndProject
-Project("{9802D3BF-D3D6-1554-ECF3-678441069408}") = "SerraPlo_Cata15", "Assembly-CSharp-Editor-vs.csproj", "{D23B1083-AB89-0719-A230-7121812419F3}"
-EndProject
+
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A24A3B9A-9743-03CF-3D29-F7BC640993F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A24A3B9A-9743-03CF-3D29-F7BC640993F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A24A3B9A-9743-03CF-3D29-F7BC640993F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A24A3B9A-9743-03CF-3D29-F7BC640993F5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D23B1083-AB89-0719-A230-7121812419F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D23B1083-AB89-0719-A230-7121812419F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D23B1083-AB89-0719-A230-7121812419F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D23B1083-AB89-0719-A230-7121812419F3}.Release|Any CPU.Build.0 = Release|Any CPU
+
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-																																					GlobalSection(MonoDevelopProperties) = preSolution
+																																																										GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1

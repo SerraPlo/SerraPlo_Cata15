@@ -1,9 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\theChosen.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\startScreenManager.js">
     <Files>
-      <File FileName="Assets\Scripts\theChosen.js" Line="62" Column="2" />
-      <File FileName="Assets\Scripts\characterController.js" Line="51" Column="6" />
+      <File FileName="Assets\Scripts\screenFading.js" Line="18" Column="22" />
+      <File FileName="Assets\Scripts\startScreenManager.js" Line="47" Column="34" />
+      <File FileName="Assets\Scripts\theChosenRunner.js" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\terrainGenerator.js" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\characterController.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
