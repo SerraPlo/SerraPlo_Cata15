@@ -141,7 +141,7 @@ function SwapSprite(){
 			reversing = true;
 		}
 		else playerSprite.RotateAround(transform.position, transform.up, Time.deltaTime * speedRotating);
-		Debug.Log("rotating");
+		//Debug.Log("rotating");
 	}
 	//revertir la rotacio anterior 180 graus en y despres d'un temps determinat pel contador
 	if (reversing && curTimeRotation - initTimeRotation >= waitSwap) {
@@ -151,6 +151,6 @@ function SwapSprite(){
 			reversing = false;
 		}
 		else playerSprite.RotateAround(transform.position, transform.up, Time.deltaTime * -speedReversing);
-		Debug.Log("reversing");
+		//Debug.Log("reversing");
 	}
 }

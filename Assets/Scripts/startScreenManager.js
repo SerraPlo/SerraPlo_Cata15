@@ -1,15 +1,76 @@
 ﻿#pragma strict
 
-//provisional vars ph
-private var xWords:double[];
+function OnGUI() {
+	if (Input.touchCount > 0 || Input.GetMouseButtonDown(0)){
+		Application.LoadLevel ("Main");
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*private var xWords:double[];
 private var yWords:double[];
 private var nWords:int = 5;
 
 private var sxPlay:double = 100;
 private var syPlay:double = 100;
 private var sdPlay:int = 1;
-
-private var FaderScript:screenFading;
 
 //---------textures---------
 var background:Texture;
@@ -20,7 +81,6 @@ var play:Texture;
 var titleGuiStyle:GUIStyle;
 
 function Start () {
-	//FaderScript = GetComponent("screenFading") as screenFading;
 	xWords = new double[nWords];
 	yWords = new double[nWords];
 }
@@ -43,15 +103,8 @@ function OnGUI() {
 	else GUI.DrawTexture(Rect(Screen.width/2-sxPlay/2,Screen.height/1.6-syPlay/2,sxPlay,syPlay), play, ScaleMode.ScaleToFit, true, 0.0f);
 	
 	if (Input.touchCount > 0 || Input.GetMouseButtonDown(0)){
-		//LoadGame ();
 		Application.LoadLevel ("Main");
 	}
-}
-
-function LoadGame () {
-	var fadeTime:float = FaderScript.Fade(1);
-	yield WaitForSeconds(fadeTime);
-	Application.LoadLevel ("Main");
 }
 
 function Update () {
@@ -70,4 +123,4 @@ function Update () {
 	syPlay += Time.deltaTime*30.0*sdPlay;
 	
 
-}
+}*/

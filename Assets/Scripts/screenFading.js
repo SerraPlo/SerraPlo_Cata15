@@ -1,26 +1,37 @@
 ﻿#pragma strict
 
-var fadeImage:Texture2D;
-private var fadeSpeed:float = 0.8f;
-private var fadeDepth:int = -1000;
-private var fadeDir:float = 1.0f;
-private var alpha:int = -1;
+public class FadeTransition extends MonoBehaviour {
 
-function OnGUI() {
-	alpha += fadeDir * fadeSpeed * Time.deltaTime;
-	alpha = Mathf.Clamp01(alpha);
+	public var fadeImage:Texture2D;
+
+	public var xFrame:double = 0.8;
+	public var yFrame:double = 0.0;
 	
-	GUI.color = new Color(GUI.color.r, GUI.color.g, GUI.color.b, alpha);
-	GUI.depth = fadeDepth;
-	GUI.DrawTexture(new Rect(0,0,Screen.width, Screen.height), fadeImage);
-}
+	public var timer:double = 0.0;
+	public var frameWait:double = 0.01;
+	public var curCol:int = 0;
 
-function Fade(dir:int){
-    fadeDir = dir;
-    return (fadeSpeed);
-}
+	public function Start() {
+		timer = Time.time;
+	}
+	
+	public function SetImage(img:Texture2D) {
+		fadeImage = img;
+	}
 
-
-function OnLevelWasLoaded(){
-    Fade(-1);
+	public function UpdateTransition() {
+		while(true) {
+			GUI.DrawTextureWithTexCoords(new Rect(0,0,Screen.width, Screen.height), fadeImage, new Rect(xFrame,yFrame,0.2, 0.2), true);
+			if(Time.time - timer >= frameWait) {
+		        if (xFrame <= 0.0) {
+		       		xFrame = 0.8;
+		       		if (curCol > 3) break;
+		       		else curCol++;
+					yFrame = 0.2*curCol;
+		        }
+				else xFrame -= 0.2;
+				timer = Time.time;
+		    }
+		}
+	}
 }
