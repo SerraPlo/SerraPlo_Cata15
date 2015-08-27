@@ -16,6 +16,8 @@ private var initTimeRotation:double;		//temps inicial del contador en la rotacio
 private var speedRotating:float = 700.0f;	//velocitat de rotacio positiva de l'sprite
 private var speedReversing:float = 600.0f;	//velocitat de rotacio negativa (reversio) de l'sprite
 
+private var pause:boolean;
+
 private var canJump:boolean = false;		//condicio de si el player pot saltar
 private var charging:boolean = false;		//condicio de si el player esta fent charge
 private var rotating:boolean = false;		//condicio de si l'sprite esta rotant positivament
@@ -45,12 +47,14 @@ var controlsGuiStyle:GUIStyle;
 //---------GUI---------
 function OnGUI (){
     //controls
-    if (GUI.Button(Rect (0,0,Screen.width/2,Screen.height), "", controlsGuiStyle)){
-    	if(canJump) bJump = true;
-    }
-    if (GUI.Button(Rect (Screen.width/2,0,Screen.width/2,Screen.height), "", controlsGuiStyle)){
-    	if(!charging) bCharge = true;
-    }
+    if(!pause){
+		if (GUI.Button(Rect (0,(Screen.height/20)*3,Screen.width/2,Screen.height-((Screen.height/20)*3)), "", controlsGuiStyle)){
+     		if(canJump) bJump = true;
+		}
+		if (GUI.Button(Rect (Screen.width/2,(Screen.height/20)*3,Screen.width/2,Screen.height-((Screen.height/20)*3)), "", controlsGuiStyle)){
+    		if(!charging) bCharge = true;
+    	}
+	}
 }
 
 function Start () {
@@ -68,9 +72,10 @@ function Update () {
 	
 	//send actualitza variable floor al manager i floor el recull
 	Manager.SendMessage("SetRealFloor", transform.position.x);
+	Manager.SendMessage("SetScore", transform.position.x);
 	floor = TerrainGeneratorScript.GetRealFloor();
 	stamina = ManagerScript.GetStamina();
-	
+	pause = ManagerScript.GetPause();
 	//friccio en x
 	if (speedX > constSpeedX) speedX -= friction;
 	else {

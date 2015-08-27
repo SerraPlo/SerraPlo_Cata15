@@ -1,19 +1,36 @@
 ﻿#pragma strict
 
+private var fadeIN:boolean = true;
+private var fadeOUT:boolean = false;
+private var alpha:float = 1.0f;
+private var fadeInit:float;
+public var fadeImage:Texture2D;
+
 function OnGUI() {
 	if (Input.touchCount > 0 || Input.GetMouseButtonDown(0)){
-		Application.LoadLevel ("Main");
+		fadeInit=Time.time;
+		fadeOUT=true;
+		fadeIN=false;
 	}
+	GUI.color.a = alpha;
+	GUI.DrawTexture(Rect(0,0,Screen.width,Screen.height),fadeImage);
 }
 
-
-
-
-
-
-
-
-
+function Update(){
+	if(fadeIN){
+		alpha = 1.0f-(Time.time*2);
+		if (alpha <= 0.0f){
+			fadeIN = false;
+			alpha=0.0f;
+		}
+	}
+	if(fadeOUT){
+		alpha = 0.0f+(Time.time-fadeInit)*4;
+		if (alpha >= 1.0f){
+			Application.LoadLevel(2);
+		}
+	}
+}
 
 
 

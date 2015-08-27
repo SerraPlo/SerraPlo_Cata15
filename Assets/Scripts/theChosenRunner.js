@@ -2,7 +2,6 @@
 
 private var stamina:int = 3;
 private var score:int = 0;
-
 private var pause:boolean = false;
 
 //---------GUIstyles---------
@@ -40,6 +39,14 @@ function GetStamina(){
 	return stamina;
 }
 
+function GetPause(){
+	return pause;
+}
+
+function SetScore(pos:float){
+	score=pos;
+}
+
 function SetStamina(ammount:int){
 	stamina+=ammount;
 }
@@ -47,6 +54,8 @@ function SetStamina(ammount:int){
 function Start () {
 	
 }
+
+
 
 function Update () {
 	
