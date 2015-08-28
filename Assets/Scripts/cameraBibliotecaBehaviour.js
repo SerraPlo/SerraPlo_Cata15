@@ -1,11 +1,13 @@
 ﻿#pragma strict
 
-//private var animationTime:double;
+private var enterBiblioteca:Animation;
 
 var titleSprite:GameObject;
 
 function Start () {
-	this.GetComponent(Animator).enabled = false;
+	enterBiblioteca = this.GetComponent(Animation);
+	enterBiblioteca.enabled = false;
+	
 	titleSprite.transform.position.x = this.transform.position.x - 4;
 	titleSprite.transform.position.y = this.transform.position.y + 1;
 	titleSprite.transform.position.z = this.transform.position.z + 5;
@@ -19,6 +21,8 @@ function Update () {
 }
 
 function PlayAnimation () {
-	this.GetComponent(Animator).enabled = true;
-	
+	enterBiblioteca.enabled = true;
+	enterBiblioteca.Play("EnterBiblioteca");
+	yield WaitForSeconds(enterBiblioteca["EnterBiblioteca"].length);
+	Application.LoadLevel ("Main");
 }

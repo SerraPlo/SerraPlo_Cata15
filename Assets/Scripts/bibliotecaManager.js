@@ -8,8 +8,8 @@ var rightDoor:GameObject;
 
 function Start() {
 	cameraScript = cameraObject.GetComponent("cameraBibliotecaBehaviour") as cameraBibliotecaBehaviour;
-	leftDoor.GetComponent(Animator).enabled = false;
-	rightDoor.GetComponent(Animator).enabled = false;
+	leftDoor.GetComponent(Animation).enabled = false;
+	rightDoor.GetComponent(Animation).enabled = false;
 }
 
 function Update() {
@@ -18,8 +18,10 @@ function Update() {
 
 function OnGUI() {
 	if (Input.touchCount > 0 || Input.GetMouseButtonDown(0)){
-		leftDoor.GetComponent(Animator).enabled = true;
-		rightDoor.GetComponent(Animator).enabled = true;
+		leftDoor.GetComponent(Animation).enabled = true;
+		leftDoor.GetComponent(Animation).Play("OpenLeftDoor");
+		rightDoor.GetComponent(Animation).enabled = true;
+		rightDoor.GetComponent(Animation).Play("OpenRightDoor");
 		cameraObject.SendMessage("PlayAnimation");
 		//Application.LoadLevel ("Main");
 	}
