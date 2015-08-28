@@ -1,11 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\screenFading.js">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\bibliotecaManager.js">
     <Files>
-      <File FileName="Assets\Scripts\terrainGenerator.js" Line="55" Column="32" />
-      <File FileName="Assets\Scripts\theChosenRunner.js" Line="27" Column="36" />
-      <File FileName="Assets\Scripts\characterController.js" Line="78" Column="34" />
-      <File FileName="Assets\Scripts\screenFading.js" Line="33" Column="23" />
+      <File FileName="Assets\Scripts\bibliotecaManager.js" Line="22" Column="12" />
+      <File FileName="Assets\Scripts\cameraBibliotecaBehaviour.js" Line="8" Column="2" />
+      <File FileName="Assets\Scripts\characterController.js" Line="61" Column="39" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
