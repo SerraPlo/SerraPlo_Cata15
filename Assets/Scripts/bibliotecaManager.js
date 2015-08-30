@@ -1,10 +1,22 @@
 ﻿#pragma strict
 
+private var alpha:float = 1.0f;
+private var fadeTitle:boolean = false;
+
 private var cameraScript:cameraBibliotecaBehaviour;
 var cameraObject:GameObject;
 
 var leftDoor:GameObject;
 var rightDoor:GameObject;
+
+var brokenPaper:Texture2D;
+var title:Texture2D;
+
+function OnGUI() {
+	GUI.DrawTexture(new Rect(0,0,Screen.width, Screen.height), brokenPaper);
+	GUI.color.a = alpha;
+	GUI.DrawTexture(new Rect(20,30,Screen.width/2, Screen.width/4), title);
+}
 
 function Start() {
 	cameraScript = cameraObject.GetComponent("cameraBibliotecaBehaviour") as cameraBibliotecaBehaviour;
@@ -13,11 +25,11 @@ function Start() {
 }
 
 function Update() {
-	
-}
 
-function OnGUI() {
+	if (fadeTitle) alpha -= Time.deltaTime;
+	
 	if (Input.touchCount > 0 || Input.GetMouseButtonDown(0)){
+		fadeTitle = true;
 		leftDoor.GetComponent(Animation).enabled = true;
 		leftDoor.GetComponent(Animation).Play("OpenLeftDoor");
 		rightDoor.GetComponent(Animation).enabled = true;
