@@ -1,11 +1,17 @@
 fileFormatVersion: 2
 guid: d63f4bb2c5b85ca4d9a2e1f0441bb511
-timeCreated: 1440702655
+timeCreated: 1441017702
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
   defaultReferences:
-  - fadeImage: {fileID: 2800000, guid: 708a7781f6d988d428e9b179c0486e89, type: 3}
+  - cameraObject: {instanceID: 0}
+  - leftDoor: {instanceID: 0}
+  - rightDoor: {instanceID: 0}
+  - alphaImg: {fileID: 2800000, guid: ed02082f51db1744d8aa183d8d4d35d2, type: 3}
+  - brokenPaper: {instanceID: 0}
+  - title: {instanceID: 0}
+  - play: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -1,9 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\bibliotecaManager.js">
     <Files>
-      <File FileName="Assets\Scripts\bibliotecaManager.js" Line="28" Column="71" />
-      <File FileName="Assets\Scripts\cameraBibliotecaBehaviour.js" Line="26" Column="2" />
+      <File FileName="Assets\Scripts\bibliotecaManager.js" Line="27" Column="157" />
+      <File FileName="Assets\Scripts\cameraBibliotecaBehaviour.js" Line="1" Column="1" />
       <File FileName="Assets\Scripts\screenFading.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>

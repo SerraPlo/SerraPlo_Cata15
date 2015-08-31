@@ -1,6 +1,7 @@
 ﻿#pragma strict
 
 private var enterBiblioteca:Animation;
+private var animLength:float;
 
 function Start () {
 	enterBiblioteca = this.GetComponent(Animation);
@@ -18,9 +19,12 @@ function Update () {
 	
 }
 
+function GetAnimLength () {
+	return animLength;
+}
+
 function PlayAnimation () {
 	enterBiblioteca.enabled = true;
 	enterBiblioteca.Play("EnterBiblioteca");
-	yield WaitForSeconds(enterBiblioteca["EnterBiblioteca"].length);
-	Application.LoadLevel ("Main");
+	animLength = enterBiblioteca["EnterBiblioteca"].length;
 }
