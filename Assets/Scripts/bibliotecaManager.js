@@ -14,17 +14,17 @@ var brokenPaper:Texture2D;
 
 var title:Texture2D;
 
-private var playScale:float = 0.0f;
-private var playDir:int = 1;
-var play:Texture;
+//private var playScale:float = 0.0f;
+//private var playDir:int = 1;
+//var play:Texture;
 
 var atrezzo:Transform;
 
 function OnGUI() {
 	GUI.color.a = alpha;
 	GUI.DrawTexture(new Rect(0,0,Screen.width, Screen.height), alphaImg);
-	GUI.DrawTexture(new Rect(Screen.width/2 - Screen.width/3,Screen.height/2 - Screen.height/2.2,Screen.width/1.5, Screen.height/1.5), title, ScaleMode.ScaleToFit, true, 0.0f);
-	GUI.DrawTexture(new Rect((Screen.width/2 - Screen.width/8)-playScale/2,(Screen.height/2+ Screen.height/6)-playScale/2, Screen.width/4+playScale,Screen.height/4+playScale), play, ScaleMode.ScaleToFit, true, 0.0f);
+	GUI.DrawTexture(new Rect(Screen.width/2 - Screen.width/2.5,Screen.height/2 - Screen.height/2.5,Screen.width/1.2, Screen.height/1.2), title, ScaleMode.ScaleToFit, true, 0.0f);
+	//GUI.DrawTexture(new Rect((Screen.width/2 - Screen.width/8)-playScale/2,(Screen.height/2+ Screen.height/6)-playScale/2, Screen.width/4+playScale,Screen.height/4+playScale), play, ScaleMode.ScaleToFit, true, 0.0f);
 	GUI.color.a = 1.0f;
 	GUI.DrawTexture(new Rect(0,0,Screen.width, Screen.height), brokenPaper);
 }
@@ -43,15 +43,15 @@ function Update() {
 		PlayGame();
 	}
 	
-	if (playScale > 25) playDir = -1;
+	/*if (playScale > 25) playDir = -1;
 	else if (playScale < 0) playDir = 1;
 	
-	if (!fadeTitle) playScale += Time.deltaTime*30.0*playDir;
+	if (!fadeTitle) playScale += Time.deltaTime*30.0*playDir;*/
 }
 
 function PlayGame() {
 	fadeTitle = true;
-	yield WaitForSeconds(0.3);
+	yield WaitForSeconds(0.4);
 	
 	leftDoor.GetComponent(Animation).enabled = true;
 	leftDoor.GetComponent(Animation).Play("OpenLeftDoor");
