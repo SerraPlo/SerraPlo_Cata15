@@ -1,17 +1,10 @@
 fileFormatVersion: 2
 guid: d63f4bb2c5b85ca4d9a2e1f0441bb511
-timeCreated: 1441017702
+timeCreated: 1441295238
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences:
-  - cameraObject: {instanceID: 0}
-  - leftDoor: {instanceID: 0}
-  - rightDoor: {instanceID: 0}
-  - alphaImg: {fileID: 2800000, guid: ed02082f51db1744d8aa183d8d4d35d2, type: 3}
-  - brokenPaper: {instanceID: 0}
-  - title: {instanceID: 0}
-  - play: {instanceID: 0}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

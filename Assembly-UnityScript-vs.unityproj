@@ -46,11 +46,11 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\bibliotecaCameraBehaviour.js" />
      <Compile Include="Assets\Scripts\bibliotecaManager.js" />
-     <Compile Include="Assets\Scripts\cameraBibliotecaBehaviour.js" />
-     <Compile Include="Assets\Scripts\cameraRunnerBehaviour.js" />
      <Compile Include="Assets\Scripts\characterController.js" />
      <Compile Include="Assets\Scripts\lionBehaviour.js" />
+     <Compile Include="Assets\Scripts\runnerCameraBehaviour.js" />
      <Compile Include="Assets\Scripts\screenFading.js" />
      <Compile Include="Assets\Scripts\terrainGenerator.js" />
      <Compile Include="Assets\Scripts\theChosenRunner.js" />

@@ -3,36 +3,32 @@
 private var alpha:float = 1.0f;
 private var fadeTitle:boolean = false;
 
-private var cameraScript:cameraBibliotecaBehaviour;
-var cameraObject:GameObject;
+private var mainCameraScript:bibliotecaCameraBehaviour;
+//private var mainCameraMovie:MovieTexture;
+var mainCamera:GameObject;
 
 var leftDoor:GameObject;
 var rightDoor:GameObject;
 
 var alphaImg:Texture2D;
-var brokenPaper:Texture2D;
-
-var title:Texture2D;
-
-//private var playScale:float = 0.0f;
-//private var playDir:int = 1;
-//var play:Texture;
-
 var atrezzo:Transform;
 
 function OnGUI() {
 	GUI.color.a = alpha;
-	GUI.DrawTexture(new Rect(0,0,Screen.width, Screen.height), alphaImg);
-	GUI.DrawTexture(new Rect(Screen.width/2 - Screen.width/2.5,Screen.height/2 - Screen.height/2.5,Screen.width/1.2, Screen.height/1.2), title, ScaleMode.ScaleToFit, true, 0.0f);
-	//GUI.DrawTexture(new Rect((Screen.width/2 - Screen.width/8)-playScale/2,(Screen.height/2+ Screen.height/6)-playScale/2, Screen.width/4+playScale,Screen.height/4+playScale), play, ScaleMode.ScaleToFit, true, 0.0f);
-	GUI.color.a = 1.0f;
-	GUI.DrawTexture(new Rect(0,0,Screen.width, Screen.height), brokenPaper);
+	//GUI.DrawTexture(new Rect(0,0,Screen.width, Screen.height), mainCameraMovie, ScaleMode.ScaleAndCrop, true, 0.0f);
+	
+}
+function Awake() {
+	Handheld.PlayFullScreenMovie ("IntroPageFlip3.mp4", Color.black, FullScreenMovieControlMode.CancelOnInput);
 }
 
 function Start() {
-	cameraScript = cameraObject.GetComponent("cameraBibliotecaBehaviour") as cameraBibliotecaBehaviour;
+	mainCameraScript = mainCamera.GetComponent("bibliotecaCameraBehaviour") as bibliotecaCameraBehaviour;
+	//mainCameraMovie = mainCamera.GetComponent(Renderer).material.mainTexture as MovieTexture;
 	leftDoor.GetComponent(Animation).enabled = false;
 	rightDoor.GetComponent(Animation).enabled = false;
+	yield WaitForSeconds(10.0);
+	PlayGame();
 }
 
 function Update() {
@@ -40,25 +36,20 @@ function Update() {
 	if (fadeTitle) alpha -= Time.deltaTime;
 	
 	if (Input.touchCount > 0 || Input.GetMouseButtonDown(0)){
-		PlayGame();
+		//PlayGame();
 	}
-	
-	/*if (playScale > 25) playDir = -1;
-	else if (playScale < 0) playDir = 1;
-	
-	if (!fadeTitle) playScale += Time.deltaTime*30.0*playDir;*/
 }
 
 function PlayGame() {
 	fadeTitle = true;
-	yield WaitForSeconds(0.4);
+	yield WaitForSeconds(1.0);
 	
 	leftDoor.GetComponent(Animation).enabled = true;
 	leftDoor.GetComponent(Animation).Play("OpenLeftDoor");
 	rightDoor.GetComponent(Animation).enabled = true;
 	rightDoor.GetComponent(Animation).Play("OpenRightDoor");
-	cameraObject.SendMessage("PlayAnimation");
-	yield WaitForSeconds(cameraObject.GetComponent(cameraBibliotecaBehaviour).GetAnimLength());
+	mainCamera.SendMessage("PlayAnimation");
+	yield WaitForSeconds(mainCameraScript.GetAnimLength());
 	
 	for (var child:Transform in atrezzo) Destroy(child.gameObject);
 	Destroy(leftDoor);
