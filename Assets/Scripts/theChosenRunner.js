@@ -28,7 +28,7 @@ function OnGUI (){
     for(var s = 1; s<=stamina;s++){
     	GUI.Box(Rect (Screen.width/20*(15+s)+(Screen.width/80*s),Screen.height/20,Screen.height/10,Screen.height/10), "", staminaGuiStyle);
     }
-    stamina = GUI.HorizontalSlider (Rect (Screen.width/20, (Screen.height/20)*19, Screen.width/5, Screen.height/20), stamina, 0.0, 3.0);
+    //stamina = GUI.HorizontalSlider (Rect (Screen.width/20, (Screen.height/20)*19, Screen.width/5, Screen.height/20), stamina, 0.0, 3.0);
 	if(pause){
 		GUI.Box(Rect(0,0,Screen.width,Screen.height), "", pauseBGGuiStyle);
 		GUI.Box(Rect(Screen.width/2-Screen.width/6,Screen.height/2-Screen.height/6,Screen.width/3,Screen.height/3), "", pauseBoxGuiStyle);

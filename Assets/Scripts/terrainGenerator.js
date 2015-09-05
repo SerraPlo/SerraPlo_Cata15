@@ -3,6 +3,9 @@
 var stepU:GameObject;				//prefab de l'esglao cap amunt
 var stepD:GameObject;				//prefab de l'esglao cap avall
 var stepG:GameObject;				//prefab de l'esglao pla
+var food1:GameObject;	
+
+var chanceFood:int = 15;     //% food appear over 1000
 
 private var lvl:int = 0;			//nivell del terra
 private var dist:float = 0.5f;		//distancia en x entre terra i terra
@@ -15,10 +18,13 @@ private	var realFloorL:float;
 
 private var width:float = 0.8f; //<------------------------ aqui ta lamplada del jugador
 private var stepArray:GameObject[];
+private var foodArray:GameObject[];
 private var playerStep:int;
 private var pPlayerStep:int;
 private var playerPos:float;
 private var stepsInScene:int = 50;
+
+var foodInArray:int = 0;
 
 //---------markers----------
 var marker1:GameObject;
@@ -26,6 +32,7 @@ var marker2:GameObject;
 
 function Start() {
 	stepArray = new GameObject[stepsInScene];
+	foodArray = new GameObject[10];
 	for (var g = 0; g<stepsInScene; g++){
 		randomGenerator(g);
 	}
@@ -74,16 +81,20 @@ function SetRealFloor(pos:float) {
 		}
 	}
 	realFloor = (realFloorL >= realFloorR) ? realFloorL:realFloorR;
+	
 }
 
 function randomGenerator(g:int) {
 	var rand:int = Random.Range(0, 100);
+	var rand2:int = Random.Range(0, 1000);
 	var up:boolean;
 	var down:boolean;
+	var food:boolean;
 	var prevArray:int[] = new int[3];
 	if (curPos<10) {
 		down = true;
 		up = true;
+		food = false;
 	} 
 	else {
 		for (var y:int = 1; y < 4;y++){
@@ -94,6 +105,8 @@ function randomGenerator(g:int) {
 		else down = false;
 		if (stepArray[prevArray[0]].tag == "GroundU" || stepArray[prevArray[1]].tag == "GroundU" || stepArray[prevArray[2]].tag == "GroundU") up = true;
 		else up = false;
+		if (rand2<chanceFood)food = true;
+		else food = false;
 		//Debug.Log(down);
 	}
 	Destroy(stepArray[g]);
@@ -132,6 +145,14 @@ function randomGenerator(g:int) {
 			lvl++;
 		}
 		else stepArray[g] = Instantiate(stepG,new Vector3(curPos * dist, height*lvl, 0), Quaternion.identity);
+	}
+	if (food){
+		Destroy(foodArray[foodInArray]);
+		var alturaF:int;
+		if (rand%2==0) alturaF = 0;
+		else alturaF = 2; 
+		foodArray[foodInArray] = Instantiate(food1,new Vector3(curPos* dist, height*lvl + alturaF, 0.1), Quaternion.identity);
+		foodInArray = (foodInArray <9)? foodInArray+1 : 0;
 	}
 	curPos++;
 }
