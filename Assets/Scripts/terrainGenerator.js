@@ -5,7 +5,7 @@ var stepD:GameObject;				//prefab de l'esglao cap avall
 var stepG:GameObject;				//prefab de l'esglao pla
 var food1:GameObject;	
 
-var chanceFood:int = 15;     //% food appear over 1000
+var chanceFood:int = 5;     //% food appear over 1000
 
 private var lvl:int = 0;			//nivell del terra
 private var dist:float = 0.5f;		//distancia en x entre terra i terra
