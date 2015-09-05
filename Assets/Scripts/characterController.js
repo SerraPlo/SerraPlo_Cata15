@@ -76,6 +76,11 @@ function Update () {
 	floor = TerrainGeneratorScript.GetRealFloor();
 	stamina = ManagerScript.GetStamina();
 	pause = ManagerScript.GetPause();
+	//resetButton
+	if (Input.GetKeyDown('r')){
+		Time.timeScale = 1.0;
+		Application.LoadLevel(1);	
+	}
 	//friccio en x
 	if (speedX > constSpeedX) speedX -= friction;
 	else {

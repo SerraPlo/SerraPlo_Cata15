@@ -34,7 +34,7 @@ function Start () {
 
 function Update () {
 	//markersUpdate();
-	transform.position.y = transform.position.y+Mathf.Sin(Time.time*2.5)*0.001f;
+	transform.position.y = transform.position.y+Mathf.Sin(Time.time*2.5)*0.001f*Time.deltaTime;
 	transform.rotation.z = Mathf.Sin(Time.time*2.5)*0.01f;
 	stamina=ManagerScript.GetStamina();
 	pPosX = Player.transform.position.x;
