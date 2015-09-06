@@ -52,7 +52,7 @@ function OnGUI (){
      		if(canJump) bJump = true;
 		}
 		if (GUI.Button(Rect (Screen.width/2,(Screen.height/20)*3,Screen.width/2,Screen.height-((Screen.height/20)*3)), "", controlsGuiStyle)){
-    		if(!charging) bCharge = true;
+    		if(!charging && stamina > 0) bCharge = true;
     	}
 	}
 }
