@@ -3,7 +3,7 @@
 var stepU:GameObject;				//prefab de l'esglao cap amunt
 var stepD:GameObject;				//prefab de l'esglao cap avall
 var stepG:GameObject;				//prefab de l'esglao pla
-var food1:GameObject;	
+var foodSprite:GameObject;	
 
 var chanceFood:int = 5;     //% food appear over 1000
 
@@ -151,8 +151,8 @@ function randomGenerator(g:int) {
 		var alturaF:int;
 		if (rand%2==0) alturaF = 0;
 		else alturaF = 2; 
-		foodArray[foodInArray] = Instantiate(food1,new Vector3(curPos* dist, height*lvl + alturaF, 0.1), Quaternion.identity);
-		foodInArray = (foodInArray <9)? foodInArray+1 : 0;
+		foodArray[foodInArray] = Instantiate(foodSprite,new Vector3(curPos* dist, height*lvl + alturaF, 0.1), Quaternion.identity);
+		foodInArray = (foodInArray < 9)? foodInArray+1 : 0; //uoooooooooo has posat un operador ternari :)
 	}
 	curPos++;
 }

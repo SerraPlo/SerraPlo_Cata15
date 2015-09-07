@@ -1,11 +1,13 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\bibliotecaManager.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\terrainGenerator.js">
     <Files>
-      <File FileName="Assets\Scripts\bibliotecaManager.js" Line="21" Column="32" />
+      <File FileName="Assets\Scripts\foodBehaviour.js" Line="34" Column="1" />
+      <File FileName="Assets\Scripts\bibliotecaManager.js" Line="19" Column="33" />
       <File FileName="Assets\Scripts\screenFading.js" Line="1" Column="1" />
       <File FileName="Assets\Scripts\bibliotecaCameraBehaviour.js" Line="1" Column="1" />
       <File FileName="Assets\Scripts\theChosenRunner.js" Line="31" Column="28" />
+      <File FileName="Assets\Scripts\terrainGenerator.js" Line="13" Column="34" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
