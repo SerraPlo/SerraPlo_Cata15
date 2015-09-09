@@ -1,7 +1,8 @@
 ﻿#pragma strict
 
-private var Player:GameObject;
+private var PlayerScript:characterController;
 private var Manager:GameObject;
+private var ManagerScript:theChosenRunner;
 
 private var sT:float;
 
@@ -12,38 +13,43 @@ private var marker4:Transform;
 private var marker5:Transform;
 private var markerCount:int=0;
 
+private var foodTransform:Transform;
 private var pPosX:float;
 private var pPosY:float;
 private var pWidth:float = 1.1f;
 private var pHeight:float = 1.1f;
 private var stamina:int;
-private var ManagerScript:theChosenRunner;
+//private var randomMove:float;
 
 function Start () {
+	foodTransform = transform;
 	marker1 = transform.FindChild("m1");
 	marker2 = transform.FindChild("m2");
 	marker3 = transform.FindChild("m3");
 	marker4 = transform.FindChild("m4");
 	marker5 = transform.FindChild("m5");
-	Player = GameObject.Find("Player");
+	PlayerScript = GameObject.Find("Player").GetComponent(characterController) as characterController;
 	Manager = GameObject.Find("Manager");
 	ManagerScript = Manager.GetComponent("theChosenRunner") as theChosenRunner;
-	pPosX = Player.transform.position.x;
-	pPosY = Player.transform.position.y;
+	pPosX = PlayerScript.GetPosX();
+	pPosY = PlayerScript.GetPosY();
+	//randomMove = Random.Range(0.1f, 0.5f);
 }
 
 function Update () {
 	//markersUpdate();
-	transform.position.y = transform.position.y+Mathf.Sin(Time.time*2.5)*0.001f*Time.deltaTime;
-	transform.rotation.z = Mathf.Sin(Time.time*2.5)*0.01f;
+	//foodTransform.position.y += Mathf.Sin(Time.time*2.5)*0.001f*Time.deltaTime;
+	//foodTransform.position.y = Mathf.Sin(Time.time*2.5)*randomMove;
+	foodTransform.position.y = Mathf.Sin(Time.time*2.0)*0.1f;
+	foodTransform.rotation.z = Mathf.Sin(Time.time*2.5)*0.02f;
 	stamina=ManagerScript.GetStamina();
-	pPosX = Player.transform.position.x;
-	pPosY = Player.transform.position.y;
+	pPosX = PlayerScript.GetPosX();
+	pPosY = PlayerScript.GetPosY();
 	if(stamina < 3){
 	//detect collision with player
 	//if(rect1.x < rect2.x + rect2.width && rect1.x + rect1.width > rect2.x && rect1.y < rect2.y + rect2.height &&	rect1.height + rect1.y > rect2.y)
-		if((transform.position.x - 0.4f) < (pPosX-pWidth/2) + (pWidth) && (transform.position.x - 0.4f) + (0.8f) > (pPosX-pWidth/2) &&
-		 (transform.position.y + 0.3f) < (0.1f + pPosY) + (pHeight) && (0.7f) + (transform.position.y + 0.3f) > (0.1f + pPosY)) {
+		if((foodTransform.position.x - 0.4f) < (pPosX-pWidth/2) + (pWidth) && (foodTransform.position.x - 0.4f) + (0.8f) > (pPosX-pWidth/2) &&
+		 (foodTransform.position.y + 0.3f) < (0.1f + pPosY) + (pHeight) && (0.7f) + (foodTransform.position.y + 0.3f) > (0.1f + pPosY)) {
 			Manager.SendMessage("SetStamina", 1);
 			Destroy(gameObject);
 		}

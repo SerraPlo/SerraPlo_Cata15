@@ -1,4 +1,4 @@
-﻿#pragma strict
+#pragma strict
 
 private var speedX:float;					//velocitat del player en x
 private var constSpeedX:float = 2.0f;		//velocitat inicial constant del player en x
@@ -26,11 +26,10 @@ private var reversing:boolean = false;		//condicio de si l'sprite esta rotant ne
 private var bJump:boolean = false;			//condicio de clic en pantalla per saltar
 private var bCharge:boolean = false;		//condicio de clic en pantalla per fer charge
 
-private var stepUpLimit:float = 0.08f;		//distancia llindar entre la posicio del player i el terra
-
 private var floor:float;					//posicio del jugador respecte el terra
 private var stamina:int;					//quantitat de cargues a fer
 private var playerSprite:Transform;			//sprite del jugador
+private var playerTransform:Transform;			//sprite del jugador
 
 private var ManagerScript:theChosenRunner;
 private var TerrainGeneratorScript:terrainGenerator;
@@ -57,22 +56,31 @@ function OnGUI (){
 	}
 }
 
+function GetPosX () {
+	return playerTransform.position.x;
+}
+
+function GetPosY () {
+	return playerTransform.position.y;
+}
+
 function Start () {
+	playerTransform = transform;
 	ManagerScript = Manager.GetComponent("theChosenRunner") as theChosenRunner;
 	TerrainGeneratorScript = Manager.GetComponent("terrainGenerator") as terrainGenerator;
-	playerSprite = transform.FindChild("PlayerSprite");
+	playerSprite = playerTransform.FindChild("PlayerSprite");
 	speedX = constSpeedX;
 	speedY = 0.0f;
 }
 
 function Update () {
 	//updatejar posicio en x i en y del player
-	transform.position.x += speedX*Time.deltaTime;
-	transform.position.y += speedY*Time.deltaTime;
+	playerTransform.position.x += speedX*Time.deltaTime;
+	playerTransform.position.y += speedY*Time.deltaTime;
 	
 	//send actualitza variable floor al manager i floor el recull
-	Manager.SendMessage("SetRealFloor", transform.position.x);
-	Manager.SendMessage("SetScore", transform.position.x);
+	Manager.SendMessage("SetRealFloor", playerTransform.position.x);
+	Manager.SendMessage("SetScore", playerTransform.position.x);
 	floor = TerrainGeneratorScript.GetRealFloor();
 	stamina = ManagerScript.GetStamina();
 	pause = ManagerScript.GetPause();
@@ -89,21 +97,21 @@ function Update () {
 	}
 	
 	//gravetat en y
-	if (transform.position.y > floor) speedY -= gravity*Time.deltaTime;
+	if (playerTransform.position.y > floor) speedY -= gravity*Time.deltaTime;
 	else {
 		canJump = true;
 		//impuls per pujar esglaons
-		if (Mathf.Abs(floor - transform.position.y) > stepUpLimit) speedY = impulseY*Mathf.Abs(floor - transform.position.y);
+		if (Mathf.Abs(floor - playerTransform.position.y) > 0.08f) speedY = impulseY*Mathf.Abs(floor - playerTransform.position.y);
 		else {
 			speedY = 0.0f;
-			transform.position.y = floor;
+			playerTransform.position.y = floor;
 		}
 	}
 	
 	//jump
 	if (canJump && (Input.GetKeyDown('z')||bJump)){
 		bJump=false;
-		transform.position.y = floor;
+		playerTransform.position.y = floor;
 		speedY = impulseY;
 		canJump= false;
 	}
@@ -129,7 +137,7 @@ function Update () {
 	SwapSprite();
 			
 	//rotacio del player en z (trontoll)
-	transform.rotation.z = Mathf.Sin(Time.time*2.5)*0.1f;
+	playerTransform.rotation.z = Mathf.Sin(Time.time*2.5)*0.1f;
 }
 
 function Charge(){
@@ -150,7 +158,7 @@ function SwapSprite(){
 			rotating = false;
 			reversing = true;
 		}
-		else playerSprite.RotateAround(transform.position, transform.up, Time.deltaTime * speedRotating);
+		else playerSprite.RotateAround(playerTransform.position, playerTransform.up, Time.deltaTime * speedRotating);
 		//Debug.Log("rotating");
 	}
 	//revertir la rotacio anterior 180 graus en y despres d'un temps determinat pel contador
@@ -160,7 +168,7 @@ function SwapSprite(){
 			rotating = false;
 			reversing = false;
 		}
-		else playerSprite.RotateAround(transform.position, transform.up, Time.deltaTime * -speedReversing);
+		else playerSprite.RotateAround(playerTransform.position, playerTransform.up, Time.deltaTime * -speedReversing);
 		//Debug.Log("reversing");
 	}
 }

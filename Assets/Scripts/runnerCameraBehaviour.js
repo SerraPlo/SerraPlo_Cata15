@@ -1,12 +1,14 @@
 ﻿#pragma strict
 
-var player:GameObject;
+private var PlayerScript:characterController;
+private var CameraTransform:Transform;
 
 function Start () {
-
+	PlayerScript = GameObject.Find("Player").GetComponent(characterController) as characterController;
+	CameraTransform = transform;
 }
 
 function Update () {
-	transform.position.x = player.transform.position.x;
+	CameraTransform.position.x = PlayerScript.GetPosX();
 	//transform.LookAt(player.transform);
 }

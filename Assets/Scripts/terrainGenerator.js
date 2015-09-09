@@ -18,6 +18,7 @@ private	var realFloorL:float;
 
 private var width:float = 0.8f; //<------------------------ aqui ta lamplada del jugador
 private var stepArray:GameObject[];
+private var stepArrayPos:Vector3[];
 private var foodArray:GameObject[];
 private var playerStep:int;
 private var pPlayerStep:int;
@@ -30,10 +31,11 @@ var foodInArray:int = 0;
 var marker1:GameObject;
 var marker2:GameObject;
 
-function Start() {
+function Awake() {
 	stepArray = new GameObject[stepsInScene];
+	stepArrayPos = new Vector3[stepsInScene];
 	foodArray = new GameObject[10];
-	for (var g = 0; g<stepsInScene; g++){
+	for (var g = 0; g<stepsInScene; g++) {
 		randomGenerator(g);
 	}
 	pPlayerStep=0;
@@ -46,7 +48,7 @@ function Update() {
 		var backSteps:int = 0;
 		for(var g = r; g!=playerStep; g--){
 			if(g ==-1) g=stepsInScene-1;
-			if(stepArray[g].transform.position.x < playerPos) backSteps++;
+			if(stepArrayPos[g].x < playerPos) backSteps++;
 			if(backSteps>25){
 				randomGenerator(g);
 				break;
@@ -65,23 +67,22 @@ function SetRealFloor(pos:float) {
 	var posL:float = pos-width/2.0f;
 	marker2.transform.position.x = posL;
 	for (var k=0; k<stepsInScene; k++) {
-		if (pos >= stepArray[k].transform.position.x && pos < stepArray[k].transform.position.x + 0.5f) {
+		if (pos >= stepArrayPos[k].x && pos < stepArrayPos[k].x + 0.5f) {
 			playerStep = k;
 			playerPos = pos;
 		}
-		if (posR >= stepArray[k].transform.position.x && posR < stepArray[k].transform.position.x + 0.5f) {
-			if (stepArray[k].tag == "GroundG") realFloorR = stepArray[k].transform.position.y;
-			else if (stepArray[k].tag == "GroundU") realFloorR = stepArray[k].transform.position.y + 0.25f;
-			else if (stepArray[k].tag == "GroundD") realFloorR = stepArray[k].transform.position.y - 0.25f;
+		if (posR >= stepArrayPos[k].x && posR < stepArrayPos[k].x + 0.5f) {
+			if (stepArray[k].tag == "GroundG") realFloorR = stepArrayPos[k].y;
+			else if (stepArray[k].tag == "GroundU") realFloorR = stepArrayPos[k].y + 0.25f;
+			else if (stepArray[k].tag == "GroundD") realFloorR = stepArrayPos[k].y - 0.25f;
 		}
-		if (posL >= stepArray[k].transform.position.x && posL < stepArray[k].transform.position.x + 0.5f) {
-			if (stepArray[k].tag == "GroundG") realFloorL = stepArray[k].transform.position.y;
-			else if (stepArray[k].tag == "GroundU") realFloorL = stepArray[k].transform.position.y + 0.25f;
-			else if (stepArray[k].tag == "GroundD") realFloorL = stepArray[k].transform.position.y - 0.25f;
+		if (posL >= stepArrayPos[k].x && posL < stepArrayPos[k].x + 0.5f) {
+			if (stepArray[k].tag == "GroundG") realFloorL = stepArrayPos[k].y;
+			else if (stepArray[k].tag == "GroundU") realFloorL = stepArrayPos[k].y + 0.25f;
+			else if (stepArray[k].tag == "GroundD") realFloorL = stepArrayPos[k].y - 0.25f;
 		}
 	}
 	realFloor = (realFloorL >= realFloorR) ? realFloorL:realFloorR;
-	
 }
 
 function randomGenerator(g:int) {
@@ -154,5 +155,6 @@ function randomGenerator(g:int) {
 		foodArray[foodInArray] = Instantiate(foodSprite,new Vector3(curPos* dist, height*lvl + alturaF, 0.1), Quaternion.identity);
 		foodInArray = (foodInArray < 9)? foodInArray+1 : 0; //uoooooooooo has posat un operador ternari :)
 	}
+	stepArrayPos[g] = (stepArray[g] as GameObject).GetComponent(Transform).position;
 	curPos++;
 }
