@@ -1,43 +1,47 @@
 ﻿#pragma strict
 
-private var head:Transform;
+/*private var head:Transform;
 private var armL:Transform;
 private var armR:Transform;
 private var body:Transform;
 private var legL:Transform;
 private var legR:Transform;
-private var tail:Transform;
+private var tail:Transform;*/
 private var speedX:float;
-var player:GameObject;
 private var playerDead:boolean;
+private var playerPosX:float;
+private var lionTransform:Transform;
 
-var Manager:GameObject;
+private var PlayerScript:characterController;
 private var ManagerScript:theChosenRunner;
 
 function Start () {
-	ManagerScript = Manager.GetComponent("theChosenRunner") as theChosenRunner;
+	ManagerScript = GameObject.Find("Manager").GetComponent("theChosenRunner") as theChosenRunner;
+	PlayerScript = GameObject.Find("Player").GetComponent("characterController") as characterController;
 	
-	head = transform.FindChild("Lleo_Head");
+	/*head = transform.FindChild("Lleo_Head");
 	armL = transform.FindChild("Lleo_ArmL");
 	armR = transform.FindChild("Lleo_ArmR");
 	body = transform.FindChild("Lleo_Body");
 	legL = transform.FindChild("Lleo_LegL");
 	legR = transform.FindChild("Lleo_LegR");
-	tail = transform.FindChild("Lleo_Tail");
-	transform.position.x = player.transform.position.x-5;
+	tail = transform.FindChild("Lleo_Tail");*/
+	lionTransform = transform;
+	lionTransform.position.x = PlayerScript.GetPosX()-5;
 	speedX = 2.0f; // <-------------- a falta de pillarla de manager per velocitats variables
 }
 
 function Update () {
 	playerDead = ManagerScript.GetDead();
+	playerPosX = PlayerScript.GetPosX();
 
-	if(playerDead && transform.position.x<player.transform.position.x - 1) transform.position.x += speedX*Time.deltaTime;
-	else if (!playerDead) transform.position.x = player.transform.position.x-5;
+	if(playerDead && lionTransform.position.x<playerPosX - 1) lionTransform.position.x += speedX*Time.deltaTime;
+	else if (!playerDead) lionTransform.position.x = playerPosX-5;
 	
-	head.transform.rotation.z = Mathf.Sin(Time.time*2.5)*0.1f;
+	/*head.transform.rotation.z = Mathf.Sin(Time.time*2.5)*0.1f;
 	armL.transform.rotation.z = -Mathf.Sin(Time.time*2.5)*0.25f;
 	armR.transform.rotation.z = Mathf.Sin(Time.time*2.5)*0.25f;
 	legL.transform.rotation.z = -Mathf.Sin(Time.time*2.5)*0.2f;
 	legR.transform.rotation.z = Mathf.Sin(Time.time*2.5)*0.2f;
-	tail.transform.rotation.z = Mathf.Sin(Time.time*2.5)*0.2f;
+	tail.transform.rotation.z = Mathf.Sin(Time.time*2.5)*0.2f;*/
 }

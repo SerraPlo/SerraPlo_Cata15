@@ -65,6 +65,10 @@ function GetPosY () {
 	return playerTransform.position.y;
 }
 
+function GetConstSpeedX () {
+	return constSpeedX;
+}
+
 function Start () {
 	dead = false;
 	playerTransform = transform;
