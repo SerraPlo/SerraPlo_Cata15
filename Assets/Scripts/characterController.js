@@ -17,6 +17,7 @@ private var speedRotating:float = 700.0f;	//velocitat de rotacio positiva de l's
 private var speedReversing:float = 600.0f;	//velocitat de rotacio negativa (reversio) de l'sprite
 
 private var pause:boolean;
+private var dead:boolean;
 
 private var canJump:boolean = false;		//condicio de si el player pot saltar
 private var charging:boolean = false;		//condicio de si el player esta fent charge
@@ -46,7 +47,7 @@ var controlsGuiStyle:GUIStyle;
 //---------GUI---------
 function OnGUI (){
     //controls
-    if(!pause){
+    if(!pause && !dead){
 		if (GUI.Button(Rect (0,(Screen.height/20)*3,Screen.width/2,Screen.height-((Screen.height/20)*3)), "", controlsGuiStyle)){
      		if(canJump) bJump = true;
 		}
@@ -65,6 +66,7 @@ function GetPosY () {
 }
 
 function Start () {
+	dead = false;
 	playerTransform = transform;
 	ManagerScript = Manager.GetComponent("theChosenRunner") as theChosenRunner;
 	TerrainGeneratorScript = Manager.GetComponent("terrainGenerator") as terrainGenerator;
@@ -75,20 +77,29 @@ function Start () {
 
 function Update () {
 	//updatejar posicio en x i en y del player
-	playerTransform.position.x += speedX*Time.deltaTime;
-	playerTransform.position.y += speedY*Time.deltaTime;
-	
+	//rotacio del player en z (trontoll)
+	if(!dead){
+		playerTransform.position.x += speedX*Time.deltaTime;
+		playerTransform.position.y += speedY*Time.deltaTime;
+		playerTransform.rotation.z = Mathf.Sin(Time.time*2.5)*0.1f;
+	}
 	//send actualitza variable floor al manager i floor el recull
 	Manager.SendMessage("SetRealFloor", playerTransform.position.x);
 	Manager.SendMessage("SetScore", playerTransform.position.x);
 	floor = TerrainGeneratorScript.GetRealFloor();
 	stamina = ManagerScript.GetStamina();
 	pause = ManagerScript.GetPause();
+	dead = ManagerScript.GetDead();
+
 	//resetButton
 	if (Input.GetKeyDown('r')){
 		Time.timeScale = 1.0;
 		Application.LoadLevel(1);	
 	}
+	//dead
+	/*if (Input.GetKeyDown('e')){
+		dead = true;
+	}*/
 	//friccio en x
 	if (speedX > constSpeedX) speedX -= friction;
 	else {
@@ -109,7 +120,7 @@ function Update () {
 	}
 	
 	//jump
-	if (canJump && (Input.GetKeyDown('z')||bJump)){
+	if (canJump && (Input.GetKeyDown('z')||bJump)&& !pause && !dead ){
 		bJump=false;
 		playerTransform.position.y = floor;
 		speedY = impulseY;
@@ -121,7 +132,7 @@ function Update () {
 		else  rendJump.material.color = Color.red;
 	
 	//charge
-	if (!charging && !rotating && !reversing && stamina > 0 && (Input.GetKeyDown('x')||bCharge)){
+	if (!charging && !rotating && !reversing && stamina > 0 && !pause && !dead && (Input.GetKeyDown('x')||bCharge)){
 		bCharge=false;
 		charging = true;
 		rotating = true;
@@ -136,8 +147,7 @@ function Update () {
 	//canvi d'sprite
 	SwapSprite();
 			
-	//rotacio del player en z (trontoll)
-	playerTransform.rotation.z = Mathf.Sin(Time.time*2.5)*0.1f;
+	
 }
 
 function Charge(){
