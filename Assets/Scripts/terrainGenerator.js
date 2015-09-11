@@ -4,7 +4,7 @@ var stepU:GameObject;				//prefab de l'esglao cap amunt
 var stepD:GameObject;				//prefab de l'esglao cap avall
 var stepG:GameObject;				//prefab de l'esglao pla
 var foodSprite:GameObject;	
-
+var enemy1:GameObject;
 var chanceFood:int = 5;     //% food appear over 1000
 
 private var lvl:int = 0;			//nivell del terra
@@ -20,12 +20,14 @@ private var width:float = 0.8f; //<------------------------ aqui ta lamplada del
 private var stepArray:GameObject[];
 private var stepArrayPos:Vector3[];
 private var foodArray:GameObject[];
+private var enemiesArray:GameObject[];
 private var playerStep:int;
 private var pPlayerStep:int;
 private var playerPos:float;
 private var stepsInScene:int = 50;
 
 var foodInArray:int = 0;
+var enemyInArray:int = 0;
 
 //---------markers----------
 var marker1:GameObject;
@@ -35,6 +37,7 @@ function Awake() {
 	stepArray = new GameObject[stepsInScene];
 	stepArrayPos = new Vector3[stepsInScene];
 	foodArray = new GameObject[10];
+	enemiesArray = new GameObject[10];
 	for (var g = 0; g<stepsInScene; g++) {
 		randomGenerator(g);
 	}
@@ -91,11 +94,13 @@ function randomGenerator(g:int) {
 	var up:boolean;
 	var down:boolean;
 	var food:boolean;
+	var enemies:boolean;
 	var prevArray:int[] = new int[3];
 	if (curPos<10) {
 		down = true;
 		up = true;
 		food = false;
+		enemies = false;
 	} 
 	else {
 		for (var y:int = 1; y < 4;y++){
@@ -108,6 +113,8 @@ function randomGenerator(g:int) {
 		else up = false;
 		if (rand2<chanceFood)food = true;
 		else food = false;
+		if (rand2>950) enemies = true;
+		else enemies = false;
 		//Debug.Log(down);
 	}
 	Destroy(stepArray[g]);
@@ -154,6 +161,14 @@ function randomGenerator(g:int) {
 		else alturaF = 2; 
 		foodArray[foodInArray] = Instantiate(foodSprite,new Vector3(curPos* dist, height*lvl + alturaF, 0.1), Quaternion.identity);
 		foodInArray = (foodInArray < 9)? foodInArray+1 : 0; //uoooooooooo has posat un operador ternari :)
+	}
+	if (enemies){
+		Destroy(enemiesArray[enemyInArray]);
+		var alturaE:int;
+		if (rand%2==0) alturaE = 0;
+		else alturaE = 2; 
+		enemiesArray[enemyInArray] = Instantiate(enemy1,new Vector3(curPos* dist, height*lvl + alturaE, 0.1), Quaternion.identity);
+		enemyInArray = (enemyInArray < 9)? enemyInArray+1 : 0; //uoooooooooo has posat un operador ternari :)
 	}
 	stepArrayPos[g] = (stepArray[g] as GameObject).GetComponent(Transform).position;
 	curPos++;

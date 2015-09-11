@@ -1,12 +1,22 @@
 ﻿#pragma strict
 
+//PlayerPrefs - Aqui es crea hS_1 que es el record del runner
+
 private var stamina:int = 3;
 private var score:int = 0;
+private var hScore:int = 0;
 private var pause:boolean = false;
 private var dead:boolean = false;
+private var improving:boolean = false;
+
+private var showRate = 0.4;
+private var lastShow = 0.0;
+private var show:boolean = false;
+
 //---------GUIstyles---------
 var pauseGuiStyle:GUIStyle;
 var scoreGuiStyle:GUIStyle;
+var hScoreGuiStyle:GUIStyle;
 var staminaGuiStyle:GUIStyle;
 var pauseBGGuiStyle:GUIStyle;
 var pauseBoxGuiStyle:GUIStyle;
@@ -34,6 +44,9 @@ function OnGUI (){
 	}
 	//dead
 	if (dead){
+		if (PlayerPrefs.HasKey("hS_1")){
+			if(hScore>PlayerPrefs.GetInt("hS_1")) PlayerPrefs.SetInt("hS_1", score);
+		}else PlayerPrefs.SetInt("hS_1", score);
 		GUI.Box(Rect(0,0,Screen.width,Screen.height), "", pauseBGGuiStyle);
 		GUI.Box(Rect(Screen.width/2-Screen.width/6,Screen.height/2-Screen.height/8,Screen.width/3,Screen.height/4), "", pauseBoxGuiStyle);
 		GUI.Label(Rect(Screen.width/2-Screen.width/6,Screen.height/2-Screen.height/8,Screen.width/3,Screen.height/4), "U DIED N00b",pauseBGGuiStyle);
@@ -50,7 +63,28 @@ function OnGUI (){
 	}
 	//
     scoreGuiStyle.fontSize = Screen.height/15;
+    hScoreGuiStyle.fontSize = Screen.height/17;
     GUI.Label (new Rect (Screen.width/2, Screen.height/15, 1, 1), ""+score, scoreGuiStyle);
+    
+    if(hScore<score) {
+    	improving = true;
+    	hScore=score;
+    }
+    if(improving){
+    	if (Time.time >= lastShow+showRate){
+    		show = !show;
+    		lastShow = Time.time;
+    	}
+    	if (show){
+    		showRate = 0.7;
+    		GUI.Label (new Rect (Screen.height/20,(Screen.height/20)*3.5, 1, 1), "Rècord: "+hScore, hScoreGuiStyle);
+    	}
+    	else {
+    		showRate = 0.3;
+    		GUI.Label (new Rect (Screen.height/20,(Screen.height/20)*3.5, 1, 1), "Rècord: ", hScoreGuiStyle);
+    	}
+    }else GUI.Label (new Rect (Screen.height/20,(Screen.height/20)*3.5, 1, 1), "Rècord: "+hScore, hScoreGuiStyle);
+      
     for(var s = 1; s<=stamina;s++){
     	GUI.Box(Rect (Screen.width/20*(15+s)+(Screen.width/80*s)-Screen.height/20,Screen.height/20,Screen.height/10,Screen.height/10), "", staminaGuiStyle);
     }
@@ -94,7 +128,9 @@ function Die(){
 }
 
 function Start () {
-	
+	improving = false;
+	hScore= PlayerPrefs.GetInt("hS_1");
+	//Debug.Log("High score = " + PlayerPrefs.GetInt("hS_1"));
 }
 
 
@@ -102,7 +138,11 @@ function Start () {
 function Update () {
 	if (Input.GetKeyDown('e')){
 		dead = true;
-		Time.timeScale = 0.0;
+		//Time.timeScale = 0.0;
+	}
+	if (Input.GetKeyDown('h')){
+		PlayerPrefs.DeleteAll();
+		Debug.Log("h pressed, PlayerPrefs deleted");
 	}
 }
 
