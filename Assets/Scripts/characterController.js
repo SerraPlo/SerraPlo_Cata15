@@ -68,6 +68,9 @@ function GetPosY () {
 function GetConstSpeedX () {
 	return constSpeedX;
 }
+function GetCharging(){
+	return charging;
+}
 
 function Start () {
 	dead = false;

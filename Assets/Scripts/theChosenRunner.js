@@ -23,6 +23,7 @@ var pauseBoxGuiStyle:GUIStyle;
 var continueGuiStyle:GUIStyle;
 var restartGuiStyle:GUIStyle;
 var menuGuiStyle:GUIStyle;
+var pHStyle:GUIStyle;
 
 //---------GUI---------
 function OnGUI (){
@@ -45,7 +46,7 @@ function OnGUI (){
 	//dead
 	if (dead){
 		if (PlayerPrefs.HasKey("hS_1")){
-			if(hScore>PlayerPrefs.GetInt("hS_1")) PlayerPrefs.SetInt("hS_1", score);
+			if(hScore>PlayerPrefs.GetInt("hS_1")) PlayerPrefs.SetInt("hS_1", hScore);
 		}else PlayerPrefs.SetInt("hS_1", score);
 		GUI.Box(Rect(0,0,Screen.width,Screen.height), "", pauseBGGuiStyle);
 		GUI.Box(Rect(Screen.width/2-Screen.width/6,Screen.height/2-Screen.height/8,Screen.width/3,Screen.height/4), "", pauseBoxGuiStyle);
@@ -59,6 +60,9 @@ function OnGUI (){
     		Time.timeScale = 1.0;
     		dead=false;
     		Application.LoadLevel(0);
+    	}
+    	if (GUI.Button(Rect (Screen.width/2+((Screen.height/16)*5.5),Screen.height/2-(Screen.height/16),Screen.height/8,Screen.height/8), "", pHStyle)) {
+    	
     	}
 	}
 	//
