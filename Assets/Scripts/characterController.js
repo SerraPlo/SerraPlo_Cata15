@@ -1,4 +1,4 @@
-#pragma strict
+ #pragma strict
 
 private var speedX:float;					//velocitat del player en x
 private var constSpeedX:float = 2.0f;		//velocitat inicial constant del player en x
@@ -45,7 +45,7 @@ var markerCharge:GameObject;
 var controlsGuiStyle:GUIStyle;
 
 //---------GUI---------
-function OnGUI (){
+/*function OnGUI (){
     //controls
     if(!pause && !dead){
 		if (GUI.Button(Rect (0,(Screen.height/20)*3,Screen.width/2,Screen.height-((Screen.height/20)*3)), "", controlsGuiStyle)){
@@ -56,7 +56,7 @@ function OnGUI (){
     	}
 	}
 }
-
+*/
 function GetPosX () {
 	return playerTransform.position.x;
 }
@@ -83,6 +83,20 @@ function Start () {
 }
 
 function Update () {
+	if(!pause && !dead){
+		if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) {
+			// Get movement of the finger since last frame
+			var touchPosition: Vector2 = Input.GetTouch(0).position;
+			// Move object across XY plane
+			if (touchPosition.y>(Screen.height/20)*3){	
+				if (touchPosition.x<Screen.width/2){
+					if(canJump) bJump = true;
+				}else {
+					if(!charging && stamina > 0) bCharge = true;
+				}
+			}
+		}
+	}
 	//updatejar posicio en x i en y del player
 	//rotacio del player en z (trontoll)
 	if(!dead){

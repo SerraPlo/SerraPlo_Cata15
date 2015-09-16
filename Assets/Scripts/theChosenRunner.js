@@ -8,6 +8,7 @@ private var hScore:int = 0;
 private var pause:boolean = false;
 private var dead:boolean = false;
 private var improving:boolean = false;
+private var added:boolean = false;
 
 private var showRate = 0.4;
 private var lastShow = 0.0;
@@ -45,6 +46,10 @@ function OnGUI (){
 	}
 	//dead
 	if (dead){
+		if (!added){
+			PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") + score);
+			added = true;
+		}
 		if (PlayerPrefs.HasKey("hS_1")){
 			if(hScore>PlayerPrefs.GetInt("hS_1")) PlayerPrefs.SetInt("hS_1", hScore);
 		}else PlayerPrefs.SetInt("hS_1", score);
@@ -133,6 +138,7 @@ function Die(){
 
 function Start () {
 	improving = false;
+	added = false;
 	hScore= PlayerPrefs.GetInt("hS_1");
 	//Debug.Log("High score = " + PlayerPrefs.GetInt("hS_1"));
 }
@@ -147,6 +153,9 @@ function Update () {
 	if (Input.GetKeyDown('h')){
 		PlayerPrefs.DeleteAll();
 		Debug.Log("h pressed, PlayerPrefs deleted");
+	}
+	if (Input.GetKeyDown('m')){
+		Debug.Log("money="+PlayerPrefs.GetInt("money"));
 	}
 }
 
