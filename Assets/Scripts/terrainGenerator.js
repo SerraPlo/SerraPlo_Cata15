@@ -5,6 +5,7 @@ var stepD:GameObject;				//prefab de l'esglao cap avall
 var stepG:GameObject;				//prefab de l'esglao pla
 var foodSprite:GameObject;	
 var enemy1:GameObject;
+var cartell:GameObject;
 var chanceFood:int = 5;     //% food appear over 1000
 
 private var lvl:int = 0;			//nivell del terra
@@ -62,6 +63,10 @@ function Update() {
 
 function GetRealFloor() {
 	return realFloor;
+}
+
+function Start(){
+	cartell = Instantiate(cartell,new Vector3(PlayerPrefs.GetInt("hS_1"), 1, 2), Quaternion.identity);
 }
 
 function SetRealFloor(pos:float) {

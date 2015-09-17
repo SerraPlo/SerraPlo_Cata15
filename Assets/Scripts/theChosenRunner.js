@@ -137,6 +137,7 @@ function Die(){
 }
 
 function Start () {
+	
 	improving = false;
 	added = false;
 	hScore= PlayerPrefs.GetInt("hS_1");
