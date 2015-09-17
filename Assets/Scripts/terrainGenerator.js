@@ -18,6 +18,16 @@ private var realFloorR:float;
 private	var realFloorL:float;
 
 private var width:float = 0.8f; //<------------------------ aqui ta lamplada del jugador
+
+private var stepUA:GameObject[];
+private var stepDA:GameObject[];
+private var stepGA:GameObject[];
+
+private var iStepU:int;
+private var iStepD:int;
+private var iStepG:int;
+
+
 private var stepArray:GameObject[];
 private var stepArrayPos:Vector3[];
 private var foodArray:GameObject[];
@@ -37,11 +47,30 @@ var marker2:GameObject;
 function Awake() {
 	stepArray = new GameObject[stepsInScene];
 	stepArrayPos = new Vector3[stepsInScene];
+	
+	stepUA = new GameObject[stepsInScene];
+	stepDA = new GameObject[stepsInScene];
+	stepGA = new GameObject[stepsInScene];
+	iStepU = stepsInScene;
+	iStepD = stepsInScene;
+	iStepG = stepsInScene;
+	var countI:int;
+	for (countI = 0;countI<stepsInScene;countI++){
+		stepUA[countI] = Instantiate(stepU,new Vector3(0, 0, 0), Quaternion.identity);
+		stepUA[countI].SetActive (false);
+		stepDA[countI] = Instantiate(stepD,new Vector3(0, 0, 0), Quaternion.identity);
+		stepDA[countI].SetActive (false);
+		stepGA[countI] = Instantiate(stepG,new Vector3(0, 0, 0), Quaternion.identity);
+		stepGA[countI].SetActive (false);
+	}
+	
 	foodArray = new GameObject[10];
 	enemiesArray = new GameObject[10];
+	
 	for (var g = 0; g<stepsInScene; g++) {
 		randomGenerator(g);
 	}
+	
 	pPlayerStep=0;
 }
 
