@@ -84,7 +84,7 @@ function Start () {
 
 function Update () {
 	if(!pause && !dead){
-		if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) {
+		if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Began) {
 			// Get movement of the finger since last frame
 			var touchPosition: Vector2 = Input.GetTouch(0).position;
 			// Move object across XY plane

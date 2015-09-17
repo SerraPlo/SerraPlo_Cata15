@@ -3,6 +3,7 @@
 var stepU:GameObject;				//prefab de l'esglao cap amunt
 var stepD:GameObject;				//prefab de l'esglao cap avall
 var stepG:GameObject;				//prefab de l'esglao pla
+var empty:GameObject;
 var foodSprite:GameObject;	
 var enemy1:GameObject;
 var cartell:GameObject;
@@ -30,6 +31,7 @@ private var iStepG:int;
 
 private var stepArray:GameObject[];
 private var stepArrayPos:Vector3[];
+
 private var foodArray:GameObject[];
 private var enemiesArray:GameObject[];
 private var playerStep:int;
@@ -47,13 +49,12 @@ var marker2:GameObject;
 function Awake() {
 	stepArray = new GameObject[stepsInScene];
 	stepArrayPos = new Vector3[stepsInScene];
-	
 	stepUA = new GameObject[stepsInScene];
 	stepDA = new GameObject[stepsInScene];
 	stepGA = new GameObject[stepsInScene];
-	iStepU = stepsInScene;
-	iStepD = stepsInScene;
-	iStepG = stepsInScene;
+	iStepG = stepsInScene-1;
+	iStepU = stepsInScene-1;
+	iStepD = stepsInScene-1;
 	var countI:int;
 	for (countI = 0;countI<stepsInScene;countI++){
 		stepUA[countI] = Instantiate(stepU,new Vector3(0, 0, 0), Quaternion.identity);
@@ -62,30 +63,26 @@ function Awake() {
 		stepDA[countI].SetActive (false);
 		stepGA[countI] = Instantiate(stepG,new Vector3(0, 0, 0), Quaternion.identity);
 		stepGA[countI].SetActive (false);
+		stepArray[countI]=Instantiate(empty,new Vector3(0, 0, 0), Quaternion.identity);
 	}
-	
 	foodArray = new GameObject[10];
 	enemiesArray = new GameObject[10];
-	
-	for (var g = 0; g<stepsInScene; g++) {
-		randomGenerator(g);
-	}
-	
+	for (var g = 0; g<stepsInScene; g++) randomGenerator(g);
 	pPlayerStep=0;
 }
 
 function Update() {
 	if (pPlayerStep!=playerStep){
 		pPlayerStep=playerStep;
-		var r:int = (playerStep ==0)? stepsInScene-1 : playerStep-1;
+		var r:int = (playerStep == 0)? stepsInScene-1 : playerStep-1;
 		var backSteps:int = 0;
 		for(var g = r; g!=playerStep; g--){
 			if(g ==-1) g=stepsInScene-1;
 			if(stepArrayPos[g].x < playerPos) backSteps++;
-			if(backSteps>25){
+			if(backSteps>20){
 				randomGenerator(g);
-				break;
-			}			
+				break;	
+			}
 		}
 	}
 }
@@ -122,6 +119,39 @@ function SetRealFloor(pos:float) {
 	realFloor = (realFloorL >= realFloorR) ? realFloorL:realFloorR;
 }
 
+function TakeF(type:int, pos:Vector3){
+	if (type==0){
+		stepGA[iStepG].transform.position = pos;
+		stepGA[iStepG].SetActive (true);
+		for (var destG = 0; destG<stepsInScene;destG++){
+			if(destG>40 && iStepG-destG>=0) stepGA[iStepG-destG].SetActive(false);
+			else if (destG>40) stepGA[stepsInScene-(destG-iStepG)].SetActive(false);
+		}
+		if (iStepG + 1 >= stepsInScene) iStepG = 0;
+		else iStepG++;
+	}
+	else if (type==1){
+		stepUA[iStepU].transform.position = pos;
+		stepUA[iStepU].SetActive (true);
+		for (var destU = 0; destU<stepsInScene;destU++){
+			if(destU>5 && iStepU-destU>=0) stepUA[iStepU-destU].SetActive(false);
+			else if (destU>5) stepUA[stepsInScene-(destU-iStepU)].SetActive(false);
+		}
+		if (iStepU + 1 >= stepsInScene) iStepU = 0;
+		else iStepU++;
+	}
+	else{
+		stepDA[iStepD].transform.position = pos;
+		stepDA[iStepD].SetActive (true);
+		for (var destD = 0; destD<stepsInScene;destD++){
+			if(destD>5 && iStepD-destD>=0) stepDA[iStepD-destD].SetActive(false);
+			else if (destD>5) stepDA[stepsInScene-(destD-iStepD)].SetActive(false);
+		}
+		if (iStepD + 1 >= stepsInScene) iStepD = 0;
+		else iStepD++;
+	}
+}
+
 function randomGenerator(g:int) {
 	var rand:int = Random.Range(0, 100);
 	var rand2:int = Random.Range(0, 1000);
@@ -135,59 +165,46 @@ function randomGenerator(g:int) {
 		up = true;
 		food = false;
 		enemies = false;
-	} 
-	else {
-		for (var y:int = 1; y < 4;y++){
-			prevArray[y-1] = g-y;
-			if (prevArray[y-1] < 0) prevArray[y-1] =stepsInScene+prevArray[y-1];
+	}else {
+		for (var tit:int = 1; tit < 4;tit++){
+			prevArray[tit-1] = g-tit;
+			if (prevArray[tit-1] < 0) prevArray[tit-1] =  stepsInScene+prevArray[tit-1];
 		}
-		if (stepArray[prevArray[0]].tag == "GroundD" || stepArray[prevArray[1]].tag == "GroundD" || stepArray[prevArray[2]].tag == "GroundD") down = true;
+		if (stepArray[prevArray[0]].transform.position.y  > stepArray[g].transform.position.y || 
+			stepArray[prevArray[1]].transform.position.y  > stepArray[prevArray[0]].transform.position.y ||
+			stepArray[prevArray[2]].transform.position.y  > stepArray[prevArray[1]].transform.position.y )down = true;
 		else down = false;
-		if (stepArray[prevArray[0]].tag == "GroundU" || stepArray[prevArray[1]].tag == "GroundU" || stepArray[prevArray[2]].tag == "GroundU") up = true;
+		
+		if (stepArray[prevArray[0]].transform.position.y  < stepArray[g].transform.position.y || 
+			stepArray[prevArray[1]].transform.position.y  < stepArray[prevArray[0]].transform.position.y ||
+			stepArray[prevArray[2]].transform.position.y  < stepArray[prevArray[1]].transform.position.y ) up = true;
 		else up = false;
-		if (rand2<chanceFood)food = true;
-		else food = false;
-		if (rand2>950) enemies = true;
-		else enemies = false;
-		//Debug.Log(down);
+		
+		if (rand2<chanceFood)food = true;	else food = false;
+		if (rand2>950) enemies = true;   	else enemies = false;
 	}
-	Destroy(stepArray[g]);
+	
+	stepArray[g].transform.position = new Vector3(curPos * dist, height*lvl, 0);
+	var queToca:int;
 	if (lvl == 0) {
-		if (rand < 80) stepArray[g] = Instantiate(stepG,new Vector3(curPos * dist, height*lvl, 0), Quaternion.identity);
-		else if (!down && rand < 90)  { 
-			stepArray[g] = Instantiate(stepU,new Vector3(curPos * dist, height*lvl, 0), Quaternion.identity);
-			lvl++;
-		}
-		else if (!up) {
-			stepArray[g] = Instantiate(stepD,new Vector3(curPos* dist, height*lvl, 0), Quaternion.identity);
-			lvl--;
-		}
-		else stepArray[g] = Instantiate(stepG,new Vector3(curPos * dist, height*lvl, 0), Quaternion.identity);
+		if (!up && rand > 90){ lvl--; queToca=2; }                                      //stepD
+		else if (!down && rand > 80){ lvl++; queToca=1;}                               //stepU
+		else queToca=0;                                                                //stepG
+	}else if (lvl > 0) {	
+		if (!down && rand < 90-lvl*5 && rand > 80){ lvl++; queToca=1;}                 //stepU
+		else if (!up && rand > 80){ lvl--; queToca=2;}                                 //stepD
+		else queToca=0;                                                                //stepG
+	}else {
+		if (!up && rand < 90+lvl*5 && rand > 80){ lvl--; queToca=2;}                   //stepD
+		else if(!down && rand > 80){ lvl++; queToca=1;}                                //stepU
+		else queToca=0;                                                                //stepG
 	}
-	else if (lvl > 0) {
-		if (rand < 80) stepArray[g] = Instantiate(stepG,new Vector3(curPos* dist, height*lvl, 0), Quaternion.identity);
-		else if (!down && rand < 90-lvl*5) {
-			stepArray[g] = Instantiate(stepU,new Vector3(curPos * dist, height*lvl, 0), Quaternion.identity);
-			lvl++;
-		}
-		else if (!up) {
-			stepArray[g] = Instantiate(stepD,new Vector3(curPos * dist, height*lvl, 0), Quaternion.identity);
-			lvl--;
-		}
-		else stepArray[g] = Instantiate(stepG,new Vector3(curPos* dist, height*lvl, 0), Quaternion.identity);
-	}
-	else {
-		if (rand < 80) stepArray[g] = Instantiate(stepG,new Vector3(curPos * dist, height*lvl, 0), Quaternion.identity);
-		else if (!up && rand < 90+lvl*5)  {
-			stepArray[g] = Instantiate(stepD,new Vector3(curPos * dist, height*lvl, 0), Quaternion.identity);
-			lvl--;
-		}
-		else if(!down) {
-			stepArray[g] = Instantiate(stepU,new Vector3(curPos * dist, height*lvl, 0), Quaternion.identity);
-			lvl++;
-		}
-		else stepArray[g] = Instantiate(stepG,new Vector3(curPos * dist, height*lvl, 0), Quaternion.identity);
-	}
+	TakeF(queToca,(stepArray[g] as GameObject).GetComponent(Transform).position); //terra que toca
+	
+	if (queToca == 0) stepArray[g].tag = "GroundG";
+	else if (queToca == 1) stepArray[g].tag = "GroundU";
+	else stepArray[g].tag = "GroundD";
+	
 	if (food){
 		Destroy(foodArray[foodInArray]);
 		var alturaF:int;
@@ -196,14 +213,14 @@ function randomGenerator(g:int) {
 		foodArray[foodInArray] = Instantiate(foodSprite,new Vector3(curPos* dist, height*lvl + alturaF, 0.1), Quaternion.identity);
 		foodInArray = (foodInArray < 9)? foodInArray+1 : 0; //uoooooooooo has posat un operador ternari :)
 	}
-	if (enemies){
+	/*if (enemies){
 		Destroy(enemiesArray[enemyInArray]);
 		var alturaE:int;
 		if (rand%2==0) alturaE = 0;
 		else alturaE = 2; 
 		enemiesArray[enemyInArray] = Instantiate(enemy1,new Vector3(curPos* dist, height*lvl + alturaE, 0.1), Quaternion.identity);
 		enemyInArray = (enemyInArray < 9)? enemyInArray+1 : 0; //uoooooooooo has posat un operador ternari :)
-	}
+	}*/
 	stepArrayPos[g] = (stepArray[g] as GameObject).GetComponent(Transform).position;
 	curPos++;
 }
