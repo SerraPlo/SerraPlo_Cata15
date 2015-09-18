@@ -117,16 +117,17 @@ function SetRealFloor(pos:float) {
 		}
 	}
 	realFloor = (realFloorL >= realFloorR) ? realFloorL:realFloorR;
+	Debug.Log(realFloor);
 }
 
 function TakeF(type:int, pos:Vector3){
 	if (type==0){
 		stepGA[iStepG].transform.position = pos;
 		stepGA[iStepG].SetActive (true);
-		for (var destG = 0; destG<stepsInScene;destG++){
+		/*for (var destG = 0; destG<stepsInScene;destG++){
 			if(destG>40 && iStepG-destG>=0) stepGA[iStepG-destG].SetActive(false);
 			else if (destG>40) stepGA[stepsInScene-(destG-iStepG)].SetActive(false);
-		}
+		}*/
 		if (iStepG + 1 >= stepsInScene) iStepG = 0;
 		else iStepG++;
 	}
@@ -134,8 +135,8 @@ function TakeF(type:int, pos:Vector3){
 		stepUA[iStepU].transform.position = pos;
 		stepUA[iStepU].SetActive (true);
 		for (var destU = 0; destU<stepsInScene;destU++){
-			if(destU>5 && iStepU-destU>=0) stepUA[iStepU-destU].SetActive(false);
-			else if (destU>5) stepUA[stepsInScene-(destU-iStepU)].SetActive(false);
+			if(destU>8 && iStepU-destU>=0) stepUA[iStepU-destU].SetActive(false);
+			else if (destU>8) stepUA[stepsInScene-(destU-iStepU)].SetActive(false);
 		}
 		if (iStepU + 1 >= stepsInScene) iStepU = 0;
 		else iStepU++;
@@ -144,8 +145,8 @@ function TakeF(type:int, pos:Vector3){
 		stepDA[iStepD].transform.position = pos;
 		stepDA[iStepD].SetActive (true);
 		for (var destD = 0; destD<stepsInScene;destD++){
-			if(destD>5 && iStepD-destD>=0) stepDA[iStepD-destD].SetActive(false);
-			else if (destD>5) stepDA[stepsInScene-(destD-iStepD)].SetActive(false);
+			if(destD>8 && iStepD-destD>=0) stepDA[iStepD-destD].SetActive(false);
+			else if (destD>8) stepDA[stepsInScene-(destD-iStepD)].SetActive(false);
 		}
 		if (iStepD + 1 >= stepsInScene) iStepD = 0;
 		else iStepD++;
@@ -170,14 +171,14 @@ function randomGenerator(g:int) {
 			prevArray[tit-1] = g-tit;
 			if (prevArray[tit-1] < 0) prevArray[tit-1] =  stepsInScene+prevArray[tit-1];
 		}
-		if (stepArray[prevArray[0]].transform.position.y  > stepArray[g].transform.position.y || 
-			stepArray[prevArray[1]].transform.position.y  > stepArray[prevArray[0]].transform.position.y ||
-			stepArray[prevArray[2]].transform.position.y  > stepArray[prevArray[1]].transform.position.y )down = true;
+		if (stepArray[prevArray[0]].tag == "GroundD" ||
+			stepArray[prevArray[1]].tag == "GroundD" /*||
+			stepArray[prevArray[2]].tag == "GroundD"*/ ) down = true;
 		else down = false;
 		
-		if (stepArray[prevArray[0]].transform.position.y  < stepArray[g].transform.position.y || 
-			stepArray[prevArray[1]].transform.position.y  < stepArray[prevArray[0]].transform.position.y ||
-			stepArray[prevArray[2]].transform.position.y  < stepArray[prevArray[1]].transform.position.y ) up = true;
+		if (stepArray[prevArray[0]].tag == "GroundU" ||
+			stepArray[prevArray[1]].tag == "GroundU" /*||
+			stepArray[prevArray[2]].tag == "GroundU"*/ ) up = true;
 		else up = false;
 		
 		if (rand2<chanceFood)food = true;	else food = false;
@@ -187,7 +188,7 @@ function randomGenerator(g:int) {
 	stepArray[g].transform.position = new Vector3(curPos * dist, height*lvl, 0);
 	var queToca:int;
 	if (lvl == 0) {
-		if (!up && rand > 90){ lvl--; queToca=2; }                                      //stepD
+		if (!up && rand > 90){ lvl--; queToca=2; }                                     //stepD
 		else if (!down && rand > 80){ lvl++; queToca=1;}                               //stepU
 		else queToca=0;                                                                //stepG
 	}else if (lvl > 0) {	
