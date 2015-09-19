@@ -86,13 +86,13 @@ function OnGUI (){
     	}
     	if (show){
     		showRate = 0.7;
-    		GUI.Label (new Rect (Screen.height/20,(Screen.height/20)*3.5, 1, 1), "Rècord: "+hScore, hScoreGuiStyle);
+    		GUI.Label (new Rect (Screen.height/20,(Screen.height/20)*18, 1, 1), "Rècord: "+hScore, hScoreGuiStyle);
     	}
     	else {
     		showRate = 0.3;
-    		GUI.Label (new Rect (Screen.height/20,(Screen.height/20)*3.5, 1, 1), "Rècord: ", hScoreGuiStyle);
+    		GUI.Label (new Rect (Screen.height/20,(Screen.height/20)*18, 1, 1), "Rècord: ", hScoreGuiStyle);
     	}
-    }else GUI.Label (new Rect (Screen.height/20,(Screen.height/20)*3.5, 1, 1), "Rècord: "+hScore, hScoreGuiStyle);
+    }else GUI.Label (new Rect (Screen.height/20,(Screen.height/20)*18, 1, 1), "Rècord: "+hScore, hScoreGuiStyle);
       
     for(var s = 1; s<=stamina;s++){
     	GUI.Box(Rect (Screen.width/20*(15+s)+(Screen.width/80*s)-Screen.height/20,Screen.height/20,Screen.height/10,Screen.height/10), "", staminaGuiStyle);
