@@ -88,7 +88,7 @@ function Update () {
 			// Get movement of the finger since last frame
 			var touchPosition: Vector2 = Input.GetTouch(0).position;
 			// Move object across XY plane
-			if (touchPosition.y>(Screen.height/20)*3){	
+			if (touchPosition.y<(Screen.height/20)*17){	
 				if (touchPosition.x<Screen.width/2){
 					if(canJump) bJump = true;
 				}else {
