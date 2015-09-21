@@ -1,12 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\lionBehaviour.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\1stBG.js">
     <Files>
-      <File FileName="Assets\Scripts\lionBehaviour.js" Line="47" Column="2" />
-      <File FileName="Assets\Scripts\characterController.js" Line="91" Column="45" />
-      <File FileName="Assets\Scripts\terrainGenerator.js" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\3rdBG.js" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\terrainGenerator.js" Line="210" Column="15" />
+      <File FileName="Assets\Scripts\1stBG.js" Line="48" Column="79" />
       <File FileName="Assets\Scripts\theChosenRunner.js" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\characterController.js" Line="113" Column="33" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

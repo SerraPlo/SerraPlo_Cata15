@@ -117,7 +117,32 @@ function SetRealFloor(pos:float) {
 		}
 	}
 	realFloor = (realFloorL >= realFloorR) ? realFloorL:realFloorR;
-	Debug.Log(realFloor);
+//	Debug.Log(realFloor);
+}
+function ReturnRequestFloor(pos:float) {
+	var posR:float = pos+width/2.0f;
+	//marker1.transform.position.x = posR;
+	var posL:float = pos-width/2.0f;
+	//marker2.transform.position.x = posL;
+	for (var k=0; k<stepsInScene; k++) {
+		if (pos >= stepArrayPos[k].x && pos < stepArrayPos[k].x + 0.5f) {
+			playerStep = k;
+			playerPos = pos;
+		}
+		if (posR >= stepArrayPos[k].x && posR < stepArrayPos[k].x + 0.5f) {
+			if (stepArray[k].tag == "GroundG") realFloorR = stepArrayPos[k].y;
+			else if (stepArray[k].tag == "GroundU") realFloorR = stepArrayPos[k].y + 0.25f;
+			else if (stepArray[k].tag == "GroundD") realFloorR = stepArrayPos[k].y - 0.25f;
+		}
+		if (posL >= stepArrayPos[k].x && posL < stepArrayPos[k].x + 0.5f) {
+			if (stepArray[k].tag == "GroundG") realFloorL = stepArrayPos[k].y;
+			else if (stepArray[k].tag == "GroundU") realFloorL = stepArrayPos[k].y + 0.25f;
+			else if (stepArray[k].tag == "GroundD") realFloorL = stepArrayPos[k].y - 0.25f;
+		}
+	}
+	var requestFloor:float;
+	requestFloor = (realFloorL >= realFloorR) ? realFloorL:realFloorR;
+	return requestFloor;
 }
 
 function TakeF(type:int, pos:Vector3){
@@ -182,7 +207,7 @@ function randomGenerator(g:int) {
 		else up = false;
 		
 		if (rand2<chanceFood)food = true;	else food = false;
-		if (rand2>950) enemies = true;   	else enemies = false;
+		if (rand2>980) enemies = true;   	else enemies = false;
 	}
 	
 	stepArray[g].transform.position = new Vector3(curPos * dist, height*lvl, 0);
@@ -214,14 +239,14 @@ function randomGenerator(g:int) {
 		foodArray[foodInArray] = Instantiate(foodSprite,new Vector3(curPos* dist, height*lvl + alturaF, 0.1), Quaternion.identity);
 		foodInArray = (foodInArray < 9)? foodInArray+1 : 0; //uoooooooooo has posat un operador ternari :)
 	}
-	/*if (enemies){
+	if (enemies){
 		Destroy(enemiesArray[enemyInArray]);
 		var alturaE:int;
 		if (rand%2==0) alturaE = 0;
 		else alturaE = 2; 
-		enemiesArray[enemyInArray] = Instantiate(enemy1,new Vector3(curPos* dist, height*lvl + alturaE, 0.1), Quaternion.identity);
-		enemyInArray = (enemyInArray < 9)? enemyInArray+1 : 0; //uoooooooooo has posat un operador ternari :)
-	}*/
+		enemiesArray[enemyInArray] = Instantiate(enemy1,new Vector3(curPos* dist, height*lvl/* + alturaE*/, 0.1), Quaternion.identity);
+		enemyInArray = (enemyInArray < 9)? enemyInArray+1 : 0;
+	}
 	stepArrayPos[g] = (stepArray[g] as GameObject).GetComponent(Transform).position;
 	curPos++;
 }

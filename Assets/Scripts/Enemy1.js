@@ -23,11 +23,11 @@ private var stamina:int;
 
 function Start () {
 	foodTransform = transform;
-	marker1 = transform.FindChild("m1");
+	/*marker1 = transform.FindChild("m1");
 	marker2 = transform.FindChild("m2");
 	marker3 = transform.FindChild("m3");
 	marker4 = transform.FindChild("m4");
-	marker5 = transform.FindChild("m5");
+	marker5 = transform.FindChild("m5");*/
 	PlayerScript = GameObject.Find("Player").GetComponent(characterController) as characterController;
 	Manager = GameObject.Find("Manager");
 	ManagerScript = Manager.GetComponent("theChosenRunner") as theChosenRunner;
@@ -45,8 +45,8 @@ function Update () {
 	pPosY = PlayerScript.GetPosY();
 	//detect collision with player
 	//if(rect1.x < rect2.x + rect2.width && rect1.x + rect1.width > rect2.x && rect1.y < rect2.y + rect2.height &&	rect1.height + rect1.y > rect2.y)
-	if((foodTransform.position.x - 0.4f) < (pPosX-pWidth/2) + (pWidth) && (foodTransform.position.x - 0.4f) + (0.8f) > (pPosX-pWidth/2) &&
-		 (foodTransform.position.y + 0.3f) < (0.1f + pPosY) + (pHeight) && (0.7f) + (foodTransform.position.y + 0.3f) > (0.1f + pPosY)) {
+	if((foodTransform.position.x - 0.45f) < (pPosX-pWidth/2) + (pWidth) && (foodTransform.position.x - 0.45f) + (0.9f) > (pPosX-pWidth/2) &&
+		 (foodTransform.position.y + 0.15f) < (0.1f + pPosY) + (pHeight) && (0.75f) + (foodTransform.position.y + 0.15f) > (0.1f + pPosY)) {
 			if(PlayerScript.GetCharging()) Destroy(gameObject);
 			else Manager.SendMessage("Die");
 			//Destroy(gameObject);
@@ -54,14 +54,14 @@ function Update () {
 }
 
 function markersUpdate(){
-	marker1.transform.position.x = transform.position.x - 0.4f;
-	marker2.transform.position.x = transform.position.x + 0.4f;
-	marker3.transform.position.x = transform.position.x + 0.4f;
-	marker4.transform.position.x = transform.position.x - 0.4f;
-	marker1.transform.position.y = transform.position.y + 1;
-	marker2.transform.position.y = transform.position.y + 1;
-	marker3.transform.position.y = transform.position.y + 0.3f;
-	marker4.transform.position.y = transform.position.y + 0.3f;
+	marker1.transform.position.x = transform.position.x - 0.45f;
+	marker2.transform.position.x = transform.position.x + 0.45f;
+	marker3.transform.position.x = transform.position.x + 0.45f;
+	marker4.transform.position.x = transform.position.x - 0.45f;
+	marker1.transform.position.y = transform.position.y + 0.9;
+	marker2.transform.position.y = transform.position.y + 0.9;
+	marker3.transform.position.y = transform.position.y + 0.15f;
+	marker4.transform.position.y = transform.position.y + 0.15f;
 	/*if (Time.time> sT +0.01f){
 		sT = Time.time;
 		if(markerCount == 0 || markerCount==4){

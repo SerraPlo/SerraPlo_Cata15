@@ -46,6 +46,8 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\1stBG.js" />
+     <Compile Include="Assets\Scripts\2ndBG.js" />
      <Compile Include="Assets\Scripts\3rdBG.js" />
      <Compile Include="Assets\Scripts\Enemy1.js" />
      <Compile Include="Assets\Scripts\bibliotecaCameraBehaviour.js" />
