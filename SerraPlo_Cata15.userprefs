@@ -1,11 +1,14 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\1stBG.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\terrainGenerator.js">
     <Files>
-      <File FileName="Assets\Scripts\terrainGenerator.js" Line="210" Column="15" />
-      <File FileName="Assets\Scripts\1stBG.js" Line="48" Column="79" />
+      <File FileName="Assets\Scripts\Enemy2.js" Line="39" Column="48" />
+      <File FileName="Assets\Scripts\Enemy1.js" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\terrainGenerator.js" Line="251" Column="5" />
+      <File FileName="Assets\Scripts\1stBG.js" Line="36" Column="60" />
       <File FileName="Assets\Scripts\theChosenRunner.js" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\characterController.js" Line="113" Column="33" />
+      <File FileName="Assets\Scripts\characterController.js" Line="126" Column="19" />
+      <File FileName="Assets\Scripts\4rtBG.js" Line="45" Column="40" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

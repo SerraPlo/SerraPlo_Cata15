@@ -1,8 +1,10 @@
  #pragma strict
 
+var Character:int=0;
+
 private var speedX:float;					//velocitat del player en x
-private var constSpeedX:float = 2.0f;		//velocitat inicial constant del player en x
-private var impulseX:float = 10.0f;			//impuls del player en x en fer charge
+private var constSpeedX:float = 3.0f;		//velocitat inicial constant del player en x
+private var impulseX:float = 20.0f;			//impuls del player en x en fer charge
 private var friction:float = 0.2f;			//friccio del player en x
 
 private var speedY:float;					//velocitat del player en y
@@ -13,8 +15,8 @@ private var gravity:float = 9.8f;			//gravetat del player en y
 private var waitSwap:double = 0.8;			//temps a esperar durant el swap
 private var initTimeRotation:double;		//temps inicial del contador en la rotacio de l'sprite
 
-private var speedRotating:float = 700.0f;	//velocitat de rotacio positiva de l'sprite
-private var speedReversing:float = 600.0f;	//velocitat de rotacio negativa (reversio) de l'sprite
+private var speedRotating:float = 900.0f;	//velocitat de rotacio positiva de l'sprite
+private var speedReversing:float = 900.0f;	//velocitat de rotacio negativa (reversio) de l'sprite
 
 private var pause:boolean;
 private var dead:boolean;
@@ -73,6 +75,59 @@ function GetCharging(){
 }
 
 function Start () {
+	Character = PlayerPrefs.GetInt("Character");
+	if (Character == 0){//bou
+		constSpeedX = 4.0f;
+		impulseX    = 15.0f;
+		impulseY    = 7.0f;
+	}
+	else if (Character == 1){//cavall
+		constSpeedX = 6.0f;
+		impulseX    = 10.0f;
+		impulseY    = 7.0f;
+	}
+	else if (Character == 2){//senglar
+		constSpeedX = 6.0f;
+		impulseX    = 15.0f;
+		impulseY    = 7.0f;
+	}
+	else if (Character == 3){//serp
+		constSpeedX = 4.0f;
+		impulseX    = 0.0f; // disparar
+		impulseY    = 7.0f;
+	}
+	else if (Character == 4){//linx
+		constSpeedX = 6.0f;
+		impulseX    = 10.0f;
+		impulseY    = 8.0f;
+	}
+	else if (Character == 5){//lleopard
+		constSpeedX = 8.0f;
+		impulseX    = 15.0f;
+		impulseY    = 8.0f;
+	}
+	else if (Character == 6){//os
+		constSpeedX = 6.0f;
+		impulseX    = 20.0f;
+		impulseY    = 5.0f;
+	}
+	else if (Character == 7){//gall
+		constSpeedX = 4.0f;
+		impulseX    = 10.0f;
+		impulseY    = 7.0f; //x2
+	}
+	else if (Character == 8){//llop
+		constSpeedX = 8.0f;
+		impulseX    = 10.0f; //kill = reload 
+		impulseY    = 8.0f;
+	}
+	else if (Character == 9){//elefant
+		constSpeedX = 4.0f;
+		impulseX    = 20.0f;
+		impulseY    = 0.0f;
+	}
+	
+	
 	dead = false;
 	playerTransform = transform;
 	ManagerScript = Manager.GetComponent("theChosenRunner") as theChosenRunner;
@@ -97,6 +152,20 @@ function Update () {
 			}
 		}
 	}
+	if (Input.GetKeyDown('0'))	PlayerPrefs.SetInt("Character", 0);//bou      || 2 2 2 (speed / carrega / salt)
+	if (Input.GetKeyDown('1'))	PlayerPrefs.SetInt("Character", 1);//cavall   || 3 1 2
+	if (Input.GetKeyDown('2'))	PlayerPrefs.SetInt("Character", 2);//senglar  || 3 2 2
+	if (Input.GetKeyDown('3'))	PlayerPrefs.SetInt("Character", 3);//serp     || 2 * 2
+	if (Input.GetKeyDown('4'))	PlayerPrefs.SetInt("Character", 4);//linx     || 3 1 3
+	if (Input.GetKeyDown('5'))	PlayerPrefs.SetInt("Character", 5);//lleopard || 4 2 3
+	if (Input.GetKeyDown('6'))	PlayerPrefs.SetInt("Character", 6);//os       || 3 4 1 (2vides)
+	if (Input.GetKeyDown('7'))	PlayerPrefs.SetInt("Character", 7);//gall     || 2 1 2x2 
+	if (Input.GetKeyDown('8'))	PlayerPrefs.SetInt("Character", 8);//llop     || 4 1 3 (recarrega xkill)
+	if (Input.GetKeyDown('9'))	PlayerPrefs.SetInt("Character", 9);//elefant  || 2 5 0
+			
+	
+	
+	
 	//updatejar posicio en x i en y del player
 	//rotacio del player en z (trontoll)
 	if(!dead){
@@ -157,7 +226,7 @@ function Update () {
 		bCharge=false;
 		charging = true;
 		rotating = true;
-		initTimeRotation = Time.time;
+		//initTimeRotation = Time.time;
 		Charge();
 	}
 		//marker Charge
@@ -181,7 +250,7 @@ function Charge(){
 
 function SwapSprite(){
 	//assignar el valor actual al contador
-	if (rotating || reversing) var curTimeRotation = Time.time;
+	//if (rotating || reversing) var curTimeRotation = Time.time;
 	//rotar sprite 180 graus en y
 	if (rotating) {
 		if (playerSprite.localEulerAngles.y >= 180.0) {
@@ -193,7 +262,7 @@ function SwapSprite(){
 		//Debug.Log("rotating");
 	}
 	//revertir la rotacio anterior 180 graus en y despres d'un temps determinat pel contador
-	if (reversing && curTimeRotation - initTimeRotation >= waitSwap) {
+	if (reversing &&/* curTimeRotation - initTimeRotation >= waitSwap*/ speedX == constSpeedX) {
 		if (playerSprite.localEulerAngles.y <= 20.0 && playerSprite.localEulerAngles.y >= 0.0) {
 			playerSprite.localEulerAngles = new Vector3(0.0,0.0,0.0);
 			rotating = false;

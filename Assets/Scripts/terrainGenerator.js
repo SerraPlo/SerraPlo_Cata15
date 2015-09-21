@@ -6,6 +6,7 @@ var stepG:GameObject;				//prefab de l'esglao pla
 var empty:GameObject;
 var foodSprite:GameObject;	
 var enemy1:GameObject;
+var enemy2:GameObject;
 var cartell:GameObject;
 var chanceFood:int = 5;     //% food appear over 1000
 
@@ -207,7 +208,7 @@ function randomGenerator(g:int) {
 		else up = false;
 		
 		if (rand2<chanceFood)food = true;	else food = false;
-		if (rand2>980) enemies = true;   	else enemies = false;
+		if (rand2>960) enemies = true;   	else enemies = false;
 	}
 	
 	stepArray[g].transform.position = new Vector3(curPos * dist, height*lvl, 0);
@@ -239,14 +240,15 @@ function randomGenerator(g:int) {
 		foodArray[foodInArray] = Instantiate(foodSprite,new Vector3(curPos* dist, height*lvl + alturaF, 0.1), Quaternion.identity);
 		foodInArray = (foodInArray < 9)? foodInArray+1 : 0; //uoooooooooo has posat un operador ternari :)
 	}
-	if (enemies){
+	/*if (enemies){
 		Destroy(enemiesArray[enemyInArray]);
 		var alturaE:int;
 		if (rand%2==0) alturaE = 0;
 		else alturaE = 2; 
-		enemiesArray[enemyInArray] = Instantiate(enemy1,new Vector3(curPos* dist, height*lvl/* + alturaE*/, 0.1), Quaternion.identity);
+		if (alturaE == 2)enemiesArray[enemyInArray] = Instantiate(enemy2,new Vector3(curPos* dist, height*lvl, 0.1), Quaternion.identity);
+		else enemiesArray[enemyInArray] = Instantiate(enemy1,new Vector3(curPos* dist, height*lvl, 0.1), Quaternion.identity);
 		enemyInArray = (enemyInArray < 9)? enemyInArray+1 : 0;
-	}
+	}*/
 	stepArrayPos[g] = (stepArray[g] as GameObject).GetComponent(Transform).position;
 	curPos++;
 }
