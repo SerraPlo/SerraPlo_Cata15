@@ -1,0 +1,131 @@
+fileFormatVersion: 2
+guid: f5ab5c9c1fc4f2c4994e05034099f710
+timeCreated: 1442867648
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Books
+    100004: EntranceDoor
+    100006: MainMenu
+    100008: OutsideBiblio
+    100010: OutsideProps
+    100012: Prestages
+    100014: Reception
+    100016: Structure
+    100018: TablesChairs
+    100020: Trees
+    100022: WallDoors
+    100024: WallTables
+    400000: //RootNode
+    400002: Books
+    400004: EntranceDoor
+    400006: MainMenu
+    400008: OutsideBiblio
+    400010: OutsideProps
+    400012: Prestages
+    400014: Reception
+    400016: Structure
+    400018: TablesChairs
+    400020: Trees
+    400022: WallDoors
+    400024: WallTables
+    2300000: Books
+    2300002: EntranceDoor
+    2300004: MainMenu
+    2300006: OutsideBiblio
+    2300008: OutsideProps
+    2300010: Prestages
+    2300012: Reception
+    2300014: Structure
+    2300016: TablesChairs
+    2300018: Trees
+    2300020: WallDoors
+    2300022: WallTables
+    3300000: Books
+    3300002: EntranceDoor
+    3300004: MainMenu
+    3300006: OutsideBiblio
+    3300008: OutsideProps
+    3300010: Prestages
+    3300012: Reception
+    3300014: Structure
+    3300016: TablesChairs
+    3300018: Trees
+    3300020: WallDoors
+    3300022: WallTables
+    4300000: EntranceDoor
+    4300002: WallDoors
+    4300004: OutsideBiblio
+    4300006: Structure
+    4300008: Reception
+    4300010: Prestages
+    4300012: TablesChairs
+    4300014: WallTables
+    4300016: Books
+    4300018: OutsideProps
+    4300020: Trees
+    4300022: MainMenu
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

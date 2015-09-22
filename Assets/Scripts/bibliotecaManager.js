@@ -1,8 +1,10 @@
 ﻿#pragma strict
 
+private var shopping:boolean = false;
+private var endAnimIntro:boolean = false;
 private var endVideo:boolean = false;
 private var alpha:float = 1.0f;
-static var restart:boolean = false;
+static var restart:boolean = false; //provisional, millor player prefs
 
 private var mainCameraScript:bibliotecaCameraBehaviour;
 //private var mainCameraMovie:MovieTexture;
@@ -12,22 +14,41 @@ var leftDoor:GameObject;
 var rightDoor:GameObject;
 
 var blackImage:Texture2D;
-var atrezzo:Transform;
-
-//------fade transition---------
-/*var fadeImage:Texture2D;
-private var xFrame:double = 0.8;
-private var yFrame:double = 0.0;
-private var timer:double = 0.0;
-private var frameWait:double = 0.02;
-private var curCol:int = 0;*/
+var atrezzoOutside:Transform;
 
 function OnGUI() {
 	GUI.color.a = alpha;
 	GUI.DrawTexture(new Rect(0,0,Screen.width, Screen.height), blackImage);
-	//GUI.DrawTextureWithTexCoords(new Rect(0,0,Screen.width, Screen.height), fadeImage, new Rect(xFrame,yFrame,0.2, 0.2), true);
+	GUI.color.a = 1.0f;
+	if(endAnimIntro){
+		if (!shopping) {
+			if (GUI.Button(Rect (Screen.width/2-((Screen.height/10)),Screen.height/2-(Screen.height/16),Screen.height/8,Screen.height/8), "PLAY")) {
+	    		Application.LoadLevel(1);
+	    	}
+	    	if (GUI.Button(Rect (Screen.width/2+((Screen.height/10)),Screen.height/2-(Screen.height/16),Screen.height/8,Screen.height/8), "TENDA")) {
+	    		shopping = true;
+	    		SwapInMenu();
+	    	}
+    	}
+    	else {
+    		if (GUI.Button(Rect (Screen.width/2,Screen.height/2,Screen.height/8,Screen.height/8), "MENU")) {
+	    		shopping = false;
+	    		SwapInMenu();
+	    	}
+    	}
+	}
 }
 
+function SwapInMenu() {
+	if (shopping) {
+		mainCamera.SendMessage("PlayChangeToShop");
+    	yield WaitForSeconds(mainCameraScript.GetAnimLength(1));
+	} else {
+		mainCamera.SendMessage("PlayChangeToMenu");
+    	yield WaitForSeconds(mainCameraScript.GetAnimLength(2));
+    }
+}
+	
 function Awake() {
 	if (!restart) PlayIntro("IntroPageFlip4.mp4");
 	else endVideo = true;
@@ -50,42 +71,27 @@ function PlayIntro(videoPath:String) {
 }
 
 function Update() {
-	
-	if (alpha <= 0.0f && endVideo)  {
-		endVideo = false;
-		PlayGame();
+	if (endVideo) {
+		if (alpha <= 0.0f)  {
+			endVideo = false;
+			EnterMainMenu();
+		}
+		else alpha -= Time.deltaTime*0.4f;
 	}
-	else if (endVideo) alpha -= Time.deltaTime*0.4f;
-	
-	//if (Input.touchCount > 0 || Input.GetMouseButtonDown(0)){}
 }
 
-function PlayGame() {
-	yield WaitForSeconds(0.5);
+function EnterMainMenu() {
+	yield WaitForSeconds(0.1);
 	
 	leftDoor.GetComponent(Animation).enabled = true;
 	leftDoor.GetComponent(Animation).Play("OpenLeftDoor");
 	rightDoor.GetComponent(Animation).enabled = true;
 	rightDoor.GetComponent(Animation).Play("OpenRightDoor");
-	mainCamera.SendMessage("PlayAnimation");
-	yield WaitForSeconds(mainCameraScript.GetAnimLength());
+	mainCamera.SendMessage("PlayEnterBiblioteca");
+	yield WaitForSeconds(mainCameraScript.GetAnimLength(0));
 	
-	for (var child:Transform in atrezzo) Destroy(child.gameObject);
-	Destroy(leftDoor);
-	Destroy(rightDoor);
-	Application.LoadLevel (1);
+	for (var child:Transform in atrezzoOutside) (child.gameObject).SetActive(false);
+	leftDoor.SetActive(false);
+	rightDoor.SetActive(false);
+	endAnimIntro = true;
 }
-
-/*function FadeOut() {
-	GUI.DrawTextureWithTexCoords(new Rect(0,0,Screen.width, Screen.height), fadeImage, new Rect(xFrame,yFrame,0.2, 0.2), true);
-	if(Time.time - timer >= frameWait) {
-        if (xFrame <= 0.0) {
-       		xFrame = 0.8;
-       		if (curCol > 3) fadingIn = false;
-       		else curCol++;
-			yFrame = 0.2*curCol;
-        }
-		else xFrame -= 0.2;
-		timer = Time.time;
-    }
-}*/
