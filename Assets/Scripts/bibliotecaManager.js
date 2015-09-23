@@ -144,9 +144,9 @@ function EnterMainMenu() {
 	yield WaitForSeconds(0.1);
 	
 	leftDoor.GetComponent(Animation).enabled = true;
-	leftDoor.GetComponent(Animation).Play("OpenLeftDoor");
+	leftDoor.GetComponent(Animation).Play("OpenDoorLeft");
 	rightDoor.GetComponent(Animation).enabled = true;
-	rightDoor.GetComponent(Animation).Play("OpenRightDoor");
+	rightDoor.GetComponent(Animation).Play("OpenDoorRight");
 	mainCamera.SendMessage("PlayEnterBiblioteca");
 	yield WaitForSeconds(mainCameraScript.GetAnimLength(0));
 	
