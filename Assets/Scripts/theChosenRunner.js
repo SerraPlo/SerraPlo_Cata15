@@ -95,7 +95,7 @@ function OnGUI (){
     }else GUI.Label (new Rect (Screen.height/20,(Screen.height/20)*18, 1, 1), "Rècord: "+hScore, hScoreGuiStyle);
       
     for(var s = 1; s<=stamina;s++){
-    	GUI.Box(Rect (Screen.width/20*(15+s)+(Screen.width/80*s)-Screen.height/20,Screen.height/20,Screen.height/10,Screen.height/10), "", staminaGuiStyle);
+    	GUI.Box(Rect (Screen.width/20*(20-s)-(Screen.width/60*(s-1))-Screen.height/20,Screen.height/20,Screen.height/10,Screen.height/10), "", staminaGuiStyle);
     }
     //stamina = GUI.HorizontalSlider (Rect (Screen.width/20, (Screen.height/20)*19, Screen.width/5, Screen.height/20), stamina, 0.0, 3.0);
 

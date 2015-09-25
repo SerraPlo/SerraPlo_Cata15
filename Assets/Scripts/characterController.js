@@ -75,58 +75,69 @@ function GetCharging(){
 }
 
 function Start () {
-	Character = PlayerPrefs.GetInt("Character");
-	if (Character == 0){//bou
+	if(PlayerPrefs.HasKey("Character"))Character = PlayerPrefs.GetInt("Character");
+	else Character = 0;
+	
+	if (Character == 0){//
 		constSpeedX = 4.0f;
 		impulseX    = 15.0f;
 		impulseY    = 7.0f;
+		Debug.Log("bou");
 	}
 	else if (Character == 1){//cavall
 		constSpeedX = 6.0f;
 		impulseX    = 10.0f;
 		impulseY    = 7.0f;
+		Debug.Log("cavall");
 	}
 	else if (Character == 2){//senglar
 		constSpeedX = 6.0f;
 		impulseX    = 15.0f;
 		impulseY    = 7.0f;
+		Debug.Log("senglar");
 	}
 	else if (Character == 3){//serp
 		constSpeedX = 4.0f;
 		impulseX    = 0.0f; // disparar
 		impulseY    = 7.0f;
+		Debug.Log("serp");
 	}
 	else if (Character == 4){//linx
 		constSpeedX = 6.0f;
 		impulseX    = 10.0f;
 		impulseY    = 8.0f;
+		Debug.Log("linx");
 	}
 	else if (Character == 5){//lleopard
 		constSpeedX = 8.0f;
 		impulseX    = 15.0f;
 		impulseY    = 8.0f;
+		Debug.Log("lleopard");
 	}
 	else if (Character == 6){//os
 		constSpeedX = 6.0f;
 		impulseX    = 20.0f;
 		impulseY    = 5.0f;
+		Debug.Log("os");
 	}
 	else if (Character == 7){//gall
 		constSpeedX = 4.0f;
 		impulseX    = 10.0f;
 		impulseY    = 7.0f; //x2
+		Debug.Log("gall");
 	}
 	else if (Character == 8){//llop
 		constSpeedX = 8.0f;
 		impulseX    = 10.0f; //kill = reload 
 		impulseY    = 8.0f;
+		Debug.Log("llop");	
 	}
 	else if (Character == 9){//elefant
 		constSpeedX = 4.0f;
 		impulseX    = 20.0f;
 		impulseY    = 0.0f;
+		Debug.Log("elefant");
 	}
-	
 	
 	dead = false;
 	playerTransform = transform;
