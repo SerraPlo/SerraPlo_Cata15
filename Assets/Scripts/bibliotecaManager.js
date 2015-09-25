@@ -7,6 +7,8 @@ private var alpha:float = 1.0f;
 static var restart:boolean = false; //provisional, millor player prefs
 var posCamMain:GameObject;
 
+private var preus:int[];
+
 private var mainCameraScript:bibliotecaCameraBehaviour;
 //private var mainCameraMovie:MovieTexture;
 var mainCamera:GameObject;
@@ -18,6 +20,7 @@ var blackImage:Texture2D;
 var atrezzoOutside:Transform;
 
 var GS_Shop1:GUIStyle;
+var GS_Shop2:GUIStyle;
 var GS_Money:GUIStyle;
 var GS_Back:GUIStyle;
 var shop1:Texture;
@@ -64,18 +67,69 @@ function OnGUI() {
 		    		if (GUI.Button(Rect (Screen.width - Screen.height/20*3,Screen.height/20,Screen.height/10,Screen.height/10), "", GS_Back)) shopLvl = 0;
 					GUI.Label (new Rect (Screen.width - Screen.height/20, Screen.height/6, 1, 1), ""+PlayerPrefs.GetInt("money"), GS_Money);
 
-			    	/*if (GUI.Button(Rect((2.26*Screen.width)/67.73,(12.6*Screen.height)/38.1,(11.99*Screen.width)/67.73,(16.36*Screen.height)/38.1),"",GS_Shop1)) {
-			    		Debug.Log("LLibreB");
-			    	}if (GUI.Button(Rect((15*Screen.width)/67.73,(12.6*Screen.height)/38.1,(11.99*Screen.width)/67.73,(16.36*Screen.height)/38.1),"",GS_Shop1)) {
-			    		Debug.Log("2");
-			    	}if (GUI.Button(Rect((27.77*Screen.width)/67.73,(12.6*Screen.height)/38.1,(11.99*Screen.width)/67.73,(16.36*Screen.height)/38.1),"",GS_Shop1)) {
-			    		Debug.Log("3");
-			    	}if (GUI.Button(Rect((40.46*Screen.width)/67.73,(12.6*Screen.height)/38.1,(11.99*Screen.width)/67.73,(16.36*Screen.height)/38.1),"",GS_Shop1)) {
+			    	if (GUI.Button(Rect((23.3*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"Bou",GS_Shop2)) {
+			    		Debug.Log("Bou");
+			    		if(PlayerPrefs.GetInt("money")>=preus[0]){
+			    			PlayerPrefs.SetInt("Character", 0);
+			    			PlayerPrefs.SetInt("money", (PlayerPrefs.GetInt("money")-preus[0]));
+			    		}
+			    	}if (GUI.Button(Rect((147.8*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"Cavall",GS_Shop2)) {
+			    		Debug.Log("Cavall");
+			    		if(PlayerPrefs.GetInt("money")>=preus[1]){
+			    			PlayerPrefs.SetInt("Character", 1);
+			    			PlayerPrefs.SetInt("money", (PlayerPrefs.GetInt("money")-preus[1]));
+			    		}
+			    	}if (GUI.Button(Rect((271.7*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"Senglar",GS_Shop2)) {
+			    		Debug.Log("Senglar");
+			    		if(PlayerPrefs.GetInt("money")>=preus[2]){
+			    			PlayerPrefs.SetInt("Character", 2);
+			    			PlayerPrefs.SetInt("money", (PlayerPrefs.GetInt("money")-preus[2]));
+			    		}
+			    	}if (GUI.Button(Rect((396.2*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"Serp",GS_Shop2)) {
+			    		Debug.Log("Serp");
+			    		if(PlayerPrefs.GetInt("money")>=preus[3]){
+			    			PlayerPrefs.SetInt("Character", 3);
+			    			PlayerPrefs.SetInt("money", (PlayerPrefs.GetInt("money")-preus[3]));
+			    		}
+			    	}if (GUI.Button(Rect((521.4*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"4",GS_Shop2)) {
 			    		Debug.Log("4");
-			    	}if (GUI.Button(Rect((53.24*Screen.width)/67.73,(12.6*Screen.height)/38.1,(11.99*Screen.width)/67.73,(16.36*Screen.height)/38.1),"",GS_Shop1)) {
+			    		if(PlayerPrefs.GetInt("money")>=preus[4]){
+			    			PlayerPrefs.SetInt("Character", 4);
+			    			PlayerPrefs.SetInt("money", (PlayerPrefs.GetInt("money")-preus[4]));
+			    		}
+			    	}
+			    	//---
+			    	if (GUI.Button(Rect((23.3*Screen.width)/677.3,(245.6*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"5",GS_Shop2)) {
 			    		Debug.Log("5");
-			    	}*/
-			    	
+			    		if(PlayerPrefs.GetInt("money")>=preus[5]){
+			    			PlayerPrefs.SetInt("Character", 5);
+			    			PlayerPrefs.SetInt("money", (PlayerPrefs.GetInt("money")-preus[5]));
+			    		}
+			    	}if (GUI.Button(Rect((147.8*Screen.width)/677.3,(245.6*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"6",GS_Shop2)) {
+			    		Debug.Log("6");
+			    		if(PlayerPrefs.GetInt("money")>=preus[6]){
+			    			PlayerPrefs.SetInt("Character", 6);
+			    			PlayerPrefs.SetInt("money", (PlayerPrefs.GetInt("money")-preus[6]));
+			    		}
+			    	}if (GUI.Button(Rect((271.7*Screen.width)/677.3,(245.6*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"7",GS_Shop2)) {
+			    		Debug.Log("7");
+			    		if(PlayerPrefs.GetInt("money")>=preus[7]){
+			    			PlayerPrefs.SetInt("Character", 7);
+			    			PlayerPrefs.SetInt("money", (PlayerPrefs.GetInt("money")-preus[7]));
+			    		}
+			    	}if (GUI.Button(Rect((396.2*Screen.width)/677.3,(245.6*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"8",GS_Shop2)) {
+			    		Debug.Log("8");
+			    		if(PlayerPrefs.GetInt("money")>=preus[8]){
+			    			PlayerPrefs.SetInt("Character", 8);
+			    			PlayerPrefs.SetInt("money", (PlayerPrefs.GetInt("money")-preus[8]));
+			    		}
+			    	}if (GUI.Button(Rect((521.4*Screen.width)/677.3,(245.6*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"9",GS_Shop2)) {
+			    		Debug.Log("9");
+			    		if(PlayerPrefs.GetInt("money")>=preus[9]){
+			    			PlayerPrefs.SetInt("Character", 9);
+			    			PlayerPrefs.SetInt("money", (PlayerPrefs.GetInt("money")-preus[9]));
+			    		}
+			    	}		    	
 		    	}
 	    	}
 			else{
@@ -116,6 +170,17 @@ function Awake() {
 }
 
 function Start() {
+	preus = new int [10];
+	preus[0]=1;
+	preus[1]=2;
+	preus[2]=3;
+	preus[3]=4;
+	preus[4]=5;
+	preus[5]=6;
+	preus[6]=7;
+	preus[7]=8;
+	preus[8]=9;
+	preus[9]=10;	
 	mainCameraScript = mainCamera.GetComponent("bibliotecaCameraBehaviour") as bibliotecaCameraBehaviour;
 	//mainCameraMovie = mainCamera.GetComponent(Renderer).material.mainTexture as MovieTexture;
 	leftDoor.GetComponent(Animation).enabled = false;
