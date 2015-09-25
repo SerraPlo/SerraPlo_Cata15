@@ -19,6 +19,7 @@ var atrezzoOutside:Transform;
 
 var GS_Shop1:GUIStyle;
 var GS_Money:GUIStyle;
+var GS_Back:GUIStyle;
 var shop1:Texture;
 var shop2:Texture;
 var shopLvl:int;
@@ -31,8 +32,7 @@ function OnGUI() {
 		if (!shopping) {
 			if (GUI.Button(Rect (Screen.width/2-((Screen.height/10)),Screen.height/2-(Screen.height/16),Screen.height/8,Screen.height/8), "PLAY")) {
 	    		Application.LoadLevel(1);
-	    	}
-	    	if (GUI.Button(Rect (Screen.width/2+((Screen.height/10)),Screen.height/2-(Screen.height/16),Screen.height/8,Screen.height/8), "TENDA")) {
+	    	}if (GUI.Button(Rect (Screen.width/2+((Screen.height/10)),Screen.height/2-(Screen.height/16),Screen.height/8,Screen.height/8), "TENDA")) {
 	    		shopping = true;
 	    		SwapInMenu();
 	    	}
@@ -42,7 +42,8 @@ function OnGUI() {
 				alpha = 0.0f;
 	    		if(shopLvl == 0){
 		    		GUI.DrawTexture(Rect (0,0,Screen.width,Screen.height),shop1);
-		    		if (GUI.Button(Rect (Screen.width/2,Screen.height/2,Screen.height/8,Screen.height/8),"menu",GS_Shop1)) {
+    				GUI.Label (new Rect (Screen.width - Screen.height/20, Screen.height/6, 1, 1), ""+PlayerPrefs.GetInt("money"), GS_Money);
+		    		if (GUI.Button(Rect (Screen.width - Screen.height/20*3,Screen.height/20,Screen.height/10,Screen.height/10), "", GS_Back)){
 			    		shopping = false;
 			    		SwapInMenu();
 			    	}else if (GUI.Button(Rect((2.26*Screen.width)/67.73,(12.6*Screen.height)/38.1,(11.99*Screen.width)/67.73,(16.36*Screen.height)/38.1),"",GS_Shop1)) {
@@ -58,11 +59,11 @@ function OnGUI() {
 			    		Debug.Log("5");
 			    	}
 			    	GS_Money.fontSize = Screen.height/15;
-    				GUI.Label (new Rect (Screen.width/2, Screen.height/15, 1, 1), ""+PlayerPrefs.GetInt("money"), GS_Money);
 		    	}else if(shopLvl == 1){
 		    		GUI.DrawTexture(Rect (0,0,Screen.width,Screen.height),shop2);
-		    		if (GUI.Button(Rect (Screen.width/2,Screen.height/2,Screen.height/8,Screen.height/8),"menu",GS_Shop1)) shopLvl = 0;
-			    	
+		    		if (GUI.Button(Rect (Screen.width - Screen.height/20*3,Screen.height/20,Screen.height/10,Screen.height/10), "", GS_Back)) shopLvl = 0;
+					GUI.Label (new Rect (Screen.width - Screen.height/20, Screen.height/6, 1, 1), ""+PlayerPrefs.GetInt("money"), GS_Money);
+
 			    	/*if (GUI.Button(Rect((2.26*Screen.width)/67.73,(12.6*Screen.height)/38.1,(11.99*Screen.width)/67.73,(16.36*Screen.height)/38.1),"",GS_Shop1)) {
 			    		Debug.Log("LLibreB");
 			    	}if (GUI.Button(Rect((15*Screen.width)/67.73,(12.6*Screen.height)/38.1,(11.99*Screen.width)/67.73,(16.36*Screen.height)/38.1),"",GS_Shop1)) {
@@ -74,6 +75,7 @@ function OnGUI() {
 			    	}if (GUI.Button(Rect((53.24*Screen.width)/67.73,(12.6*Screen.height)/38.1,(11.99*Screen.width)/67.73,(16.36*Screen.height)/38.1),"",GS_Shop1)) {
 			    		Debug.Log("5");
 			    	}*/
+			    	
 		    	}
 	    	}
 			else{

@@ -138,9 +138,17 @@ function Start () {
 		impulseY    = 0.0f;
 		Debug.Log("elefant");
 	}
-	
 	dead = false;
 	playerTransform = transform;
+	var sprite:GameObject;
+	for (var lop=0;lop<3;lop++){
+		if(lop != Character){
+			sprite = playerTransform.FindChild("PlayerSprite/PlaneFront"+lop).gameObject;
+			sprite.SetActive(false);
+			sprite = playerTransform.FindChild("PlayerSprite/PlaneBack"+lop).gameObject;
+			sprite.SetActive(false);
+		}
+	}
 	ManagerScript = Manager.GetComponent("theChosenRunner") as theChosenRunner;
 	TerrainGeneratorScript = Manager.GetComponent("terrainGenerator") as terrainGenerator;
 	playerSprite = playerTransform.FindChild("PlayerSprite");
