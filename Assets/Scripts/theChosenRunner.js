@@ -14,6 +14,11 @@ private var showRate = 0.4;
 private var lastShow = 0.0;
 private var show:boolean = false;
 
+var tuto1:Texture;
+var tuto2:Texture;
+private var tutoLvl:int;
+
+
 //---------GUIstyles---------
 var pauseGuiStyle:GUIStyle;
 var scoreGuiStyle:GUIStyle;
@@ -22,12 +27,35 @@ var staminaGuiStyle:GUIStyle;
 var pauseBGGuiStyle:GUIStyle;
 var pauseBoxGuiStyle:GUIStyle;
 var continueGuiStyle:GUIStyle;
+var backGuiStyle:GUIStyle;
 var restartGuiStyle:GUIStyle;
 var menuGuiStyle:GUIStyle;
 var pHStyle:GUIStyle;
 
 //---------GUI---------
 function OnGUI (){
+// tuto
+	if (tutoLvl==1){
+		Time.timeScale = 0.0;
+		GUI.DrawTexture(Rect (0,0,Screen.width,Screen.height),tuto1);
+		if (GUI.Button(Rect (Screen.width/20*(19)-(Screen.height/20)*2,Screen.height-(Screen.height/6),Screen.height/8,Screen.height/8), "", continueGuiStyle)) {
+    		tutoLvl++;
+    	}
+    	
+	}
+	else if (tutoLvl == 2){
+		Time.timeScale = 0.0;
+		GUI.DrawTexture(Rect (0,0,Screen.width,Screen.height),tuto2);
+		if (GUI.Button(Rect (Screen.width/20*(18)-(Screen.height/20)*3,Screen.height-(Screen.height/6),Screen.height/8,Screen.height/8), "", backGuiStyle)) {
+    		tutoLvl--;
+    	}
+		if (GUI.Button(Rect (Screen.width/20*(19)-(Screen.height/20)*2,Screen.height-(Screen.height/6),Screen.height/8,Screen.height/8), "", continueGuiStyle)) {
+    		tutoLvl++;
+    		Time.timeScale = 1.0;
+    	}
+	}
+// /tuto	
+
 	if(pause){
 		GUI.Box(Rect(0,0,Screen.width,Screen.height), "", pauseBGGuiStyle);
 		GUI.Box(Rect(Screen.width/2-Screen.width/6,Screen.height/2-Screen.height/8,Screen.width/3,Screen.height/4), "", pauseBoxGuiStyle);
@@ -100,7 +128,7 @@ function OnGUI (){
     //stamina = GUI.HorizontalSlider (Rect (Screen.width/20, (Screen.height/20)*19, Screen.width/5, Screen.height/20), stamina, 0.0, 3.0);
 
 	//pause
-    if (GUI.Button(Rect (Screen.height/20,Screen.height/20,Screen.height/10,Screen.height/10), "", pauseGuiStyle) && !dead ) {
+    if (GUI.Button(Rect (Screen.height/20,Screen.height/20,Screen.height/10,Screen.height/10), "", pauseGuiStyle) && !dead && tutoLvl!=1 &&  tutoLvl!=2) {
     	if(!pause){
     		Time.timeScale = 0.0;
     		pause = true;
@@ -109,8 +137,6 @@ function OnGUI (){
     		pause = false;
     	}
     }
-    
-    
 }
 
 function GetStamina(){
@@ -119,6 +145,13 @@ function GetStamina(){
 
 function GetPause(){
 	return pause;
+}
+
+function GetTuto(){
+	var tuto:boolean;
+	if (tutoLvl>0&& tutoLvl<3) tuto = true;
+	else tuto = false;
+	return tuto;
 }
 
 function GetDead(){
@@ -141,6 +174,8 @@ function Start () {
 	improving = false;
 	added = false;
 	hScore= PlayerPrefs.GetInt("hS_1");
+	if(hScore==0) tutoLvl=1;
+	else tutoLvl=0;
 	//Debug.Log("High score = " + PlayerPrefs.GetInt("hS_1"));
 }
 

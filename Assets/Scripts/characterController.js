@@ -20,6 +20,7 @@ private var speedReversing:float = 900.0f;	//velocitat de rotacio negativa (reve
 
 private var pause:boolean;
 private var dead:boolean;
+private var tuto:boolean;
 
 private var canJump:boolean = false;		//condicio de si el player pot saltar
 private var charging:boolean = false;		//condicio de si el player esta fent charge
@@ -157,7 +158,7 @@ function Start () {
 }
 
 function Update () {
-	if(!pause && !dead){
+	if(!pause && !dead && !tuto){
 		if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Began) {
 			// Get movement of the finger since last frame
 			var touchPosition: Vector2 = Input.GetTouch(0).position;
@@ -199,7 +200,7 @@ function Update () {
 	stamina = ManagerScript.GetStamina();
 	pause = ManagerScript.GetPause();
 	dead = ManagerScript.GetDead();
-
+	tuto = ManagerScript.GetTuto();
 	//resetButton
 	if (Input.GetKeyDown('r')){
 		Time.timeScale = 1.0;
@@ -229,7 +230,7 @@ function Update () {
 	}
 	
 	//jump
-	if (canJump && (Input.GetKeyDown('z')||bJump)&& !pause && !dead ){
+	if (canJump && (Input.GetKeyDown('z')||bJump)&& !pause && !dead && !tuto ){
 		bJump=false;
 		playerTransform.position.y = floor;
 		speedY = impulseY;
@@ -241,7 +242,7 @@ function Update () {
 		else  rendJump.material.color = Color.red;
 	
 	//charge
-	if (!charging && !rotating && !reversing && stamina > 0 && !pause && !dead && (Input.GetKeyDown('x')||bCharge)){
+	if (!charging && !rotating && !reversing && !tuto && stamina > 0 && !pause && !dead && (Input.GetKeyDown('x')||bCharge)){
 		bCharge=false;
 		charging = true;
 		rotating = true;
