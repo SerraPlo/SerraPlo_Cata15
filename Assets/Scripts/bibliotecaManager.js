@@ -13,16 +13,20 @@ private var mainCameraScript:bibliotecaCameraBehaviour;
 //private var mainCameraMovie:MovieTexture;
 var mainCamera:GameObject;
 
+var book:GameObject;
+private var bookMat:Material;
+
 var leftDoor:GameObject;
 var rightDoor:GameObject;
 
 var blackImage:Texture2D;
-var atrezzoOutside:Transform;
+var atrezzoIntro:Transform;
 
 var GS_Shop1:GUIStyle;
 var GS_Shop2:GUIStyle;
 var GS_Money:GUIStyle;
 var GS_Back:GUIStyle;
+var GS_Buy:GUIStyle;
 var shop1:Texture;
 var shop2:Texture;
 var shopLvl:int;
@@ -33,9 +37,15 @@ function OnGUI() {
 	GUI.color.a = 1.0f;
 	if(endAnimIntro){
 		if (!shopping) {
-			if (GUI.Button(Rect (Screen.width/2-((Screen.height/10)),Screen.height/2-(Screen.height/16),Screen.height/8,Screen.height/8), "PLAY")) {
+			if ((Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Began)) {
+				var touchPosition: Vector2 = Input.GetTouch(0).position;
+				if (touchPosition.x>Screen.width*0.5-Screen.height*0.5 && touchPosition.y>Screen.height*0.5+Screen.height*0.02 && touchPosition.x<Screen.width*0.5-Screen.height*0.16 && touchPosition.y<Screen.height*0.5+Screen.height*0.26){	
+					Application.LoadLevel(1);
+				}
+			}
+			/*if (GUI.Button(Rect (Screen.width*0.5-Screen.height*0.16,Screen.height*0.5+Screen.height*0.26,Screen.width*0.2,Screen.height*0.25), "")) {
 	    		Application.LoadLevel(1);
-	    	}if (GUI.Button(Rect (Screen.width/2+((Screen.height/10)),Screen.height/2-(Screen.height/16),Screen.height/8,Screen.height/8), "TENDA")) {
+	    	}*/if (GUI.Button(Rect (Screen.width*0.5+Screen.height*0.65,Screen.height*0.5-Screen.height*0.45,Screen.height*0.15,Screen.height*0.15), "", GS_Buy)) {
 	    		shopping = true;
 	    		SwapInMenu();
 	    	}
@@ -45,8 +55,8 @@ function OnGUI() {
 				alpha = 0.0f;
 	    		if(shopLvl == 0){
 		    		GUI.DrawTexture(Rect (0,0,Screen.width,Screen.height),shop1);
-    				GUI.Label (new Rect (Screen.width - Screen.height/20, Screen.height/6, 1, 1), ""+PlayerPrefs.GetInt("money"), GS_Money);
-		    		if (GUI.Button(Rect (Screen.width - Screen.height/20*3,Screen.height/20,Screen.height/10,Screen.height/10), "", GS_Back)){
+    				GUI.Label (new Rect (Screen.width - Screen.height/20, Screen.height/6+Screen.height/14, 1, 1), ""+PlayerPrefs.GetInt("money"), GS_Money);
+		    		if (GUI.Button(Rect (Screen.width - Screen.height/20*3,Screen.height/20+Screen.height/14,Screen.height/10,Screen.height/10), "", GS_Back)){
 			    		shopping = false;
 			    		SwapInMenu();
 			    	}else if (GUI.Button(Rect((2.26*Screen.width)/67.73,(12.6*Screen.height)/38.1,(11.99*Screen.width)/67.73,(16.36*Screen.height)/38.1),"",GS_Shop1)) {
@@ -64,8 +74,8 @@ function OnGUI() {
 			    	GS_Money.fontSize = Screen.height/15;
 		    	}else if(shopLvl == 1){
 		    		GUI.DrawTexture(Rect (0,0,Screen.width,Screen.height),shop2);
-		    		if (GUI.Button(Rect (Screen.width - Screen.height/20*3,Screen.height/20,Screen.height/10,Screen.height/10), "", GS_Back)) shopLvl = 0;
-					GUI.Label (new Rect (Screen.width - Screen.height/20, Screen.height/6, 1, 1), ""+PlayerPrefs.GetInt("money"), GS_Money);
+		    		if (GUI.Button(Rect (Screen.width - Screen.height/20*3,Screen.height/20+Screen.height/14,Screen.height/10,Screen.height/10), "", GS_Back)) shopLvl = 0;
+					GUI.Label (new Rect (Screen.width - Screen.height/20, Screen.height/6+Screen.height/14, 1, 1), ""+PlayerPrefs.GetInt("money"), GS_Money);
 
 			    	if (GUI.Button(Rect((23.3*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"Bou",GS_Shop2)) {
 			    		Debug.Log("Bou");
@@ -160,13 +170,12 @@ function Awake() {
 	shopLvl = 0;
 	if (!restart) PlayIntro("IntroPageFlip4.mp4");
 	else{
-		for (var child:Transform in atrezzoOutside) (child.gameObject).SetActive(false);
+		for (var child:Transform in atrezzoIntro) (child.gameObject).SetActive(false);
 		mainCamera.transform.position = posCamMain.transform.position;
 		mainCamera.transform.rotation = posCamMain.transform.rotation;
 		endVideo = true;
 		endAnimIntro = true;
 	}
-	
 }
 
 function Start() {
@@ -185,8 +194,8 @@ function Start() {
 	//mainCameraMovie = mainCamera.GetComponent(Renderer).material.mainTexture as MovieTexture;
 	leftDoor.GetComponent(Animation).enabled = false;
 	rightDoor.GetComponent(Animation).enabled = false;
-	
-	
+	bookMat = book.GetComponent(Renderer).material as Material;
+	bookMat.shader = Shader.Find ("Specular");
 }
 
 function PlayIntro(videoPath:String) {
@@ -205,6 +214,11 @@ function Update() {
 		}
 		else alpha -= Time.deltaTime*0.4f;
 	}
+	else if (!shopping) {
+		var shine : float = Mathf.PingPong(Time.time*0.5f, 0.5f);
+		bookMat.SetFloat("_Shininess", shine);
+		if (Input.GetKeyDown('p')) Application.LoadLevel(1);
+	}
 }
 
 function EnterMainMenu() {
@@ -217,7 +231,7 @@ function EnterMainMenu() {
 	mainCamera.SendMessage("PlayEnterBiblioteca");
 	yield WaitForSeconds(mainCameraScript.GetAnimLength(0));
 	
-	for (var child:Transform in atrezzoOutside) (child.gameObject).SetActive(false);
+	for (var child:Transform in atrezzoIntro) (child.gameObject).SetActive(false);
 	leftDoor.SetActive(false);
 	rightDoor.SetActive(false);
 	endAnimIntro = true;

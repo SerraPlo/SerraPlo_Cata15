@@ -28,6 +28,7 @@ function GetAnimLength (i:int) {
 	if (i == 0) return anim0Length;
 	else if (i == 1)return anim1Length;
 	else if (i == 2)return anim2Length;
+	return 0;
 }
 
 function PlayEnterBiblioteca () {
