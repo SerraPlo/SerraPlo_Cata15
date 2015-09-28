@@ -142,7 +142,7 @@ function Start () {
 	dead = false;
 	playerTransform = transform;
 	var sprite:GameObject;
-	for (var lop=0;lop<4;lop++){
+	for (var lop=0;lop<6;lop++){
 		if(lop != Character){
 			sprite = playerTransform.FindChild("PlayerSprite/PlaneFront"+lop).gameObject;
 			sprite.SetActive(false);

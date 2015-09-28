@@ -13,6 +13,10 @@ private var mainCameraScript:bibliotecaCameraBehaviour;
 //private var mainCameraMovie:MovieTexture;
 var mainCamera:GameObject;
 
+//CREATE SHADER; BY ALEIX - ASCCIO
+
+var specShader:Shader;
+
 var book:GameObject;
 private var bookMat:Material;
 
@@ -37,12 +41,6 @@ function OnGUI() {
 	GUI.color.a = 1.0f;
 	if(endAnimIntro){
 		if (!shopping) {
-			if ((Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Began)) {
-				var touchPosition: Vector2 = Input.GetTouch(0).position;
-				if (touchPosition.x>Screen.width*0.5-Screen.height*0.5 && touchPosition.y>Screen.height*0.5+Screen.height*0.02 && touchPosition.x<Screen.width*0.5-Screen.height*0.16 && touchPosition.y<Screen.height*0.5+Screen.height*0.26){	
-					Application.LoadLevel(1);
-				}
-			}
 			/*if (GUI.Button(Rect (Screen.width*0.5-Screen.height*0.16,Screen.height*0.5+Screen.height*0.26,Screen.width*0.2,Screen.height*0.25), "")) {
 	    		Application.LoadLevel(1);
 	    	}*/if (GUI.Button(Rect (Screen.width*0.5+Screen.height*0.65,Screen.height*0.5-Screen.height*0.45,Screen.height*0.15,Screen.height*0.15), "", GS_Buy)) {
@@ -195,7 +193,7 @@ function Start() {
 	leftDoor.GetComponent(Animation).enabled = false;
 	rightDoor.GetComponent(Animation).enabled = false;
 	bookMat = book.GetComponent(Renderer).material as Material;
-	bookMat.shader = Shader.Find ("Specular");
+	//bookMat.shader = Shader.Find ("Specular");
 }
 
 function PlayIntro(videoPath:String) {
@@ -215,8 +213,15 @@ function Update() {
 		else alpha -= Time.deltaTime*0.4f;
 	}
 	else if (!shopping) {
-		var shine : float = Mathf.PingPong(Time.time*0.5f, 0.5f);
-		bookMat.SetFloat("_Shininess", shine);
+		if ((Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Began)) {
+				var touchPosition: Vector2 = Input.GetTouch(0).position;
+				if (touchPosition.x>Screen.width*0.5-Screen.height*0.5 && touchPosition.y>Screen.height*0.5+Screen.height*0.02 && touchPosition.x<Screen.width*0.5-Screen.height*0.16 && touchPosition.y<Screen.height*0.5+Screen.height*0.26){	
+					Application.LoadLevel(1);
+				}
+			}
+		var shine : double = Mathf.PingPong(Time.time*1.5f, 1.0);
+		bookMat.SetColor("_Color",  Color(0.6+shine*0.125,0.6+shine*0.125,0.6+shine*0.125,0.6+shine*0.125));
+		
 		if (Input.GetKeyDown('p')) Application.LoadLevel(1);
 	}
 }
