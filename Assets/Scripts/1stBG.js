@@ -33,7 +33,7 @@ function Start () {
 
 function Update () {
 	for (var i = 0; i<10;i++){
-		if (Player.transform.position.x - bg[i].position.x >= 7.5){
+		if (Player.transform.position.x - bg[i].position.x >= 10){
 			use[i] = false;
 		}
 	}

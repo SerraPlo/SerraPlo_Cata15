@@ -1,11 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\bibliotecaManager.js">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\1stBG.js">
     <Files>
-      <File FileName="Assets\Scripts\bibliotecaManager.js" Line="223" Column="100" />
-      <File FileName="Assets\Scripts\characterController.js" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\bibliotecaCameraBehaviour.js" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\theChosenRunner.js" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\1stBG.js" Line="53" Column="2" />
+      <File FileName="Assets\Scripts\bibliotecaManager.js" Line="246" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

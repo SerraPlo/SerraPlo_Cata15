@@ -215,8 +215,10 @@ function Update() {
 	else if (!shopping) {
 		if ((Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Began)) {
 				var touchPosition: Vector2 = Input.GetTouch(0).position;
-				if (touchPosition.x>Screen.width*0.5-Screen.height*0.5 && touchPosition.y>Screen.height*0.5+Screen.height*0.02 && touchPosition.x<Screen.width*0.5-Screen.height*0.16 && touchPosition.y<Screen.height*0.5+Screen.height*0.26){	
-					Application.LoadLevel(1);
+				if (touchPosition.y<(Screen.height/2)){
+					if (touchPosition.x>Screen.width/8 && touchPosition.x<(Screen.width/8)*3){	
+						Application.LoadLevel(1);
+					}
 				}
 			}
 		var shine : double = Mathf.PingPong(Time.time*1.5f, 1.0);
