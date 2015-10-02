@@ -1,6 +1,6 @@
  #pragma strict
 
-var Character:int=0;
+private var Character:int=0;
 
 private var speedX:float;					//velocitat del player en x
 private var constSpeedX:float = 3.0f;		//velocitat inicial constant del player en x
@@ -23,6 +23,7 @@ private var dead:boolean;
 private var tuto:boolean;
 
 private var canJump:boolean = false;		//condicio de si el player pot saltar
+private var can2Jump:boolean = false;       //jump gall
 private var charging:boolean = false;		//condicio de si el player esta fent charge
 private var rotating:boolean = false;		//condicio de si l'sprite esta rotant positivament
 private var reversing:boolean = false;		//condicio de si l'sprite esta rotant negativament
@@ -33,7 +34,7 @@ private var bCharge:boolean = false;		//condicio de clic en pantalla per fer cha
 private var floor:float;					//posicio del jugador respecte el terra
 private var stamina:int;					//quantitat de cargues a fer
 private var playerSprite:Transform;			//sprite del jugador
-private var playerTransform:Transform;			//sprite del jugador
+private var playerTransform:Transform;		//sprite del jugador
 
 private var ManagerScript:theChosenRunner;
 private var TerrainGeneratorScript:terrainGenerator;
@@ -87,7 +88,7 @@ function Start () {
 	}
 	else if (Character == 1){//cavall
 		constSpeedX = 6.0f;
-		impulseX    = 10.0f;
+		impulseX    = 13.0f;
 		impulseY    = 7.0f;
 		Debug.Log("cavall");
 	}
@@ -105,7 +106,7 @@ function Start () {
 	}
 	else if (Character == 4){//linx
 		constSpeedX = 6.0f;
-		impulseX    = 10.0f;
+		impulseX    = 13.0f;
 		impulseY    = 8.0f;
 		Debug.Log("linx");
 	}
@@ -123,13 +124,13 @@ function Start () {
 	}
 	else if (Character == 7){//gall
 		constSpeedX = 4.0f;
-		impulseX    = 10.0f;
+		impulseX    = 13.0f;
 		impulseY    = 7.0f; //x2
 		Debug.Log("gall");
 	}
 	else if (Character == 8){//llop
 		constSpeedX = 8.0f;
-		impulseX    = 10.0f; //kill = reload 
+		impulseX    = 13.0f; //kill = reload 
 		impulseY    = 8.0f;
 		Debug.Log("llop");	
 	}
@@ -142,7 +143,7 @@ function Start () {
 	dead = false;
 	playerTransform = transform;
 	var sprite:GameObject;
-	for (var lop=0;lop<6;lop++){
+	for (var lop=0;lop<10;lop++){
 		if(lop != Character){
 			sprite = playerTransform.FindChild("PlayerSprite/PlaneFront"+lop).gameObject;
 			sprite.SetActive(false);
@@ -179,7 +180,7 @@ function Update () {
 	if (Input.GetKeyDown('4'))	PlayerPrefs.SetInt("Character", 4);//linx     || 3 1 3
 	if (Input.GetKeyDown('5'))	PlayerPrefs.SetInt("Character", 5);//lleopard || 4 2 3
 	if (Input.GetKeyDown('6'))	PlayerPrefs.SetInt("Character", 6);//os       || 3 4 1 (2vides)
-	if (Input.GetKeyDown('7'))	PlayerPrefs.SetInt("Character", 7);//gall     || 2 1 2x2 
+	if (Input.GetKeyDown('7'))	PlayerPrefs.SetInt("Character", 7);//gall     || 2 1 2 x2 
 	if (Input.GetKeyDown('8'))	PlayerPrefs.SetInt("Character", 8);//llop     || 4 1 3 (recarrega xkill)
 	if (Input.GetKeyDown('9'))	PlayerPrefs.SetInt("Character", 9);//elefant  || 2 5 0
 			
@@ -221,6 +222,7 @@ function Update () {
 	if (playerTransform.position.y > floor) speedY -= gravity*Time.deltaTime;
 	else {
 		canJump = true;
+		can2Jump = true;
 		//impuls per pujar esglaons
 		if (Mathf.Abs(floor - playerTransform.position.y) > 0.08f) speedY = impulseY*Mathf.Abs(floor - playerTransform.position.y);
 		else {
@@ -235,11 +237,15 @@ function Update () {
 		playerTransform.position.y = floor;
 		speedY = impulseY;
 		canJump= false;
+	}else if (Character == 7 && !canJump && can2Jump && (Input.GetKeyDown('z')||bJump)&& !pause && !dead && !tuto ){
+		speedY = impulseY;
+		can2Jump= false;
 	}
+	
 		//marker canJump
-		var rendJump = markerJump.GetComponent.<Renderer>();
+		/*var rendJump = markerJump.GetComponent.<Renderer>();
 		if (canJump) rendJump.material.color = Color.green;
-		else  rendJump.material.color = Color.red;
+		else  rendJump.material.color = Color.red;*/
 	
 	//charge
 	if (!charging && !rotating && !reversing && !tuto && stamina > 0 && !pause && !dead && (Input.GetKeyDown('x')||bCharge)){
@@ -258,6 +264,13 @@ function Update () {
 	SwapSprite();
 			
 	
+}
+
+function GainStamina(){
+	if(stamina<3 && Character == 8){
+		stamina++;
+		Manager.SendMessage("SetStamina", 1);
+	}
 }
 
 function Charge(){

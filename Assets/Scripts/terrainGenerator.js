@@ -192,7 +192,10 @@ function randomGenerator(g:int) {
 		up = true;
 		food = false;
 		enemies = false;
-	}else {
+	}if (curPos<30) {
+		food = false;
+	}
+	else {
 		for (var tit:int = 1; tit < 4;tit++){
 			prevArray[tit-1] = g-tit;
 			if (prevArray[tit-1] < 0) prevArray[tit-1] =  stepsInScene+prevArray[tit-1];

@@ -44,8 +44,10 @@ function Update () {
 	//	rect1.y < rect2.y + rect2.height &&	rect1.height + rect1.y > rect2.y)
 	if((meTransform.position.x - 0.5f) < (pPosX-pWidth/2) + (pWidth) && (meTransform.position.x - 0.5f) + (1.0f) > (pPosX-pWidth/2) &&
 		 (meTransform.position.y - 2.0f) < (0.1f + pPosY) + (pHeight) && (0.8f) + (meTransform.position.y - 2.0f) > (0.1f + pPosY)) {
-			if(PlayerScript.GetCharging()) Destroy(gameObject);
-			else Manager.SendMessage("Die");
+			if(PlayerScript.GetCharging()){
+				Destroy(gameObject);
+				PlayerScript.GainStamina();
+			}else Manager.SendMessage("Die");
 			//Destroy(gameObject);
 	}
 }

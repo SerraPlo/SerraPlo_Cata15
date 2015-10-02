@@ -1,12 +1,15 @@
 ﻿#pragma strict
 
 //PlayerPrefs - Aqui es crea hS_1 que es el record del runner
+private var Character:int=0;
 
 private var stamina:int = 3;
 private var score:int = 0;
 private var hScore:int = 0;
 private var pause:boolean = false;
 private var dead:boolean = false;
+private var dead1:boolean = false;
+private var dead2:boolean = false;
 private var improving:boolean = false;
 private var added:boolean = false;
 
@@ -125,6 +128,13 @@ function OnGUI (){
     for(var s = 1; s<=stamina;s++){
     	GUI.Box(Rect (Screen.width/20*(20-s)-(Screen.width/60*(s-1))-Screen.height/20,Screen.height/20,Screen.height/10,Screen.height/10), "", staminaGuiStyle);
     }
+    if(!dead1 && !dead2 && Character == 6) GUI.Box(Rect(Screen.width/20*(20-5)-(Screen.width/60*(5-1))-Screen.height/20,Screen.height/20,Screen.height/10,Screen.height/10), "", pHStyle);
+    else if(dead1 && !dead2 && Character == 6){
+    	if (Time.time >= lastShow+0.1){
+    		show = !show;
+    		lastShow = Time.time;
+    	}if (show) GUI.Box(Rect(Screen.width/20*(20-5)-(Screen.width/60*(5-1))-Screen.height/20,Screen.height/20,Screen.height/10,Screen.height/10), "", pHStyle);
+    }
     //stamina = GUI.HorizontalSlider (Rect (Screen.width/20, (Screen.height/20)*19, Screen.width/5, Screen.height/20), stamina, 0.0, 3.0);
 
 	//pause
@@ -166,11 +176,19 @@ function SetStamina(ammount:int){
 	stamina+=ammount;
 }
 function Die(){
-	dead=true;
+	if(PlayerPrefs.GetInt("Character") == 6){  //2 vides de l'os
+		if(!dead2){
+			dead1 = true;
+			yield WaitForSeconds(1);
+			dead2 = true;
+		}else dead=true;
+	}
+	else dead=true;
 }
 
 function Start () {
-	
+	if(PlayerPrefs.HasKey("Character"))Character = PlayerPrefs.GetInt("Character");
+	else Character = 0;
 	improving = false;
 	added = false;
 	hScore= PlayerPrefs.GetInt("hS_1");
@@ -183,7 +201,7 @@ function Start () {
 
 function Update () {
 	if (Input.GetKeyDown('e')){
-		dead = true;
+		Die();
 		//Time.timeScale = 0.0;
 	}
 	if (Input.GetKeyDown('h')){
