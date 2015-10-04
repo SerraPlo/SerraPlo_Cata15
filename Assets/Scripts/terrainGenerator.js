@@ -5,6 +5,7 @@ var stepD:GameObject;				//prefab de l'esglao cap avall
 var stepG:GameObject;				//prefab de l'esglao pla
 var empty:GameObject;
 var foodSprite:GameObject;	
+var fragmentSprite:GameObject;	
 var enemy1:GameObject;
 var enemy2:GameObject;
 var cartell:GameObject;
@@ -29,16 +30,18 @@ private var iStepU:int;
 private var iStepD:int;
 private var iStepG:int;
 
-
 private var stepArray:GameObject[];
 private var stepArrayPos:Vector3[];
 
 private var foodArray:GameObject[];
+private var fragmentObj:GameObject;
 private var enemiesArray:GameObject[];
 private var playerStep:int;
 private var pPlayerStep:int;
 private var playerPos:float;
 private var stepsInScene:int = 50;
+
+private var fragment:boolean = false;
 
 var foodInArray:int = 0;
 var enemyInArray:int = 0;
@@ -93,6 +96,7 @@ function GetRealFloor() {
 }
 
 function Start(){
+	Random.seed = System.DateTime.Now.Ticks;
 	cartell = Instantiate(cartell,new Vector3(PlayerPrefs.GetInt("hS_1"), 1, 2), Quaternion.identity);
 }
 
@@ -179,6 +183,10 @@ function TakeF(type:int, pos:Vector3){
 	}
 }
 
+function SetFragment(val:boolean){
+	fragment = val;
+}
+
 function randomGenerator(g:int) {
 	var rand:int = Random.Range(0, 100);
 	var rand2:int = Random.Range(0, 1000);
@@ -237,17 +245,19 @@ function randomGenerator(g:int) {
 	
 	if (food){
 		Destroy(foodArray[foodInArray]);
-		var alturaF:int;
-		if (rand%2==0) alturaF = 0;
-		else alturaF = 2; 
+		var alturaF:int = (rand%2==0) ? 0:2;
 		foodArray[foodInArray] = Instantiate(foodSprite,new Vector3(curPos* dist, height*lvl + alturaF, 0.1), Quaternion.identity);
 		foodInArray = (foodInArray < 9)? foodInArray+1 : 0; //uoooooooooo has posat un operador ternari :)
 	}
+	if (fragment){
+		fragment = false;
+		Destroy(fragmentObj);
+		var alturaR:int = (rand%2==0) ? 0:2;
+		fragmentObj = Instantiate(fragmentSprite,new Vector3(curPos* dist*1.2, height*lvl + alturaR, 0.1), Quaternion.identity);
+	}
 	/*if (enemies){
 		Destroy(enemiesArray[enemyInArray]);
-		var alturaE:int;
-		if (rand%2==0) alturaE = 0;
-		else alturaE = 2; 
+		var alturaE:int = (rand%2==0) ? 0:2;
 		if (alturaE == 2)enemiesArray[enemyInArray] = Instantiate(enemy2,new Vector3(curPos* dist, height*lvl, 0.1), Quaternion.identity);
 		else enemiesArray[enemyInArray] = Instantiate(enemy1,new Vector3(curPos* dist, height*lvl, 0.1), Quaternion.identity);
 		enemyInArray = (enemyInArray < 9)? enemyInArray+1 : 0;

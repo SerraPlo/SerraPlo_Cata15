@@ -17,10 +17,9 @@ private var showRate = 0.4;
 private var lastShow = 0.0;
 private var show:boolean = false;
 
-var tuto1:Texture;
-var tuto2:Texture;
+private var tuto1:Texture;
+private var tuto2:Texture;
 private var tutoLvl:int;
-
 
 //---------GUIstyles---------
 var pauseGuiStyle:GUIStyle;
@@ -104,7 +103,7 @@ function OnGUI (){
 	//
     scoreGuiStyle.fontSize = Screen.height/15;
     hScoreGuiStyle.fontSize = Screen.height/17;
-    GUI.Label (new Rect (Screen.width/2, Screen.height/15, 1, 1), ""+score, scoreGuiStyle);
+    GUI.Label (Rect (Screen.width/2-Screen.width/14,Screen.height/20,Screen.height/4,Screen.height/10), ""+score, scoreGuiStyle);
     
     if(hScore<score) {
     	improving = true;
@@ -117,13 +116,13 @@ function OnGUI (){
     	}
     	if (show){
     		showRate = 0.7;
-    		GUI.Label (new Rect (Screen.height/20,(Screen.height/20)*18, 1, 1), "Rècord: "+hScore, hScoreGuiStyle);
+    		GUI.Label (new Rect (Screen.height/20,(Screen.height/20)*17.2, Screen.height/2,Screen.height/10), "Rècord: "+hScore, hScoreGuiStyle);
     	}
     	else {
     		showRate = 0.3;
-    		GUI.Label (new Rect (Screen.height/20,(Screen.height/20)*18, 1, 1), "Rècord: ", hScoreGuiStyle);
+    		GUI.Label (new Rect (Screen.height/20,(Screen.height/20)*17.2, Screen.height/2,Screen.height/10), "Rècord: ", hScoreGuiStyle);
     	}
-    }else GUI.Label (new Rect (Screen.height/20,(Screen.height/20)*18, 1, 1), "Rècord: "+hScore, hScoreGuiStyle);
+    }else GUI.Label (new Rect (Screen.height/20,(Screen.height/20)*17.2, Screen.height/2,Screen.height/10), "Rècord: "+hScore, hScoreGuiStyle);
       
     for(var s = 1; s<=stamina;s++){
     	GUI.Box(Rect (Screen.width/20*(20-s)-(Screen.width/60*(s-1))-Screen.height/20,Screen.height/20,Screen.height/10,Screen.height/10), "", staminaGuiStyle);
@@ -168,6 +167,10 @@ function GetDead(){
 	return dead;
 }
 
+function GetHScore(){
+	return hScore;
+}
+
 function SetScore(pos:float){
 	score=pos;
 }
@@ -186,14 +189,22 @@ function Die(){
 	else dead=true;
 }
 
+function Awake () {
+	hScore= PlayerPrefs.GetInt("hS_1");
+	if(hScore==0) {
+		tutoLvl=1;
+		tuto1 = Resources.Load("tuto1") as Texture;
+		tuto2 = Resources.Load("tuto2") as Texture;
+	}
+	else tutoLvl=0;
+	
+}
+
 function Start () {
 	if(PlayerPrefs.HasKey("Character"))Character = PlayerPrefs.GetInt("Character");
 	else Character = 0;
 	improving = false;
 	added = false;
-	hScore= PlayerPrefs.GetInt("hS_1");
-	if(hScore==0) tutoLvl=1;
-	else tutoLvl=0;
 	//Debug.Log("High score = " + PlayerPrefs.GetInt("hS_1"));
 }
 

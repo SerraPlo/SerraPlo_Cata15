@@ -1,6 +1,7 @@
  #pragma strict
 
 private var Character:int=0;
+private var Rubriques:int=0;
 
 private var speedX:float;					//velocitat del player en x
 private var constSpeedX:float = 3.0f;		//velocitat inicial constant del player en x
@@ -21,6 +22,9 @@ private var speedReversing:float = 900.0f;	//velocitat de rotacio negativa (reve
 private var pause:boolean;
 private var dead:boolean;
 private var tuto:boolean;
+private var hScore:int;
+private var fScore:int = 0;
+private var rMult:int = 1;
 
 private var canJump:boolean = false;		//condicio de si el player pot saltar
 private var can2Jump:boolean = false;       //jump gall
@@ -77,8 +81,15 @@ function GetCharging(){
 }
 
 function Start () {
-	if(PlayerPrefs.HasKey("Character"))Character = PlayerPrefs.GetInt("Character");
-	else Character = 0;
+	Character = (PlayerPrefs.HasKey("Character")) ? PlayerPrefs.GetInt("Character"):0;
+	if (PlayerPrefs.HasKey("Rubriques")) Rubriques = PlayerPrefs.GetInt("Rubriques");
+	else {
+		Rubriques = 21;
+		PlayerPrefs.SetInt("Rubriques", Rubriques);
+	}
+	if (PlayerPrefs.HasKey("hS_1")) hScore = PlayerPrefs.GetInt("hS_1");
+	else hScore = 0;
+	fScore = hScore;
 	
 	if (Character == 0){//
 		constSpeedX = 4.0f;
@@ -158,6 +169,10 @@ function Start () {
 	speedY = 0.0f;
 }
 
+function SubstractRubrica(){
+	if (Rubriques > 0) PlayerPrefs.SetInt("Rubriques", --Rubriques);
+}
+
 function Update () {
 	if(!pause && !dead && !tuto){
 		if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Began) {
@@ -183,8 +198,6 @@ function Update () {
 	if (Input.GetKeyDown('7'))	PlayerPrefs.SetInt("Character", 7);//gall     || 2 1 2 x2 
 	if (Input.GetKeyDown('8'))	PlayerPrefs.SetInt("Character", 8);//llop     || 4 1 3 (recarrega xkill)
 	if (Input.GetKeyDown('9'))	PlayerPrefs.SetInt("Character", 9);//elefant  || 2 5 0
-			
-	
 	
 	
 	//updatejar posicio en x i en y del player
@@ -198,10 +211,20 @@ function Update () {
 	Manager.SendMessage("SetRealFloor", playerTransform.position.x);
 	Manager.SendMessage("SetScore", playerTransform.position.x);
 	floor = TerrainGeneratorScript.GetRealFloor();
+	hScore = ManagerScript.GetHScore();
 	stamina = ManagerScript.GetStamina();
 	pause = ManagerScript.GetPause();
 	dead = ManagerScript.GetDead();
 	tuto = ManagerScript.GetTuto();
+	
+	//fragment generator
+	if (playerTransform.position.x >= fScore && hScore >= 50 && Rubriques > 0) {
+		rMult++;
+		fScore = hScore+ Random.Range(20,80)*rMult;
+		Debug.Log("Fragment respawn: " +fScore.ToString());
+		TerrainGeneratorScript.SetFragment(true);
+	} else if(hScore < 50) fScore = hScore;
+	
 	//resetButton
 	if (Input.GetKeyDown('r')){
 		Time.timeScale = 1.0;
