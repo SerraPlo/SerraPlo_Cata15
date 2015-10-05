@@ -148,7 +148,7 @@ function Start () {
 	else if (Character == 9){//elefant
 		constSpeedX = 4.0f;
 		impulseX    = 20.0f;
-		impulseY    = 0.0f;
+		impulseY    = 3.0f;
 		Debug.Log("elefant");
 	}
 	dead = false;

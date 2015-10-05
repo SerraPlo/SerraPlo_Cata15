@@ -1,11 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\theChosenRunner.js">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\characterController.js">
     <Files>
-      <File FileName="Assets\Scripts\theChosenRunner.js" Line="189" Column="7" />
-      <File FileName="Assets\Scripts\bibliotecaManager.js" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\characterController.js" Line="151" Column="18" />
+      <File FileName="Assets\Scripts\theChosenRunner.js" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\bibliotecaManager.js" Line="16" Column="32" />
       <File FileName="Assets\Scripts\1stBG.js" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\characterController.js" Line="1" Column="1" />
       <File FileName="Assets\Scripts\terrainGenerator.js" Line="1" Column="1" />
       <File FileName="Assets\Scripts\fragmentBehaviour.js" Line="1" Column="1" />
     </Files>
