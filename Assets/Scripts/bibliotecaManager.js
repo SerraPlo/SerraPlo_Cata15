@@ -30,8 +30,7 @@ var GS_Shop3:GUIStyle;
 var GS_Money:GUIStyle;
 var GS_Back:GUIStyle;
 var GS_Buy:GUIStyle;
-var GS_Characters:GUIStyle;
-var GS_Rubriques:GUIStyle;
+var GS_1:GUIStyle;
 private var shop1:Texture;
 private var shop2:Texture;
 private var shop3:Texture;
@@ -40,6 +39,7 @@ private var shop5:Texture;
 var locked:Texture;
 var equipped:Texture;
 var redCircle:Texture;
+var greenCircle:Texture;
 private var eRect:Rect;
 var shopLvl:int;
 private var rubArray:Texture[];
@@ -76,8 +76,8 @@ function OnGUI() {
 			    }else if(shopLvl == 1){
 		    		GUI.DrawTexture(Rect (0,0,Screen.width,Screen.height),shop2);
 		    		if (GUI.Button(Rect (Screen.width - Screen.height/20*3,Screen.height/20+Screen.height/12,Screen.height/10,Screen.height/10), "", GS_Back)) shopLvl = 0;
-		    		if (GUI.Button(Rect (Screen.width/2 - Screen.width/4,Screen.height/2+Screen.height/16,Screen.width/5,Screen.height/10), "", GS_Characters)) shopLvl = 2;
-		    		if (GUI.Button(Rect (Screen.width/2 + Screen.width/20,Screen.height/2+Screen.height/16,Screen.width/5,Screen.height/10), "", GS_Rubriques)) shopLvl = 3;
+		    		if (GUI.Button(Rect ((68.9*Screen.width)/1920,(399.2*Screen.height)/1080,(839*Screen.width)/1920,(565*Screen.height)/1080), "", GS_1)) shopLvl = 2;
+		    		if (GUI.Button(Rect ((988*Screen.width)/1920, (399.2*Screen.height)/1080,(839*Screen.width)/1920,(565*Screen.height)/1080), "", GS_1)) shopLvl = 3;
 		    	}else if(shopLvl == 2){
 		    		GUI.DrawTexture(Rect (0,0,Screen.width,Screen.height),shop3);
 		    		if (GUI.Button(Rect (Screen.width - Screen.height/20*3,Screen.height/20+Screen.height/12,Screen.height/10,Screen.height/10), "", GS_Back)) shopLvl = 1;
@@ -140,7 +140,7 @@ function OnGUI() {
 			    			PlayerPrefs.SetInt("Character", 5);
 			    			PlayerPrefs.SetInt("money", (PlayerPrefs.GetInt("money")-preus[5]));
 			    		}else if (PlayerPrefs.GetInt("C5")) {
-				    		eRect = new Rect((521.4*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381);
+				    		eRect = new Rect((23.3*Screen.width)/677.3,(245.6*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381);
 				    		PlayerPrefs.SetInt("Character", 5);
 				    	}
 			    	}else if (GUI.Button(Rect((147.8*Screen.width)/677.3,(245.6*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
@@ -191,18 +191,21 @@ function OnGUI() {
 		    		}
 		    		for (var j:int = 0; j< 21-PlayerPrefs.GetInt("Rubriques"); j++) {
 		    			if (j < 7) {
+		    				GUI.DrawTexture(Rect (Screen.width/3 - Screen.width/3.35,Screen.height/10+Screen.height/4.5+(Screen.height*0.0956)*j,Screen.width/18.8,Screen.height/11.8),greenCircle);
 		    				if(GUI.Button(Rect (Screen.width/3 - Screen.width/4,Screen.height/10+Screen.height/4.1+(Screen.height*0.0956)*j,Screen.width/4.22,Screen.height/22.5), "", GS_Shop3)) {
 			    				rubN = j;
 			    				shopLvl = 4;
 			    				break;
 		    				}
 		    			}else if (j< 14) {
+		    				GUI.DrawTexture(Rect (Screen.width/3 + Screen.width/50.7,Screen.height/10+Screen.height/4.5+(Screen.height*0.0956)*(j-7),Screen.width/18.8,Screen.height/11.8),greenCircle);
 		    				if(GUI.Button(Rect (Screen.width/3 + Screen.width/14.4,Screen.height/10+Screen.height/4.1+(Screen.height*0.0956)*(j-7),Screen.width/4.22,Screen.height/22.5), "", GS_Shop3)) {
 			    				rubN = j;
 			    				shopLvl = 4;
 			    				break;
 		    				}
 		    			}else if (j < 21) {
+		    				GUI.DrawTexture(Rect (Screen.width/3 + Screen.width/2.98,Screen.height/10+Screen.height/4.5+(Screen.height*0.0956)*(j-14),Screen.width/18.8,Screen.height/11.8),greenCircle);
 			    			if (GUI.Button(Rect (Screen.width/3 + Screen.width/2.6, Screen.height/10+Screen.height/4.1+(Screen.height*0.0956)*(j-14),Screen.width/4.22,Screen.height/22.5), "", GS_Shop3)) {
 			    				rubN = j;
 			    				shopLvl = 4;
@@ -280,7 +283,7 @@ function Start() {
 	// inicialitzar equipped rect
 	eRect = new Rect(0,0,0,0);
 	if (PlayerPrefs.GetInt("Character") == 0) eRect = new Rect((23.3*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381);
-	else if  (PlayerPrefs.GetInt("Character") == 1) eRect =new Rect((147.8*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381);
+	else if  (PlayerPrefs.GetInt("Character") == 1)eRect =new Rect((147.8*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381);
 	else if  (PlayerPrefs.GetInt("Character") == 2)eRect = new Rect((271.7*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381);
 	else if  (PlayerPrefs.GetInt("Character") == 3)eRect = new Rect((396.2*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381);
 	else if  (PlayerPrefs.GetInt("Character") == 4)eRect = new Rect((521.4*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381);

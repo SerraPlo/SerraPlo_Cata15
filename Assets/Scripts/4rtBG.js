@@ -40,7 +40,7 @@ function Update () {
 			use[rand] = true;
 			dist = Random.Range(5.5,20.0);
 			
-			bg[rand].position.x = Player.transform.position.x + 25;
+			bg[rand].position.x = Player.transform.position.x + 28;
 			lastPos = Player.transform.position.x;
 			bg[rand].position.y = Random.Range(3.0f,7.5f);
 			//Debug.Log(TerrainGeneratorScript.ReturnRequestFloor(lastPos+15));
