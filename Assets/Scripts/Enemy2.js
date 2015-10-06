@@ -4,6 +4,8 @@ private var PlayerScript:characterController;
 private var Manager:GameObject;
 private var ManagerScript:theChosenRunner;
 
+private var serp:boolean;
+
 private var sT:float;
 
 private var marker1:Transform;
@@ -21,6 +23,8 @@ private var pHeight:float = 1.1f;
 //private var randomMove:float;
 
 function Start () {
+	if (PlayerPrefs.GetInt("Character")==3) serp=true;
+	else serp=false;
 	meTransform = transform.FindChild("SPRITE");
 	marker1 = meTransform.FindChild("Marker1");
 	marker2 = meTransform.FindChild("Marker2");
@@ -37,18 +41,29 @@ function Update () {
 	//markersUpdate();
 	//meTransform.position.y += Mathf.Sin(Time.time*2.0)*0.1f*Time.deltaTime;
 	meTransform.rotation.z = Mathf.Sin(Time.time*3.0)*0.33f;
-	pPosX = PlayerScript.GetPosX();
-	pPosY = PlayerScript.GetPosY();
+	
 	//detect collision with player
 	//if(rect1.x < rect2.x + rect2.width && rect1.x + rect1.width > rect2.x &&
 	//	rect1.y < rect2.y + rect2.height &&	rect1.height + rect1.y > rect2.y)
-	if((meTransform.position.x - 0.5f) < (pPosX-pWidth/2) + (pWidth) && (meTransform.position.x - 0.5f) + (1.0f) > (pPosX-pWidth/2) &&
-		 (meTransform.position.y - 2.0f) < (0.1f + pPosY) + (pHeight) && (0.8f) + (meTransform.position.y - 2.0f) > (0.1f + pPosY)) {
-			if(PlayerScript.GetCharging()){
-				Destroy(gameObject);
-				PlayerScript.GainStamina();
-			}else Manager.SendMessage("Die");
-			//Destroy(gameObject);
+	pPosX = PlayerScript.GetPosX();
+	pPosY = PlayerScript.GetPosY();
+		if((meTransform.position.x - 0.5f) < (pPosX-pWidth/2) + (pWidth) && (meTransform.position.x - 0.5f) + (1.0f) > (pPosX-pWidth/2) &&
+			 (meTransform.position.y - 2.0f) < (0.1f + pPosY) + (pHeight) && (0.8f) + (meTransform.position.y - 2.0f) > (0.1f + pPosY)) {
+				if(PlayerScript.GetCharging()){
+					Destroy(gameObject);
+					PlayerScript.GainStamina();
+				}else Manager.SendMessage("Die");
+				//Destroy(gameObject);
+	}
+	
+	if(serp){
+		pPosX = PlayerScript.getPosBalaX();
+		pPosY = PlayerScript.getPosBalaY();
+		Debug.Log(pPosX + ", " + pPosY);
+		if((meTransform.position.x - 0.5f) < (pPosX-pWidth/2) + (pWidth) && (meTransform.position.x - 0.5f) + (1.0f) > (pPosX-pWidth/2) &&
+			 (meTransform.position.y - 2.0f) < (0.1f + pPosY) + (pHeight) && (0.8f) + (meTransform.position.y - 2.0f) > (0.1f + pPosY)) {
+					Destroy(gameObject);
+		}
 	}
 }
 

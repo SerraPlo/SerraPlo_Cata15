@@ -3,7 +3,7 @@
 //PlayerPrefs - Aqui es crea hS_1 que es el record del runner
 private var Character:int=0;
 
-private var stamina:int = 3;
+private var stamina:int;
 private var score:int = 0;
 private var hScore:int = 0;
 private var pause:boolean = false;
@@ -192,6 +192,8 @@ function Die(){
 }
 
 function Awake () {
+	if (PlayerPrefs.GetInt("Character")==9) stamina = 5;
+	else stamina = 3;
 	hScore= PlayerPrefs.GetInt("hS_1");
 	if(hScore==0) {
 		tutoLvl=1;

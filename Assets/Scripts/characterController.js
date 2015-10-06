@@ -3,6 +3,9 @@
 private var Character:int=0;
 private var Rubriques:int=0;
 
+private var posBalaX:float;
+private var posBalaY:float;
+
 private var speedX:float;					//velocitat del player en x
 private var constSpeedX:float = 3.0f;		//velocitat inicial constant del player en x
 private var impulseX:float = 20.0f;			//impuls del player en x en fer charge
@@ -43,6 +46,8 @@ private var playerTransform:Transform;		//sprite del jugador
 private var ManagerScript:theChosenRunner;
 private var TerrainGeneratorScript:terrainGenerator;
 
+var bala:GameObject;
+
 var Manager:GameObject;
 
 //---------markers----------
@@ -65,20 +70,17 @@ var controlsGuiStyle:GUIStyle;
 	}
 }
 */
-function GetPosX () {
-	return playerTransform.position.x;
-}
 
-function GetPosY () {
-	return playerTransform.position.y;
-}
+function setPosBalaX(pos:float){posBalaX = pos;}
+function setPosBalaY(pos:float){posBalaY = pos;}
+function getPosBalaX(){return posBalaX;}
+function getPosBalaY(){return posBalaY;}
 
-function GetConstSpeedX () {
-	return constSpeedX;
-}
-function GetCharging(){
-	return charging;
-}
+function GetPosX () {return playerTransform.position.x;}
+function GetPosY () {return playerTransform.position.y;}
+
+function GetConstSpeedX () {return constSpeedX;}
+function GetCharging(){return charging;}
 
 function Start () {
 	Character = (PlayerPrefs.HasKey("Character")) ? PlayerPrefs.GetInt("Character"):0;
@@ -111,7 +113,7 @@ function Start () {
 	}
 	else if (Character == 3){//serp
 		constSpeedX = 4.0f;
-		impulseX    = 0.0f; // disparar
+		impulseX    = 1.0f; // disparar
 		impulseY    = 7.0f;
 		Debug.Log("serp");
 	}
@@ -174,6 +176,8 @@ function SubstractRubrica(){
 }
 
 function Update () {
+	//Debug.Log("X " + posBalaX + ",Y " + posBalaY);
+	
 	if(!pause && !dead && !tuto){
 		if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Began) {
 			// Get movement of the finger since last frame
@@ -297,11 +301,16 @@ function GainStamina(){
 }
 
 function Charge(){
+	if (Character == 3) Disparar();
 	speedX = impulseX;	speedY -= 0.5f;
 	Manager.SendMessage("SetStamina", -1);
 	//yield WaitForSeconds(waitCharge);
 	//charging = false;
 	//Debug.Log("charge done, stamina:" + stamina);
+}
+
+function Disparar(){
+	Instantiate(bala,transform.position, Quaternion.identity);
 }
 
 function SwapSprite(){

@@ -6,6 +6,8 @@ private var ManagerScript:theChosenRunner;
 
 private var sT:float;
 
+private var serp:boolean;
+
 private var marker1:Transform;
 private var marker2:Transform;
 private var marker3:Transform;
@@ -22,6 +24,8 @@ private var stamina:int;
 //private var randomMove:float;
 
 function Start () {
+	if (PlayerPrefs.GetInt("Character")==3) serp=true;
+	else serp=false;
 	foodTransform = transform;
 	/*marker1 = transform.FindChild("m1");
 	marker2 = transform.FindChild("m2");
@@ -41,10 +45,10 @@ function Update () {
 	foodTransform.position.y += Mathf.Sin(Time.time*2.0)*0.1f*Time.deltaTime;
 	foodTransform.rotation.z = Mathf.Sin(Time.time*2.5)*0.02f;
 	stamina=ManagerScript.GetStamina();
-	pPosX = PlayerScript.GetPosX();
-	pPosY = PlayerScript.GetPosY();
 	//detect collision with player
 	//if(rect1.x < rect2.x + rect2.width && rect1.x + rect1.width > rect2.x && rect1.y < rect2.y + rect2.height &&	rect1.height + rect1.y > rect2.y)
+	pPosX = PlayerScript.GetPosX();
+	pPosY = PlayerScript.GetPosY();
 	if((foodTransform.position.x - 0.45f) < (pPosX-pWidth/2) + (pWidth) && (foodTransform.position.x - 0.45f) + (0.9f) > (pPosX-pWidth/2) &&
 		 (foodTransform.position.y + 0.15f) < (0.1f + pPosY) + (pHeight) && (0.75f) + (foodTransform.position.y + 0.15f) > (0.1f + pPosY)) {
 			if(PlayerScript.GetCharging()){
@@ -52,6 +56,16 @@ function Update () {
 				PlayerScript.GainStamina();
 			}else Manager.SendMessage("Die");
 			//Destroy(gameObject);
+	}
+	
+	if(serp){
+		pPosX = PlayerScript.getPosBalaX();
+		pPosY = PlayerScript.getPosBalaY();
+		Debug.Log(pPosX + ", " + pPosY);
+		if((foodTransform.position.x - 0.45f) < (pPosX-pWidth/2) + (pWidth) && (foodTransform.position.x - 0.45f) + (0.9f) > (pPosX-pWidth/2) &&
+		 (foodTransform.position.y + 0.15f) < (0.1f + pPosY) + (pHeight) && (0.75f) + (foodTransform.position.y + 0.15f) > (0.1f + pPosY)) {
+					Destroy(gameObject);
+		}
 	}
 }
 

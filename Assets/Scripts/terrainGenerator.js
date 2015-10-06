@@ -255,13 +255,13 @@ function randomGenerator(g:int) {
 		var alturaR:int = (rand%2==0) ? 0:2;
 		fragmentObj = Instantiate(fragmentSprite,new Vector3(curPos* dist*1.2, height*lvl + alturaR, 0.1), Quaternion.identity);
 	}
-	/*if (enemies){
+	if (enemies){
 		Destroy(enemiesArray[enemyInArray]);
 		var alturaE:int = (rand%2==0) ? 0:2;
 		if (alturaE == 2)enemiesArray[enemyInArray] = Instantiate(enemy2,new Vector3(curPos* dist, height*lvl, 0.1), Quaternion.identity);
 		else enemiesArray[enemyInArray] = Instantiate(enemy1,new Vector3(curPos* dist, height*lvl, 0.1), Quaternion.identity);
 		enemyInArray = (enemyInArray < 9)? enemyInArray+1 : 0;
-	}*/
+	}
 	stepArrayPos[g] = (stepArray[g] as GameObject).GetComponent(Transform).position;
 	curPos++;
 }

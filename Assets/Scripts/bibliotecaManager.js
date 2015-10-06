@@ -104,6 +104,7 @@ function OnGUI() {
 		    		
 		    		if (GUI.Button(Rect (Screen.width - Screen.height/20*3,Screen.height/20+Screen.height/12,Screen.height/10,Screen.height/10), "", GS_Back)) shopLvl = 1;
 					GUI.Label (new Rect (Screen.width - Screen.height/20, Screen.height/6+Screen.height/14, 1, 1), ""+PlayerPrefs.GetInt("money"), GS_Money);
+					if(!PlayerPrefs.GetInt("C1")) GUI.DrawTexture(Rect((147.8*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),locked);
 					if(!PlayerPrefs.GetInt("C2")) GUI.DrawTexture(Rect((271.7*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),locked);
 					if(!PlayerPrefs.GetInt("C3")) GUI.DrawTexture(Rect((396.2*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),locked);
 					if(!PlayerPrefs.GetInt("C4")) GUI.DrawTexture(Rect((521.4*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),locked);
@@ -114,100 +115,101 @@ function OnGUI() {
 					if(!PlayerPrefs.GetInt("C9")) GUI.DrawTexture(Rect((521.4*Screen.width)/677.3,(245.6*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),locked);
 					GUI.DrawTexture(eRect,equipped);
 					
-			    	if (GUI.Button(Rect((23.3*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
+					if (PlayerPrefs.GetInt("Character")==0) eRect = new Rect((23.3*Screen.width)/677.3,(126*Screen.height)/381,(104*Screen.width)/677.3,(104*Screen.height)/381);
+			    	else if (PlayerPrefs.GetInt("Character")==1) eRect = new Rect((147.8*Screen.width)/677.3,(126*Screen.height)/381,(104*Screen.width)/677.3,(104*Screen.height)/381);
+					else if (PlayerPrefs.GetInt("Character")==2) eRect = new Rect((271.7*Screen.width)/677.3,(126*Screen.height)/381,(104*Screen.width)/677.3,(104*Screen.height)/381);
+					else if (PlayerPrefs.GetInt("Character")==3) eRect = new Rect((396.2*Screen.width)/677.3,(126*Screen.height)/381,(104*Screen.width)/677.3,(104*Screen.height)/381);
+					else if (PlayerPrefs.GetInt("Character")==4) eRect = new Rect((521.4*Screen.width)/677.3,(126*Screen.height)/381,(104*Screen.width)/677.3,(104*Screen.height)/381);
+					else if (PlayerPrefs.GetInt("Character")==5) eRect = new Rect((23.3*Screen.width)/677.3,(245.6*Screen.height)/381,(104*Screen.width)/677.3,(104*Screen.height)/381);
+					else if (PlayerPrefs.GetInt("Character")==6) eRect = new Rect((147.8*Screen.width)/677.3,(245.6*Screen.height)/381,(104*Screen.width)/677.3,(104*Screen.height)/381);
+					else if (PlayerPrefs.GetInt("Character")==7) eRect = new Rect((271.7*Screen.width)/677.3,(245.6*Screen.height)/381,(104*Screen.width)/677.3,(104*Screen.height)/381);
+					else if (PlayerPrefs.GetInt("Character")==8) eRect = new Rect((396.2*Screen.width)/677.3,(245.6*Screen.height)/381,(104*Screen.width)/677.3,(104*Screen.height)/381);
+					else eRect = new Rect((521.4*Screen.width)/677.3,(245.6*Screen.height)/381,(104*Screen.width)/677.3,(104*Screen.height)/381);
+					
+			    	if (PlayerPrefs.GetInt("Character")!=0 && GUI.Button(Rect((23.3*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
 			    		lastTap = 0;
-			    		eRect = new Rect((23.3*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381);
 				    	PlayerPrefs.SetInt("Character", 0);
-			    	}else if (GUI.Button(Rect((147.8*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
+			    	}else if (PlayerPrefs.GetInt("Character")!=1 && GUI.Button(Rect((147.8*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
 			    		lastTap = 1;
 			    		if(!PlayerPrefs.GetInt("C1") && PlayerPrefs.GetInt("money")>=preus[1]){
 			    			PlayerPrefs.SetInt("C1", 1);
 			    			PlayerPrefs.SetInt("Character", 1);
 			    			PlayerPrefs.SetInt("money", (PlayerPrefs.GetInt("money")-preus[1]));
 			    		}else if (PlayerPrefs.GetInt("C1")) {
-			    			eRect = new Rect((147.8*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381);
 			    			PlayerPrefs.SetInt("Character", 1);
 			    		}
-			    	}else if (GUI.Button(Rect((271.7*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
+			    	}else if (PlayerPrefs.GetInt("Character")!=2 && GUI.Button(Rect((271.7*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
 			    		lastTap = 2;
 			    		if(!PlayerPrefs.GetInt("C2") && PlayerPrefs.GetInt("money")>=preus[2]){
 			    			PlayerPrefs.SetInt("C2", 1);
 			    			PlayerPrefs.SetInt("Character", 2);
 			    			PlayerPrefs.SetInt("money", (PlayerPrefs.GetInt("money")-preus[2]));
 			    		}else if (PlayerPrefs.GetInt("C2")) {
-				    		eRect = new Rect((271.7*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381);
 				    		PlayerPrefs.SetInt("Character", 2);
 				    	}
-			    	}else if (GUI.Button(Rect((396.2*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
+			    	}else if (PlayerPrefs.GetInt("Character")!=3 && GUI.Button(Rect((396.2*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
 			    		lastTap = 3;
 			    		if(!PlayerPrefs.GetInt("C3") && PlayerPrefs.GetInt("money")>=preus[3]){
 			    			PlayerPrefs.SetInt("C3", 1);
 			    			PlayerPrefs.SetInt("Character", 3);
 			    			PlayerPrefs.SetInt("money", (PlayerPrefs.GetInt("money")-preus[3]));
 			    		}else if (PlayerPrefs.GetInt("C3")) {
-				    		eRect = new Rect((396.2*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381);
 				    		PlayerPrefs.SetInt("Character", 3);
 				    	}
-			    	}else if (GUI.Button(Rect((521.4*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
+			    	}else if (PlayerPrefs.GetInt("Character")!=4 && GUI.Button(Rect((521.4*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
 			    		lastTap = 4;
 			    		if(!PlayerPrefs.GetInt("C4") && PlayerPrefs.GetInt("money")>=preus[4]){
 			    			PlayerPrefs.SetInt("C4", 1);
 			    			PlayerPrefs.SetInt("Character", 4);
 			    			PlayerPrefs.SetInt("money", (PlayerPrefs.GetInt("money")-preus[4]));
 			    		}else if (PlayerPrefs.GetInt("C4")) {
-				    		eRect = new Rect((521.4*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381);
 				    		PlayerPrefs.SetInt("Character", 4);
 				    	}
 			    	}
 			    	//---
-			    	if (GUI.Button(Rect((23.3*Screen.width)/677.3,(245.6*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
+			    	if (PlayerPrefs.GetInt("Character")!=5 && GUI.Button(Rect((23.3*Screen.width)/677.3,(245.6*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
 			    		lastTap = 5;
 			    		if(!PlayerPrefs.GetInt("C5") && PlayerPrefs.GetInt("money")>=preus[5]){
 			    			PlayerPrefs.SetInt("C5", 1);
 			    			PlayerPrefs.SetInt("Character", 5);
 			    			PlayerPrefs.SetInt("money", (PlayerPrefs.GetInt("money")-preus[5]));
 			    		}else if (PlayerPrefs.GetInt("C5")) {
-				    		eRect = new Rect((23.3*Screen.width)/677.3,(245.6*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381);
 				    		PlayerPrefs.SetInt("Character", 5);
 				    	}
-			    	}else if (GUI.Button(Rect((147.8*Screen.width)/677.3,(245.6*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
+			    	}else if (PlayerPrefs.GetInt("Character")!=6 && GUI.Button(Rect((147.8*Screen.width)/677.3,(245.6*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
 			    		lastTap = 6;
 			    		if(!PlayerPrefs.GetInt("C6") && PlayerPrefs.GetInt("money")>=preus[6]){
 			    			PlayerPrefs.SetInt("C6", 1);
 			    			PlayerPrefs.SetInt("Character", 6);
 			    			PlayerPrefs.SetInt("money", (PlayerPrefs.GetInt("money")-preus[6]));
 			    		}else if (PlayerPrefs.GetInt("C6")) {
-				    		eRect = new Rect((147.8*Screen.width)/677.3,(245.6*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381);
-				    		PlayerPrefs.SetInt("Character", 6);
+			    			PlayerPrefs.SetInt("Character", 6);
 				    	}
-			    	}else if (GUI.Button(Rect((271.7*Screen.width)/677.3,(245.6*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
+			    	}else if (PlayerPrefs.GetInt("Character")!=7 && GUI.Button(Rect((271.7*Screen.width)/677.3,(245.6*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
 			    		lastTap = 7;
 			    		if(!PlayerPrefs.GetInt("C7") && PlayerPrefs.GetInt("money")>=preus[7]){
 			    			PlayerPrefs.SetInt("C7", 1);
 			    			PlayerPrefs.SetInt("Character", 7);
 			    			PlayerPrefs.SetInt("money", (PlayerPrefs.GetInt("money")-preus[7]));
 			    		}else if (PlayerPrefs.GetInt("C7")) {
-				    		eRect = new Rect((271.7*Screen.width)/677.3,(245.6*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381);
 				    		PlayerPrefs.SetInt("Character", 7);
 				    	}
-			    	}else if (GUI.Button(Rect((396.2*Screen.width)/677.3,(245.6*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
+			    	}else if (PlayerPrefs.GetInt("Character")!=8 && GUI.Button(Rect((396.2*Screen.width)/677.3,(245.6*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
 			    		lastTap = 8;
 			    		if(!PlayerPrefs.GetInt("C8") && PlayerPrefs.GetInt("money")>=preus[8]){
 			    			PlayerPrefs.SetInt("C8", 1);
 			    			PlayerPrefs.SetInt("Character", 8);
 			    			PlayerPrefs.SetInt("money", (PlayerPrefs.GetInt("money")-preus[8]));
 			    		}else if (PlayerPrefs.GetInt("C8")) {
-				    		eRect = new Rect((396.2*Screen.width)/677.3,(245.6*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381);
 				    		PlayerPrefs.SetInt("Character", 8);
 				    	}
-			    	}else if (GUI.Button(Rect((521.4*Screen.width)/677.3,(245.6*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
+			    	}else if (PlayerPrefs.GetInt("Character")!=9 && GUI.Button(Rect((521.4*Screen.width)/677.3,(245.6*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
 			    		lastTap = 9;
 			    		if(!PlayerPrefs.GetInt("C9") && PlayerPrefs.GetInt("money")>=preus[9]){
 			    			PlayerPrefs.SetInt("C9", 1);
 			    			PlayerPrefs.SetInt("Character", 9);
 			    			PlayerPrefs.SetInt("money", (PlayerPrefs.GetInt("money")-preus[9]));
 			    		}else if (PlayerPrefs.GetInt("C9")) {
-				    		eRect = new Rect((521.4*Screen.width)/677.3,(245.6*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381);
 				    		PlayerPrefs.SetInt("Character", 9);
 				    	}
 			    	}		    	
@@ -311,7 +313,9 @@ function Start() {
 	for (var i:int=1; i<10; i++) {
 		if (!PlayerPrefs.HasKey("C"+i.ToString())) PlayerPrefs.SetInt("C"+i.ToString(), 0);
 	}
-	lastTap = 0;
+	for (var lti=0;lti<10;lti++){
+		if(PlayerPrefs.GetInt("Character")==lti) lastTap = lti;
+	}
 	// inicialitzar equipped rect
 	eRect = new Rect(0,0,0,0);
 	if (PlayerPrefs.GetInt("Character") == 0) eRect = new Rect((23.3*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381);

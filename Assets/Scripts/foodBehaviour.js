@@ -45,11 +45,12 @@ function Update () {
 	stamina=ManagerScript.GetStamina();
 	pPosX = PlayerScript.GetPosX();
 	pPosY = PlayerScript.GetPosY();
-	if(stamina < 3){
-	//detect collision with player
-	//if(rect1.x < rect2.x + rect2.width && rect1.x + rect1.width > rect2.x && rect1.y < rect2.y + rect2.height &&	rect1.height + rect1.y > rect2.y)
-	if((foodTransform.position.x - 0.4f) < (pPosX-pWidth/2) + (pWidth) && (foodTransform.position.x - 0.4f) + (0.8f) > (pPosX-pWidth/2) &&
-		 (foodTransform.position.y + 0.3f) < (0.1f + pPosY) + (pHeight) && (0.7f) + (foodTransform.position.y + 0.3f) > (0.1f + pPosY)) {
+	if(stamina < 5){
+		//detect collision with player
+		//if(rect1.x < rect2.x + rect2.width && rect1.x + rect1.width > rect2.x && rect1.y < rect2.y + rect2.height &&	rect1.height + rect1.y > rect2.y)
+		if ((stamina <3 && PlayerPrefs.GetInt("Character") !=9) || PlayerPrefs.GetInt("Character") == 9)
+		if((foodTransform.position.x - 0.4f) < (pPosX-pWidth/2) + (pWidth) && (foodTransform.position.x - 0.4f) + (0.8f) > (pPosX-pWidth/2) &&
+			 (foodTransform.position.y + 0.3f) < (0.1f + pPosY) + (pHeight) && (0.7f) + (foodTransform.position.y + 0.3f) > (0.1f + pPosY)) {
 			Manager.SendMessage("SetStamina", 1);
 			Destroy(gameObject);
 		}
