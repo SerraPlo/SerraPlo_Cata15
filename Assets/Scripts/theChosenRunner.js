@@ -21,6 +21,8 @@ private var tuto1:Texture;
 private var tuto2:Texture;
 private var tutoLvl:int;
 
+var deadLion:Texture;
+
 //---------GUIstyles---------
 var pauseGuiStyle:GUIStyle;
 var scoreGuiStyle:GUIStyle;
@@ -84,19 +86,19 @@ function OnGUI (){
 			if(hScore>PlayerPrefs.GetInt("hS_1")) PlayerPrefs.SetInt("hS_1", hScore);
 		}else PlayerPrefs.SetInt("hS_1", score);
 		GUI.Box(Rect(0,0,Screen.width,Screen.height), "", pauseBGGuiStyle);
-		GUI.Box(Rect(Screen.width/2-Screen.width/6,Screen.height/2-Screen.height/8,Screen.width/3,Screen.height/4), "", pauseBoxGuiStyle);
-		GUI.Label(Rect(Screen.width/2-Screen.width/6,Screen.height/2-Screen.height/8,Screen.width/3,Screen.height/4), "U DIED N00b",pauseBGGuiStyle);
-    	if (GUI.Button(Rect (Screen.width/2-(Screen.height/16),Screen.height/2-(Screen.height/16),Screen.height/8,Screen.height/8), "", restartGuiStyle)) {
+		GUI.Box(Rect(Screen.width/2-Screen.width/6,Screen.height/2-Screen.height/16,Screen.width/3,Screen.height/4), "", pauseBoxGuiStyle);
+		GUI.DrawTexture(Rect(Screen.width/2-Screen.width/9,Screen.height/2-Screen.height/3.32,Screen.width/4.5,Screen.height/3.6), deadLion);
+    	if (GUI.Button(Rect (Screen.width/2-(Screen.height/16),Screen.height/2,Screen.height/8,Screen.height/8), "", restartGuiStyle)) {
     		Time.timeScale = 1.0;
     		dead=false;
     		Application.LoadLevel(1);
     	}
-    	if (GUI.Button(Rect (Screen.width/2+((Screen.height/16)*1.5),Screen.height/2-(Screen.height/16),Screen.height/8,Screen.height/8), "", menuGuiStyle)) {
+    	if (GUI.Button(Rect (Screen.width/2+((Screen.height/16)*1.5),Screen.height/2,Screen.height/8,Screen.height/8), "", menuGuiStyle)) {
     		Time.timeScale = 1.0;
     		dead=false;
     		Application.LoadLevel(0);
     	}
-    	if (GUI.Button(Rect (Screen.width/2+((Screen.height/16)*5.5),Screen.height/2-(Screen.height/16),Screen.height/8,Screen.height/8), "", pHStyle)) {
+    	if (GUI.Button(Rect (Screen.width/2+((Screen.height/16)*5.5),Screen.height/2,Screen.height/8,Screen.height/8), "", pHStyle)) {
     	
     	}
 	}

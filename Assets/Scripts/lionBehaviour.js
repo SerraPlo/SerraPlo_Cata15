@@ -34,14 +34,17 @@ function Start () {
 function Update () {
 	playerDead = ManagerScript.GetDead();
 	playerPosX = PlayerScript.GetPosX();
-
-	if(playerDead && lionTransform.position.x<playerPosX - 1) lionTransform.position.x += speedX*Time.deltaTime;
-	else if (!playerDead) lionTransform.position.x = playerPosX-5;
 	
-	head.transform.rotation.z = Mathf.Sin(Time.time*2.5)*0.1f;
-	armL.transform.rotation.z = -Mathf.Sin(Time.time*2.5)*0.25f;
-	armR.transform.rotation.z = Mathf.Sin(Time.time*2.5)*0.25f;
-	legL.transform.rotation.z = -Mathf.Sin(Time.time*2.5)*0.2f;
-	legR.transform.rotation.z = Mathf.Sin(Time.time*2.5)*0.2f;
-	tail.transform.rotation.z = Mathf.Sin(Time.time*2.5)*0.2f;
+	if (lionTransform.position.x<playerPosX - 1) {
+		if(playerDead) lionTransform.position.x += speedX*Time.deltaTime;
+		else if (!playerDead) lionTransform.position.x = playerPosX-5;
+		head.transform.rotation.z = Mathf.Sin(Time.time*2.5)*0.1f;
+		armL.transform.rotation.z = -Mathf.Sin(Time.time*2.5)*0.25f;
+		armR.transform.rotation.z = Mathf.Sin(Time.time*2.5)*0.25f;
+		legL.transform.rotation.z = -Mathf.Sin(Time.time*2.5)*0.2f;
+		legR.transform.rotation.z = Mathf.Sin(Time.time*2.5)*0.2f;
+		tail.transform.rotation.z = Mathf.Sin(Time.time*2.5)*0.2f;
+	}
+	
+	
 }
