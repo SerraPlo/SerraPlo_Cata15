@@ -36,12 +36,23 @@ private var shop2:Texture;
 private var shop3:Texture;
 private var shop4:Texture;
 private var shop5:Texture;
+var targ0:Texture;
+var targ1:Texture;
+var targ2:Texture;
+var targ3:Texture;
+var targ4:Texture;
+var targ5:Texture;
+var targ6:Texture;
+var targ7:Texture;
+var targ8:Texture;
+var targ9:Texture;
 var locked:Texture;
 var equipped:Texture;
 var redCircle:Texture;
 var greenCircle:Texture;
 private var eRect:Rect;
 var shopLvl:int;
+var lastTap:int;
 private var rubArray:Texture[];
 private var rubN:int;
 
@@ -80,9 +91,19 @@ function OnGUI() {
 		    		if (GUI.Button(Rect ((988*Screen.width)/1920, (399.2*Screen.height)/1080,(839*Screen.width)/1920,(565*Screen.height)/1080), "", GS_1)) shopLvl = 3;
 		    	}else if(shopLvl == 2){
 		    		GUI.DrawTexture(Rect (0,0,Screen.width,Screen.height),shop3);
+		    		if (lastTap==0) GUI.DrawTexture(Rect ((271.6*Screen.width)/677.3,(52.2*Screen.height)/381,(249.77*Screen.width)/677.3,(53.39*Screen.height)/381),targ0);
+		    		else if (lastTap==1) GUI.DrawTexture(Rect ((271.6*Screen.width)/677.3,(52.2*Screen.height)/381,(249.77*Screen.width)/677.3,(53.39*Screen.height)/381),targ1);
+		    		else if (lastTap==2) GUI.DrawTexture(Rect ((271.6*Screen.width)/677.3,(52.2*Screen.height)/381,(249.77*Screen.width)/677.3,(53.39*Screen.height)/381),targ2);
+		    		else if (lastTap==3) GUI.DrawTexture(Rect ((271.6*Screen.width)/677.3,(52.2*Screen.height)/381,(249.77*Screen.width)/677.3,(53.39*Screen.height)/381),targ3);
+		    		else if (lastTap==4) GUI.DrawTexture(Rect ((271.6*Screen.width)/677.3,(52.2*Screen.height)/381,(249.77*Screen.width)/677.3,(53.39*Screen.height)/381),targ4);
+		    		else if (lastTap==5) GUI.DrawTexture(Rect ((271.6*Screen.width)/677.3,(52.2*Screen.height)/381,(249.77*Screen.width)/677.3,(53.39*Screen.height)/381),targ5);
+		    		else if (lastTap==6) GUI.DrawTexture(Rect ((271.6*Screen.width)/677.3,(52.2*Screen.height)/381,(249.77*Screen.width)/677.3,(53.39*Screen.height)/381),targ6);
+		    		else if (lastTap==7) GUI.DrawTexture(Rect ((271.6*Screen.width)/677.3,(52.2*Screen.height)/381,(249.77*Screen.width)/677.3,(53.39*Screen.height)/381),targ7);
+		    		else if (lastTap==8) GUI.DrawTexture(Rect ((271.6*Screen.width)/677.3,(52.2*Screen.height)/381,(249.77*Screen.width)/677.3,(53.39*Screen.height)/381),targ8);
+		    		else GUI.DrawTexture(Rect ((271.6*Screen.width)/677.3,(52.2*Screen.height)/381,(249.77*Screen.width)/677.3,(53.39*Screen.height)/381),targ9);
+		    		
 		    		if (GUI.Button(Rect (Screen.width - Screen.height/20*3,Screen.height/20+Screen.height/12,Screen.height/10,Screen.height/10), "", GS_Back)) shopLvl = 1;
 					GUI.Label (new Rect (Screen.width - Screen.height/20, Screen.height/6+Screen.height/14, 1, 1), ""+PlayerPrefs.GetInt("money"), GS_Money);
-					if(!PlayerPrefs.GetInt("C1")) GUI.DrawTexture(Rect((147.8*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),locked);
 					if(!PlayerPrefs.GetInt("C2")) GUI.DrawTexture(Rect((271.7*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),locked);
 					if(!PlayerPrefs.GetInt("C3")) GUI.DrawTexture(Rect((396.2*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),locked);
 					if(!PlayerPrefs.GetInt("C4")) GUI.DrawTexture(Rect((521.4*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),locked);
@@ -94,9 +115,11 @@ function OnGUI() {
 					GUI.DrawTexture(eRect,equipped);
 					
 			    	if (GUI.Button(Rect((23.3*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
+			    		lastTap = 0;
 			    		eRect = new Rect((23.3*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381);
 				    	PlayerPrefs.SetInt("Character", 0);
 			    	}else if (GUI.Button(Rect((147.8*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
+			    		lastTap = 1;
 			    		if(!PlayerPrefs.GetInt("C1") && PlayerPrefs.GetInt("money")>=preus[1]){
 			    			PlayerPrefs.SetInt("C1", 1);
 			    			PlayerPrefs.SetInt("Character", 1);
@@ -106,6 +129,7 @@ function OnGUI() {
 			    			PlayerPrefs.SetInt("Character", 1);
 			    		}
 			    	}else if (GUI.Button(Rect((271.7*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
+			    		lastTap = 2;
 			    		if(!PlayerPrefs.GetInt("C2") && PlayerPrefs.GetInt("money")>=preus[2]){
 			    			PlayerPrefs.SetInt("C2", 1);
 			    			PlayerPrefs.SetInt("Character", 2);
@@ -115,6 +139,7 @@ function OnGUI() {
 				    		PlayerPrefs.SetInt("Character", 2);
 				    	}
 			    	}else if (GUI.Button(Rect((396.2*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
+			    		lastTap = 3;
 			    		if(!PlayerPrefs.GetInt("C3") && PlayerPrefs.GetInt("money")>=preus[3]){
 			    			PlayerPrefs.SetInt("C3", 1);
 			    			PlayerPrefs.SetInt("Character", 3);
@@ -124,6 +149,7 @@ function OnGUI() {
 				    		PlayerPrefs.SetInt("Character", 3);
 				    	}
 			    	}else if (GUI.Button(Rect((521.4*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
+			    		lastTap = 4;
 			    		if(!PlayerPrefs.GetInt("C4") && PlayerPrefs.GetInt("money")>=preus[4]){
 			    			PlayerPrefs.SetInt("C4", 1);
 			    			PlayerPrefs.SetInt("Character", 4);
@@ -135,6 +161,7 @@ function OnGUI() {
 			    	}
 			    	//---
 			    	if (GUI.Button(Rect((23.3*Screen.width)/677.3,(245.6*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
+			    		lastTap = 5;
 			    		if(!PlayerPrefs.GetInt("C5") && PlayerPrefs.GetInt("money")>=preus[5]){
 			    			PlayerPrefs.SetInt("C5", 1);
 			    			PlayerPrefs.SetInt("Character", 5);
@@ -144,6 +171,7 @@ function OnGUI() {
 				    		PlayerPrefs.SetInt("Character", 5);
 				    	}
 			    	}else if (GUI.Button(Rect((147.8*Screen.width)/677.3,(245.6*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
+			    		lastTap = 6;
 			    		if(!PlayerPrefs.GetInt("C6") && PlayerPrefs.GetInt("money")>=preus[6]){
 			    			PlayerPrefs.SetInt("C6", 1);
 			    			PlayerPrefs.SetInt("Character", 6);
@@ -153,6 +181,7 @@ function OnGUI() {
 				    		PlayerPrefs.SetInt("Character", 6);
 				    	}
 			    	}else if (GUI.Button(Rect((271.7*Screen.width)/677.3,(245.6*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
+			    		lastTap = 7;
 			    		if(!PlayerPrefs.GetInt("C7") && PlayerPrefs.GetInt("money")>=preus[7]){
 			    			PlayerPrefs.SetInt("C7", 1);
 			    			PlayerPrefs.SetInt("Character", 7);
@@ -162,6 +191,7 @@ function OnGUI() {
 				    		PlayerPrefs.SetInt("Character", 7);
 				    	}
 			    	}else if (GUI.Button(Rect((396.2*Screen.width)/677.3,(245.6*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
+			    		lastTap = 8;
 			    		if(!PlayerPrefs.GetInt("C8") && PlayerPrefs.GetInt("money")>=preus[8]){
 			    			PlayerPrefs.SetInt("C8", 1);
 			    			PlayerPrefs.SetInt("Character", 8);
@@ -171,6 +201,7 @@ function OnGUI() {
 				    		PlayerPrefs.SetInt("Character", 8);
 				    	}
 			    	}else if (GUI.Button(Rect((521.4*Screen.width)/677.3,(245.6*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
+			    		lastTap = 9;
 			    		if(!PlayerPrefs.GetInt("C9") && PlayerPrefs.GetInt("money")>=preus[9]){
 			    			PlayerPrefs.SetInt("C9", 1);
 			    			PlayerPrefs.SetInt("Character", 9);
@@ -280,6 +311,7 @@ function Start() {
 	for (var i:int=1; i<10; i++) {
 		if (!PlayerPrefs.HasKey("C"+i.ToString())) PlayerPrefs.SetInt("C"+i.ToString(), 0);
 	}
+	lastTap = 0;
 	// inicialitzar equipped rect
 	eRect = new Rect(0,0,0,0);
 	if (PlayerPrefs.GetInt("Character") == 0) eRect = new Rect((23.3*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381);
