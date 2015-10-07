@@ -61,7 +61,7 @@ function Update () {
 	if(serp){
 		pPosX = PlayerScript.getPosBalaX();
 		pPosY = PlayerScript.getPosBalaY();
-		Debug.Log(pPosX + ", " + pPosY);
+		//Debug.Log(pPosX + ", " + pPosY);
 		if((foodTransform.position.x - 0.45f) < (pPosX-pWidth/2) + (pWidth) && (foodTransform.position.x - 0.45f) + (0.9f) > (pPosX-pWidth/2) &&
 		 (foodTransform.position.y + 0.15f) < (0.1f + pPosY) + (pHeight) && (0.75f) + (foodTransform.position.y + 0.15f) > (0.1f + pPosY)) {
 					Destroy(gameObject);

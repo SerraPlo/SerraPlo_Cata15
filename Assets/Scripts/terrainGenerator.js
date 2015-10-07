@@ -43,6 +43,9 @@ private var stepsInScene:int = 50;
 
 private var fragment:boolean = false;
 
+private var lastEnemies = 0.1;
+private var desiredTime = 5.4;
+
 var foodInArray:int = 0;
 var enemyInArray:int = 0;
 
@@ -193,13 +196,16 @@ function randomGenerator(g:int) {
 	var up:boolean;
 	var down:boolean;
 	var food:boolean;
-	var enemies:boolean;
+	var enemies1:boolean;
+	var enemies2:boolean;
+	
 	var prevArray:int[] = new int[3];
 	if (curPos<10) {
 		down = true;
 		up = true;
 		food = false;
-		enemies = false;
+		enemies1 = false;
+		enemies2 = false;
 	}if (curPos<30) {
 		food = false;
 	}
@@ -218,8 +224,15 @@ function randomGenerator(g:int) {
 			stepArray[prevArray[2]].tag == "GroundU"*/ ) up = true;
 		else up = false;
 		
-		if (rand2<chanceFood)food = true;	else food = false;
-		if (rand2>960) enemies = true;   	else enemies = false;
+		if (rand2<chanceFood)food = true;
+		else food = false;
+		
+		if (Time.time >= desiredTime+lastEnemies){
+			Debug.Log(lastEnemies + ", " + desiredTime + ", " + Time.time);
+			enemies1 = true;
+			desiredTime = Random.Range(2.0,10.0-(Mathf.Sqrt(curPos) * 0.2));
+			lastEnemies = Time.time;
+		}else enemies1 = false;
 	}
 	
 	stepArray[g].transform.position = new Vector3(curPos * dist, height*lvl, 0);
@@ -255,13 +268,22 @@ function randomGenerator(g:int) {
 		var alturaR:int = (rand%2==0) ? 0:2;
 		fragmentObj = Instantiate(fragmentSprite,new Vector3(curPos* dist*1.2, height*lvl + alturaR, 0.1), Quaternion.identity);
 	}
-	if (enemies){
+	
+	if (enemies1){
 		Destroy(enemiesArray[enemyInArray]);
 		var alturaE:int = (rand%2==0) ? 0:2;
 		if (alturaE == 2)enemiesArray[enemyInArray] = Instantiate(enemy2,new Vector3(curPos* dist, height*lvl, 0.1), Quaternion.identity);
 		else enemiesArray[enemyInArray] = Instantiate(enemy1,new Vector3(curPos* dist, height*lvl, 0.1), Quaternion.identity);
 		enemyInArray = (enemyInArray < 9)? enemyInArray+1 : 0;
 	}
+	/*if (enemies2){
+		Destroy(enemiesArray[enemyInArray]);
+		var alturaE:int = (rand%2==0) ? 0:2;
+		if (alturaE == 2)enemiesArray[enemyInArray] = Instantiate(enemy2,new Vector3(curPos* dist, height*lvl, 0.1), Quaternion.identity);
+		else enemiesArray[enemyInArray] = Instantiate(enemy1,new Vector3(curPos* dist, height*lvl, 0.1), Quaternion.identity);
+		enemyInArray = (enemyInArray < 9)? enemyInArray+1 : 0;
+	}*/
+	
 	stepArrayPos[g] = (stepArray[g] as GameObject).GetComponent(Transform).position;
 	curPos++;
 }

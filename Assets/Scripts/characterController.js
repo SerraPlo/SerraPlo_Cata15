@@ -46,6 +46,8 @@ private var playerTransform:Transform;		//sprite del jugador
 private var ManagerScript:theChosenRunner;
 private var TerrainGeneratorScript:terrainGenerator;
 
+private var monsters:int;
+
 var bala:GameObject;
 
 var Manager:GameObject;
@@ -214,6 +216,7 @@ function Update () {
 	//send actualitza variable floor al manager i floor el recull
 	Manager.SendMessage("SetRealFloor", playerTransform.position.x);
 	Manager.SendMessage("SetScore", playerTransform.position.x);
+	
 	floor = TerrainGeneratorScript.GetRealFloor();
 	hScore = ManagerScript.GetHScore();
 	stamina = ManagerScript.GetStamina();
@@ -294,6 +297,8 @@ function Update () {
 }
 
 function GainStamina(){
+	monsters++;
+	Manager.SendMessage("SetMonsters", monsters);
 	if(stamina<3 && Character == 8){
 		stamina++;
 		Manager.SendMessage("SetStamina", 1);

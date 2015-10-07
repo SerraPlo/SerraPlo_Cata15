@@ -31,21 +31,22 @@ var GS_Money:GUIStyle;
 var GS_Back:GUIStyle;
 var GS_Buy:GUIStyle;
 var GS_1:GUIStyle;
+var emptyGS:GUIStyle;
 private var shop1:Texture;
 private var shop2:Texture;
 private var shop3:Texture;
 private var shop4:Texture;
 private var shop5:Texture;
-var targ0:Texture;
-var targ1:Texture;
-var targ2:Texture;
-var targ3:Texture;
-var targ4:Texture;
-var targ5:Texture;
-var targ6:Texture;
-var targ7:Texture;
-var targ8:Texture;
-var targ9:Texture;
+private var targ0:Texture;
+private var targ1:Texture;
+private var targ2:Texture;
+private var targ3:Texture;
+private var targ4:Texture;
+private var targ5:Texture;
+private var targ6:Texture;
+private var targ7:Texture;
+private var targ8:Texture;
+private var targ9:Texture;
 var locked:Texture;
 var equipped:Texture;
 var redCircle:Texture;
@@ -102,7 +103,10 @@ function OnGUI() {
 		    		else if (lastTap==8) GUI.DrawTexture(Rect ((271.6*Screen.width)/677.3,(52.2*Screen.height)/381,(249.77*Screen.width)/677.3,(53.39*Screen.height)/381),targ8);
 		    		else GUI.DrawTexture(Rect ((271.6*Screen.width)/677.3,(52.2*Screen.height)/381,(249.77*Screen.width)/677.3,(53.39*Screen.height)/381),targ9);
 		    		
-		    		if (GUI.Button(Rect (Screen.width - Screen.height/20*3,Screen.height/20+Screen.height/12,Screen.height/10,Screen.height/10), "", GS_Back)) shopLvl = 1;
+		    		if (GUI.Button(Rect (Screen.width - Screen.height/20*3,Screen.height/20+Screen.height/12,Screen.height/10,Screen.height/10), "", GS_Back)){
+		    			shopLvl = 1;
+		    			lastTap = PlayerPrefs.GetInt("Character");
+		    		}
 					GUI.Label (new Rect (Screen.width - Screen.height/20, Screen.height/6+Screen.height/14, 1, 1), ""+PlayerPrefs.GetInt("money"), GS_Money);
 					if(!PlayerPrefs.GetInt("C1")) GUI.DrawTexture(Rect((147.8*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),locked);
 					if(!PlayerPrefs.GetInt("C2")) GUI.DrawTexture(Rect((271.7*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),locked);
@@ -129,7 +133,7 @@ function OnGUI() {
 			    	if (PlayerPrefs.GetInt("Character")!=0 && GUI.Button(Rect((23.3*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
 			    		lastTap = 0;
 				    	PlayerPrefs.SetInt("Character", 0);
-			    	}else if (PlayerPrefs.GetInt("Character")!=1 && GUI.Button(Rect((147.8*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
+				    }else if (PlayerPrefs.GetInt("Character")!=1 && GUI.Button(Rect((147.8*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
 			    		lastTap = 1;
 			    		if(!PlayerPrefs.GetInt("C1") && PlayerPrefs.GetInt("money")>=preus[1]){
 			    			PlayerPrefs.SetInt("C1", 1);
@@ -334,6 +338,16 @@ function Start() {
 	shop3 = Resources.Load("eBuy_besties") as Texture;
 	shop4 = Resources.Load("eBuy_rubriques") as Texture;
 	shop5 = Resources.Load("pc_viewer") as Texture;
+	targ0 = Resources.Load("TARGETES/targ0") as Texture;
+	targ1 = Resources.Load("TARGETES/targ1") as Texture;
+	targ2 = Resources.Load("TARGETES/targ2") as Texture;
+	targ3 = Resources.Load("TARGETES/targ3") as Texture;
+	targ4 = Resources.Load("TARGETES/targ4") as Texture;
+	targ5 = Resources.Load("TARGETES/targ5") as Texture;
+	targ6 = Resources.Load("TARGETES/targ6") as Texture;
+	targ7 = Resources.Load("TARGETES/targ7") as Texture;
+	targ8 = Resources.Load("TARGETES/targ8") as Texture;
+	targ9 = Resources.Load("TARGETES/targ9") as Texture;
 	// inicialitzar others
 	mainCameraScript = mainCamera.GetComponent("bibliotecaCameraBehaviour") as bibliotecaCameraBehaviour;
 	leftDoor.GetComponent(Animation).enabled = false;

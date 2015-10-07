@@ -59,10 +59,11 @@ function Update () {
 	if(serp){
 		pPosX = PlayerScript.getPosBalaX();
 		pPosY = PlayerScript.getPosBalaY();
-		Debug.Log(pPosX + ", " + pPosY);
+		//Debug.Log(pPosX + ", " + pPosY);
 		if((meTransform.position.x - 0.5f) < (pPosX-pWidth/2) + (pWidth) && (meTransform.position.x - 0.5f) + (1.0f) > (pPosX-pWidth/2) &&
 			 (meTransform.position.y - 2.0f) < (0.1f + pPosY) + (pHeight) && (0.8f) + (meTransform.position.y - 2.0f) > (0.1f + pPosY)) {
 					Destroy(gameObject);
+					PlayerScript.GainStamina();
 		}
 	}
 }
