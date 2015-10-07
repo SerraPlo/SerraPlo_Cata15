@@ -38,126 +38,143 @@ var restartGuiStyle:GUIStyle;
 var menuGuiStyle:GUIStyle;
 var pHStyle:GUIStyle;
 var deadTGuiStyle:GUIStyle;
+
+//load game
+var loadingBlack : Texture;
+var loadingWhite : Texture;
+private var loadingLevel:boolean = false;
+private var async:AsyncOperation;
+private var pageFlip : Texture[];
+private var pageN:int = 0;
 //---------GUI---------
 function OnGUI (){
-// tuto
-	if (tutoLvl==1){
-		Time.timeScale = 0.0;
-		GUI.DrawTexture(Rect (0,0,Screen.width,Screen.height),tuto1);
-		if (GUI.Button(Rect (Screen.width/20*(19)-(Screen.height/20)*2,Screen.height-(Screen.height/6),Screen.height/8,Screen.height/8), "", continueGuiStyle)) {
-    		tutoLvl++;
-    	}
-    	
-	}
-	else if (tutoLvl == 2){
-		Time.timeScale = 0.0;
-		GUI.DrawTexture(Rect (0,0,Screen.width,Screen.height),tuto2);
-		if (GUI.Button(Rect (Screen.width/20*(18)-(Screen.height/20)*3,Screen.height-(Screen.height/6),Screen.height/8,Screen.height/8), "", backGuiStyle)) {
-    		tutoLvl--;
-    	}
-		if (GUI.Button(Rect (Screen.width/20*(19)-(Screen.height/20)*2,Screen.height-(Screen.height/6),Screen.height/8,Screen.height/8), "", continueGuiStyle)) {
-    		tutoLvl++;
-    		Time.timeScale = 1.0;
-    	}
-	}
-// /tuto	
 
-	if(pause){
-		Debug.Log(monsters);
-		GUI.Box(Rect(0,0,Screen.width,Screen.height), "", pauseBGGuiStyle);
-		GUI.Box(Rect(Screen.width/2-Screen.width/6,Screen.height/2-Screen.height/8,Screen.width/3,Screen.height/4), "", pauseBoxGuiStyle);
-		if (GUI.Button(Rect (Screen.width/2-((Screen.height/16)*3.5),Screen.height/2-(Screen.height/16),Screen.height/8,Screen.height/8), "", continueGuiStyle)) {
-    		Time.timeScale = 1.0;
-    		pause = false;
-    	}
-    	if (GUI.Button(Rect (Screen.width/2-(Screen.height/16),Screen.height/2-(Screen.height/16),Screen.height/8,Screen.height/8), "", restartGuiStyle)) {
-    		Time.timeScale = 1.0;
-    		Application.LoadLevel(1);
-    	}
-    	if (GUI.Button(Rect (Screen.width/2+((Screen.height/16)*1.5),Screen.height/2-(Screen.height/16),Screen.height/8,Screen.height/8), "", menuGuiStyle)) {
-    		Time.timeScale = 1.0;
-    		Application.LoadLevel(0);
-    	}
-	}
-	//dead
-	if (dead){
-		if (!added){
-			PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") + score + monsters*10);
-			added = true;
+	if (loadingLevel && !async.isDone) {
+		if (pageN > 5) pageN =0;
+		else pageN++;
+		GUI.DrawTexture(Rect (0,0,Screen.width,Screen.height),loadingBlack);
+		GUI.DrawTexture(Rect (Screen.width/2-Screen.width/6,Screen.height/2-Screen.height/3,Screen.width/3,Screen.height/3),pageFlip[pageN]);
+		GUI.DrawTexture(new Rect(Screen.width/20, Screen.height/2+Screen.height/4, Screen.width*async.progress-(Screen.width/20)*2, Screen.height/30), loadingWhite);
+	}else {
+	// tuto
+		if (tutoLvl==1){
+			Time.timeScale = 0.0;
+			GUI.DrawTexture(Rect (0,0,Screen.width,Screen.height),tuto1);
+			if (GUI.Button(Rect (Screen.width/20*(19)-(Screen.height/20)*2,Screen.height-(Screen.height/6),Screen.height/8,Screen.height/8), "", continueGuiStyle)) {
+	    		tutoLvl++;
+	    	}
+	    	
 		}
-		if (PlayerPrefs.HasKey("hS_1")){
-			if(hScore>PlayerPrefs.GetInt("hS_1")) PlayerPrefs.SetInt("hS_1", hScore);
-		}else PlayerPrefs.SetInt("hS_1", score);
-		GUI.Box(Rect(0,0,Screen.width,Screen.height), "", pauseBGGuiStyle);
-		GUI.Box(Rect(Screen.width/2-Screen.width/6,Screen.height/2-Screen.height/16,Screen.width/3,Screen.height/4), "", pauseBoxGuiStyle);
-		GUI.DrawTexture(Rect(Screen.width/2-Screen.width/9,Screen.height/2-Screen.height/3.32,Screen.width/4.5,Screen.height/3.6), deadLion);
-		if(improving){
-			if (show)GUI.Box(Rect(Screen.width/2+Screen.width/5,Screen.height/2,Screen.width/10,Screen.height/8), "Nou\nrècord", pauseBoxGuiStyle);                                        //NEWRECORD
-			else GUI.Box(Rect(Screen.width/2+Screen.width/5,Screen.height/2,Screen.width/10,Screen.height/8), "", pauseBoxGuiStyle);
-		}GUI.Label (Rect (Screen.width/2-Screen.width/6.5,Screen.height/2+(Screen.height/23)*-0.5,Screen.height/4,Screen.height/10), "Distància: "+score, deadTGuiStyle);
-		GUI.Label (Rect (Screen.width/2-Screen.width/6.5,Screen.height/2+(Screen.height/23)*0.5,Screen.height/4,Screen.height/10), "Derrotats: "+monsters, deadTGuiStyle);
-		GUI.Label (Rect (Screen.width/2-Screen.width/6.5,Screen.height/2+(Screen.height/23)*1.5,Screen.height/4,Screen.height/10), "Total: "+(monsters*10+score) + "€", deadTGuiStyle);
-		GUI.Label (Rect (Screen.width/2-Screen.width/6.5,Screen.height/2+(Screen.height/23)*3,Screen.height/4,Screen.height/10), "Compte: "+PlayerPrefs.GetInt("money") + "€", deadTGuiStyle);
+		else if (tutoLvl == 2){
+			Time.timeScale = 0.0;
+			GUI.DrawTexture(Rect (0,0,Screen.width,Screen.height),tuto2);
+			if (GUI.Button(Rect (Screen.width/20*(18)-(Screen.height/20)*3,Screen.height-(Screen.height/6),Screen.height/8,Screen.height/8), "", backGuiStyle)) {
+	    		tutoLvl--;
+	    	}
+			if (GUI.Button(Rect (Screen.width/20*(19)-(Screen.height/20)*2,Screen.height-(Screen.height/6),Screen.height/8,Screen.height/8), "", continueGuiStyle)) {
+	    		tutoLvl++;
+	    		Time.timeScale = 1.0;
+	    	}
+		}
+	// /tuto	
 
-    	if (GUI.Button(Rect (Screen.width/2/*-(Screen.height/16)*/,Screen.height/2,Screen.height/8,Screen.height/8), "", restartGuiStyle)) {  //restart
-    		Time.timeScale = 1.0;
-    		dead=false;
-    		Application.LoadLevel(1);
-    	}
-    	if (GUI.Button(Rect (Screen.width/2+((Screen.height/16)*2.1),Screen.height/2,Screen.height/8,Screen.height/8), "", menuGuiStyle)) {//menu
-    		Time.timeScale = 1.0;
-    		dead=false;
-    		Application.LoadLevel(0);
-    	}
-	}
-	//
-    scoreGuiStyle.fontSize = Screen.height/15;
-    hScoreGuiStyle.fontSize = Screen.height/17;
-    deadTGuiStyle.fontSize = Screen.height/25;
-    pauseBoxGuiStyle.fontSize = Screen.height/25;
-    GUI.Label (Rect (Screen.width/2-Screen.width/14,Screen.height/20,Screen.height/4,Screen.height/10), ""+score, scoreGuiStyle);
-    
-    if(hScore<score) {
-    	improving = true;
-    	hScore=score;
-    }
-    if(improving){
-    	if (Time.time >= lastShow+showRate){
-    		show = !show;
-    		lastShow = Time.time;
-    	}
-    	if (show){
-    		showRate = 0.7;
-    		GUI.Label (new Rect (Screen.height/20,(Screen.height/20)*17.2, Screen.height/2.5,Screen.height/10), "  Rècord: "+hScore, hScoreGuiStyle);
-    	}
-    	else {
-    		showRate = 0.3;
-    		GUI.Label (new Rect (Screen.height/20,(Screen.height/20)*17.2, Screen.height/2.5,Screen.height/10), "  Rècord: ", hScoreGuiStyle);
-    	}
-    }else GUI.Label (new Rect (Screen.height/20,(Screen.height/20)*17.2, Screen.height/2.5,Screen.height/10), "  Rècord: "+hScore, hScoreGuiStyle);
-      
-    for(var s = 1; s<=stamina;s++){
-    	GUI.Box(Rect (Screen.width/20*(20-s)-(Screen.width/60*(s-1))-Screen.height/20,Screen.height/20,Screen.height/10,Screen.height/10), "", staminaGuiStyle);
-    }
-    if(!dead1 && !dead2 && Character == 6) GUI.Box(Rect(Screen.width/20*(20-5)-(Screen.width/60*(5-1))-Screen.height/20,Screen.height/20,Screen.height/10,Screen.height/10), "", pHStyle);
-    else if(dead1 && !dead2 && Character == 6){
-    	if (Time.time >= lastShow+0.1){
-    		show = !show;
-    		lastShow = Time.time;
-    	}if (show) GUI.Box(Rect(Screen.width/20*(20-5)-(Screen.width/60*(5-1))-Screen.height/20,Screen.height/20,Screen.height/10,Screen.height/10), "", pHStyle);
-    }
-    //stamina = GUI.HorizontalSlider (Rect (Screen.width/20, (Screen.height/20)*19, Screen.width/5, Screen.height/20), stamina, 0.0, 3.0);
+		if(pause){
+			Debug.Log(monsters);
+			GUI.Box(Rect(0,0,Screen.width,Screen.height), "", pauseBGGuiStyle);
+			GUI.Box(Rect(Screen.width/2-Screen.width/6,Screen.height/2-Screen.height/8,Screen.width/3,Screen.height/4), "", pauseBoxGuiStyle);
+			if (GUI.Button(Rect (Screen.width/2-((Screen.height/16)*3.5),Screen.height/2-(Screen.height/16),Screen.height/8,Screen.height/8), "", continueGuiStyle)) {
+	    		Time.timeScale = 1.0;
+	    		pause = false;
+	    	}
+	    	if (GUI.Button(Rect (Screen.width/2-(Screen.height/16),Screen.height/2-(Screen.height/16),Screen.height/8,Screen.height/8), "", restartGuiStyle)) {
+	    		Time.timeScale = 1.0;
+	    		Application.LoadLevel(1);
+	    	}
+	    	if (GUI.Button(Rect (Screen.width/2+((Screen.height/16)*1.5),Screen.height/2-(Screen.height/16),Screen.height/8,Screen.height/8), "", menuGuiStyle)) {
+	    		Time.timeScale = 1.0;
+	    		LoadLevel(0);
+	    	}
+		}
+		//dead
+		if (dead){
+			if (!added){
+				PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") + score + monsters*10);
+				added = true;
+			}
+			if (PlayerPrefs.HasKey("hS_1")){
+				if(hScore>PlayerPrefs.GetInt("hS_1")) PlayerPrefs.SetInt("hS_1", hScore);
+			}else PlayerPrefs.SetInt("hS_1", score);
+			GUI.Box(Rect(0,0,Screen.width,Screen.height), "", pauseBGGuiStyle);
+			GUI.Box(Rect(Screen.width/2-Screen.width/6,Screen.height/2-Screen.height/16,Screen.width/3,Screen.height/4), "", pauseBoxGuiStyle);
+			GUI.DrawTexture(Rect(Screen.width/2-Screen.width/9,Screen.height/2-Screen.height/3.32,Screen.width/4.5,Screen.height/3.6), deadLion);
+			if(improving){
+				if (show)GUI.Box(Rect(Screen.width/2+Screen.width/5,Screen.height/2,Screen.width/10,Screen.height/8), "Nou\nrècord", pauseBoxGuiStyle);                                        //NEWRECORD
+				else GUI.Box(Rect(Screen.width/2+Screen.width/5,Screen.height/2,Screen.width/10,Screen.height/8), "", pauseBoxGuiStyle);
+			}GUI.Label (Rect (Screen.width/2-Screen.width/6.5,Screen.height/2+(Screen.height/23)*-0.5,Screen.height/4,Screen.height/10), "Distància: "+score, deadTGuiStyle);
+			GUI.Label (Rect (Screen.width/2-Screen.width/6.5,Screen.height/2+(Screen.height/23)*0.5,Screen.height/4,Screen.height/10), "Derrotats: "+monsters, deadTGuiStyle);
+			GUI.Label (Rect (Screen.width/2-Screen.width/6.5,Screen.height/2+(Screen.height/23)*1.5,Screen.height/4,Screen.height/10), "Total: "+(monsters*10+score) + "€", deadTGuiStyle);
+			GUI.Label (Rect (Screen.width/2-Screen.width/6.5,Screen.height/2+(Screen.height/23)*3,Screen.height/4,Screen.height/10), "Compte: "+PlayerPrefs.GetInt("money") + "€", deadTGuiStyle);
 
-	//pause
-    if (GUI.Button(Rect (Screen.height/20,Screen.height/20,Screen.height/10,Screen.height/10), "", pauseGuiStyle) && !dead && tutoLvl!=1 &&  tutoLvl!=2) {
-    	if(!pause){
-    		Time.timeScale = 0.0;
-    		pause = true;
-    	}else{
-    		Time.timeScale = 1.0;
-    		pause = false;
-    	}
-    }
+	    	if (GUI.Button(Rect (Screen.width/2/*-(Screen.height/16)*/,Screen.height/2,Screen.height/8,Screen.height/8), "", restartGuiStyle)) {  //restart
+	    		Time.timeScale = 1.0;
+	    		dead=false;
+	    		Application.LoadLevel(1);
+	    	}
+	    	if (GUI.Button(Rect (Screen.width/2+((Screen.height/16)*2.1),Screen.height/2,Screen.height/8,Screen.height/8), "", menuGuiStyle)) {//menu
+	    		Time.timeScale = 1.0;
+	    		dead=false;
+	    		LoadLevel(0);
+	    	}
+		}
+		//
+	    scoreGuiStyle.fontSize = Screen.height/15;
+	    hScoreGuiStyle.fontSize = Screen.height/17;
+	    deadTGuiStyle.fontSize = Screen.height/25;
+	    pauseBoxGuiStyle.fontSize = Screen.height/25;
+	    GUI.Label (Rect (Screen.width/2-Screen.width/14,Screen.height/20,Screen.height/4,Screen.height/10), ""+score, scoreGuiStyle);
+	    
+	    if(hScore<score) {
+	    	improving = true;
+	    	hScore=score;
+	    }
+	    if(improving){
+	    	if (Time.time >= lastShow+showRate){
+	    		show = !show;
+	    		lastShow = Time.time;
+	    	}
+	    	if (show){
+	    		showRate = 0.7;
+	    		GUI.Label (new Rect (Screen.height/20,(Screen.height/20)*17.2, Screen.height/2.5,Screen.height/10), "  Rècord: "+hScore, hScoreGuiStyle);
+	    	}
+	    	else {
+	    		showRate = 0.3;
+	    		GUI.Label (new Rect (Screen.height/20,(Screen.height/20)*17.2, Screen.height/2.5,Screen.height/10), "  Rècord: ", hScoreGuiStyle);
+	    	}
+	    }else GUI.Label (new Rect (Screen.height/20,(Screen.height/20)*17.2, Screen.height/2.5,Screen.height/10), "  Rècord: "+hScore, hScoreGuiStyle);
+	      
+	    for(var s = 1; s<=stamina;s++){
+	    	GUI.Box(Rect (Screen.width/20*(20-s)-(Screen.width/60*(s-1))-Screen.height/20,Screen.height/20,Screen.height/10,Screen.height/10), "", staminaGuiStyle);
+	    }
+	    if(!dead1 && !dead2 && Character == 6) GUI.Box(Rect(Screen.width/20*(20-5)-(Screen.width/60*(5-1))-Screen.height/20,Screen.height/20,Screen.height/10,Screen.height/10), "", pHStyle);
+	    else if(dead1 && !dead2 && Character == 6){
+	    	if (Time.time >= lastShow+0.1){
+	    		show = !show;
+	    		lastShow = Time.time;
+	    	}if (show) GUI.Box(Rect(Screen.width/20*(20-5)-(Screen.width/60*(5-1))-Screen.height/20,Screen.height/20,Screen.height/10,Screen.height/10), "", pHStyle);
+	    }
+	    //stamina = GUI.HorizontalSlider (Rect (Screen.width/20, (Screen.height/20)*19, Screen.width/5, Screen.height/20), stamina, 0.0, 3.0);
+
+		//pause
+	    if (GUI.Button(Rect (Screen.height/20,Screen.height/20,Screen.height/10,Screen.height/10), "", pauseGuiStyle) && !dead && tutoLvl!=1 &&  tutoLvl!=2) {
+	    	if(!pause){
+	    		Time.timeScale = 0.0;
+	    		pause = true;
+	    	}else{
+	    		Time.timeScale = 1.0;
+	    		pause = false;
+	    	}
+	    }
+  	}
 }
 
 function GetStamina(){
@@ -226,10 +243,18 @@ function Start () {
 	improving = false;
 	added = false;
 	monsters=0;
+	pageFlip = new Texture[10];
+	for (var p=0;p<10;p++){
+		pageFlip[p] = Resources.Load("PageFlip/pageFlip" + p.ToString()) as Texture;
+	}
 	//Debug.Log("High score = " + PlayerPrefs.GetInt("hS_1"));
 }
 
-
+function LoadLevel(lvl:int) {
+	pageN = 0;
+	loadingLevel = true;
+	async = Application.LoadLevelAsync(lvl);
+}
 
 function Update () {
 if (Input.GetKeyDown('m')){

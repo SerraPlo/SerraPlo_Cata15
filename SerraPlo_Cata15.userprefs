@@ -1,9 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\theChosenRunner.js">
     <Files>
-      <File FileName="Assets\Scripts\bibliotecaManager.js" Line="370" Column="2" />
-      <File FileName="Assets\Scripts\theChosenRunner.js" Line="238" Column="3" />
+      <File FileName="Assets\Scripts\bibliotecaManager.js" Line="69" Column="1" />
+      <File FileName="Assets\Scripts\theChosenRunner.js" Line="47" Column="34" />
       <File FileName="Assets\Scripts\Enemy2.js" Line="1" Column="1" />
       <File FileName="Assets\Scripts\terrainGenerator.js" Line="1" Column="1" />
       <File FileName="Assets\Scripts\foodBehaviour.js" Line="1" Column="1" />

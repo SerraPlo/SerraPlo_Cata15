@@ -37,16 +37,7 @@ private var shop2:Texture;
 private var shop3:Texture;
 private var shop4:Texture;
 private var shop5:Texture;
-private var targ0:Texture;
-private var targ1:Texture;
-private var targ2:Texture;
-private var targ3:Texture;
-private var targ4:Texture;
-private var targ5:Texture;
-private var targ6:Texture;
-private var targ7:Texture;
-private var targ8:Texture;
-private var targ9:Texture;
+private var targ:Texture[];
 var locked:Texture;
 var equipped:Texture;
 var redCircle:Texture;
@@ -57,11 +48,26 @@ var lastTap:int;
 private var rubArray:Texture[];
 private var rubN:int;
 
+//load game
+var loadingBlack : Texture;
+var loadingWhite : Texture;
+private var loadingLevel:boolean = false;
+private var async:AsyncOperation;
+private var pageFlip : Texture[];
+private var pageN:int = 0;
+
 function OnGUI() {
 	GUI.color.a = alpha;
 	GUI.DrawTexture(new Rect(0,0,Screen.width, Screen.height), blackImage);
 	GUI.color.a = 1.0f;
-	if(endAnimIntro){
+	if (loadingLevel && !async.isDone) {
+		if (pageN > 5) pageN =0;
+		else pageN++;
+		GUI.DrawTexture(Rect (0,0,Screen.width,Screen.height),loadingBlack);
+		GUI.DrawTexture(Rect (Screen.width/2-Screen.width/6,Screen.height/2-Screen.height/3,Screen.width/3,Screen.height/3),pageFlip[pageN]);
+		GUI.DrawTexture(new Rect(Screen.width/20, Screen.height/2+Screen.height/4, Screen.width*async.progress-(Screen.width/20)*2, Screen.height/30), loadingWhite);
+	}
+	else if(endAnimIntro){
 		if (!shopping) {
 			/*if (GUI.Button(Rect (Screen.width*0.5-Screen.height*0.16,Screen.height*0.5+Screen.height*0.26,Screen.width*0.2,Screen.height*0.25), "")) {
 	    		Application.LoadLevel(1);
@@ -92,16 +98,16 @@ function OnGUI() {
 		    		if (GUI.Button(Rect ((988*Screen.width)/1920, (399.2*Screen.height)/1080,(839*Screen.width)/1920,(565*Screen.height)/1080), "", GS_1)) shopLvl = 3;
 		    	}else if(shopLvl == 2){
 		    		GUI.DrawTexture(Rect (0,0,Screen.width,Screen.height),shop3);
-		    		if (lastTap==0) GUI.DrawTexture(Rect ((271.6*Screen.width)/677.3,(52.2*Screen.height)/381,(249.77*Screen.width)/677.3,(53.39*Screen.height)/381),targ0);
-		    		else if (lastTap==1) GUI.DrawTexture(Rect ((271.6*Screen.width)/677.3,(52.2*Screen.height)/381,(249.77*Screen.width)/677.3,(53.39*Screen.height)/381),targ1);
-		    		else if (lastTap==2) GUI.DrawTexture(Rect ((271.6*Screen.width)/677.3,(52.2*Screen.height)/381,(249.77*Screen.width)/677.3,(53.39*Screen.height)/381),targ2);
-		    		else if (lastTap==3) GUI.DrawTexture(Rect ((271.6*Screen.width)/677.3,(52.2*Screen.height)/381,(249.77*Screen.width)/677.3,(53.39*Screen.height)/381),targ3);
-		    		else if (lastTap==4) GUI.DrawTexture(Rect ((271.6*Screen.width)/677.3,(52.2*Screen.height)/381,(249.77*Screen.width)/677.3,(53.39*Screen.height)/381),targ4);
-		    		else if (lastTap==5) GUI.DrawTexture(Rect ((271.6*Screen.width)/677.3,(52.2*Screen.height)/381,(249.77*Screen.width)/677.3,(53.39*Screen.height)/381),targ5);
-		    		else if (lastTap==6) GUI.DrawTexture(Rect ((271.6*Screen.width)/677.3,(52.2*Screen.height)/381,(249.77*Screen.width)/677.3,(53.39*Screen.height)/381),targ6);
-		    		else if (lastTap==7) GUI.DrawTexture(Rect ((271.6*Screen.width)/677.3,(52.2*Screen.height)/381,(249.77*Screen.width)/677.3,(53.39*Screen.height)/381),targ7);
-		    		else if (lastTap==8) GUI.DrawTexture(Rect ((271.6*Screen.width)/677.3,(52.2*Screen.height)/381,(249.77*Screen.width)/677.3,(53.39*Screen.height)/381),targ8);
-		    		else GUI.DrawTexture(Rect ((271.6*Screen.width)/677.3,(52.2*Screen.height)/381,(249.77*Screen.width)/677.3,(53.39*Screen.height)/381),targ9);
+		    		if (lastTap==0) GUI.DrawTexture(Rect ((271.6*Screen.width)/677.3,(52.2*Screen.height)/381,(249.77*Screen.width)/677.3,(53.39*Screen.height)/381),targ[0]);
+		    		else if (lastTap==1) GUI.DrawTexture(Rect ((271.6*Screen.width)/677.3,(52.2*Screen.height)/381,(249.77*Screen.width)/677.3,(53.39*Screen.height)/381),targ[1]);
+		    		else if (lastTap==2) GUI.DrawTexture(Rect ((271.6*Screen.width)/677.3,(52.2*Screen.height)/381,(249.77*Screen.width)/677.3,(53.39*Screen.height)/381),targ[2]);
+		    		else if (lastTap==3) GUI.DrawTexture(Rect ((271.6*Screen.width)/677.3,(52.2*Screen.height)/381,(249.77*Screen.width)/677.3,(53.39*Screen.height)/381),targ[3]);
+		    		else if (lastTap==4) GUI.DrawTexture(Rect ((271.6*Screen.width)/677.3,(52.2*Screen.height)/381,(249.77*Screen.width)/677.3,(53.39*Screen.height)/381),targ[4]);
+		    		else if (lastTap==5) GUI.DrawTexture(Rect ((271.6*Screen.width)/677.3,(52.2*Screen.height)/381,(249.77*Screen.width)/677.3,(53.39*Screen.height)/381),targ[5]);
+		    		else if (lastTap==6) GUI.DrawTexture(Rect ((271.6*Screen.width)/677.3,(52.2*Screen.height)/381,(249.77*Screen.width)/677.3,(53.39*Screen.height)/381),targ[6]);
+		    		else if (lastTap==7) GUI.DrawTexture(Rect ((271.6*Screen.width)/677.3,(52.2*Screen.height)/381,(249.77*Screen.width)/677.3,(53.39*Screen.height)/381),targ[7]);
+		    		else if (lastTap==8) GUI.DrawTexture(Rect ((271.6*Screen.width)/677.3,(52.2*Screen.height)/381,(249.77*Screen.width)/677.3,(53.39*Screen.height)/381),targ[8]);
+		    		else GUI.DrawTexture(Rect ((271.6*Screen.width)/677.3,(52.2*Screen.height)/381,(249.77*Screen.width)/677.3,(53.39*Screen.height)/381),targ[9]);
 		    		
 		    		if (GUI.Button(Rect (Screen.width - Screen.height/20*3,Screen.height/20+Screen.height/12,Screen.height/10,Screen.height/10), "", GS_Back)){
 		    			shopLvl = 1;
@@ -338,16 +344,14 @@ function Start() {
 	shop3 = Resources.Load("eBuy_besties") as Texture;
 	shop4 = Resources.Load("eBuy_rubriques") as Texture;
 	shop5 = Resources.Load("pc_viewer") as Texture;
-	targ0 = Resources.Load("TARGETES/targ0") as Texture;
-	targ1 = Resources.Load("TARGETES/targ1") as Texture;
-	targ2 = Resources.Load("TARGETES/targ2") as Texture;
-	targ3 = Resources.Load("TARGETES/targ3") as Texture;
-	targ4 = Resources.Load("TARGETES/targ4") as Texture;
-	targ5 = Resources.Load("TARGETES/targ5") as Texture;
-	targ6 = Resources.Load("TARGETES/targ6") as Texture;
-	targ7 = Resources.Load("TARGETES/targ7") as Texture;
-	targ8 = Resources.Load("TARGETES/targ8") as Texture;
-	targ9 = Resources.Load("TARGETES/targ9") as Texture;
+	targ = new Texture[10];
+	for (var t=0;t<10;t++){
+		targ[t] = Resources.Load("TARGETES/targ" + t.ToString()) as Texture;
+	}
+	pageFlip = new Texture[10];
+	for (var p=0;p<10;p++){
+		pageFlip[p] = Resources.Load("PageFlip/pageFlip" + p.ToString()) as Texture;
+	}
 	// inicialitzar others
 	mainCameraScript = mainCamera.GetComponent("bibliotecaCameraBehaviour") as bibliotecaCameraBehaviour;
 	leftDoor.GetComponent(Animation).enabled = false;
@@ -393,20 +397,28 @@ function Update() {
 		}
 		else alpha -= Time.deltaTime*0.6f;
 	}
-	else if (!shopping) {
+	else if (!shopping && !loadingLevel) {
 		if ((Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Began)) {
 				var touchPosition: Vector2 = Input.GetTouch(0).position;
 				if (touchPosition.y<(Screen.height/2)){
 					if (touchPosition.x>Screen.width/8 && touchPosition.x<(Screen.width/8)*3){	
-						Application.LoadLevel(1);
+						LoadLevel(1);
 					}
 				}
 			}
 		var shine : double = Mathf.PingPong(Time.time*1.3f, 1.0f);
 		bookMat.SetColor("_Color",  Color(0.6+shine*0.325,0.6+shine*0.325,0.6+shine*0.325,0.6+shine*0.325));
 		
-		if (Input.GetKeyDown('p')) Application.LoadLevel(1);
+		if (Input.GetKeyDown('p')) {
+			LoadLevel(1);
+		}
 	}
+}
+
+function LoadLevel(lvl:int) {
+	pageN = 0;
+	loadingLevel = true;
+	async = Application.LoadLevelAsync(lvl);
 }
 
 function EnterMainMenu() {
