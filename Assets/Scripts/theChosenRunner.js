@@ -189,7 +189,7 @@ function SetScore(pos:float){
 
 function SetMonsters(pos:int){
 	monsters=pos;
-	Debug.Log("done");
+	//Debug.Log("done");
 }
 
 function SetStamina(ammount:int){
@@ -208,6 +208,7 @@ function Die(){
 
 function Awake () {
 	if (PlayerPrefs.GetInt("Character")==9) stamina = 5;
+	else if (PlayerPrefs.GetInt("Character")==8) stamina = 1;
 	else stamina = 3;
 	hScore= PlayerPrefs.GetInt("hS_1");
 	if(hScore==0) {
@@ -231,6 +232,10 @@ function Start () {
 
 
 function Update () {
+if (Input.GetKeyDown('m')){
+		PlayerPrefs.SetInt("money", (PlayerPrefs.GetInt("money"))+10);
+		Debug.Log("m pressed, 10 money added");
+	}
 	if (Input.GetKeyDown('e')){
 		Die();
 		//Time.timeScale = 0.0;

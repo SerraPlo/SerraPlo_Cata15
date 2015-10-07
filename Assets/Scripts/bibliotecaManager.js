@@ -65,7 +65,7 @@ function OnGUI() {
 		if (!shopping) {
 			/*if (GUI.Button(Rect (Screen.width*0.5-Screen.height*0.16,Screen.height*0.5+Screen.height*0.26,Screen.width*0.2,Screen.height*0.25), "")) {
 	    		Application.LoadLevel(1);
-	    	}*/if (GUI.Button(Rect (Screen.width*0.5+Screen.height*0.65,Screen.height*0.5-Screen.height*0.45,Screen.height*0.15,Screen.height*0.15), "", GS_Buy)) {
+	    	}*/if (GUI.Button(Rect (Screen.width-Screen.width*0.15,Screen.height*0.5-Screen.height*0.45,Screen.height*0.15,Screen.height*0.15), "", GS_Buy)) {
 	    		shopping = true;
 	    		SwapInMenu();
 	    	}
@@ -356,14 +356,20 @@ function Start() {
 }
 
 function PlayIntro(videoPath:String) {
+	#if UNITY_ANDROID
  	Handheld.PlayFullScreenMovie(videoPath, Color.black, FullScreenMovieControlMode.CancelOnInput);  
  	yield WaitForEndOfFrame();
+ 	#endif
  	alpha = 1.0f;
- 	Debug.Log("Video playback completed.");
+ 	//Debug.Log("Video playback completed.");
  	endVideo = true;
+ 	
 }
 
 function Update() {
+	if (Input.GetKeyDown(KeyCode.Escape)){
+		Application.Quit();
+	}
 	if (Input.GetKeyDown('h')){
 		PlayerPrefs.DeleteAll();
 		Debug.Log("h pressed, PlayerPrefs deleted");

@@ -9,7 +9,7 @@ var fragmentSprite:GameObject;
 var enemy1:GameObject;
 var enemy2:GameObject;
 var cartell:GameObject;
-var chanceFood:int = 5;     //% food appear over 1000
+private var chanceFood = 5;     //% food appear over 1000
 
 private var lvl:int = 0;			//nivell del terra
 private var dist:float = 0.5f;		//distancia en x entre terra i terra
@@ -45,7 +45,9 @@ private var fragment:boolean = false;
 
 private var lastEnemies = 0.1;
 private var desiredTime = 5.4;
-
+private var numEnemics:int;
+private var descans:boolean;
+private var descans1:boolean;
 var foodInArray:int = 0;
 var enemyInArray:int = 0;
 
@@ -200,13 +202,7 @@ function randomGenerator(g:int) {
 	var enemies2:boolean;
 	
 	var prevArray:int[] = new int[3];
-	if (curPos<10) {
-		down = true;
-		up = true;
-		food = false;
-		enemies1 = false;
-		enemies2 = false;
-	}if (curPos<30) {
+	if (curPos<30) {
 		food = false;
 	}
 	else {
@@ -224,20 +220,28 @@ function randomGenerator(g:int) {
 			stepArray[prevArray[2]].tag == "GroundU"*/ ) up = true;
 		else up = false;
 		
-		if (rand2<chanceFood)food = true;
+		if (curPos<10) food = false;
+		else if (rand2<chanceFood)food = true;
 		else food = false;
 		
 		if (Time.time >= desiredTime+lastEnemies){
-			Debug.Log(lastEnemies + ", " + desiredTime + ", " + Time.time);
 			enemies1 = true;
-			desiredTime = Random.Range(2.0,10.0-(Mathf.Sqrt(curPos) * 0.2));
+			//numEnemics = Random.Range(1, 2+Mathf.Sqrt(curPos)/20);
+			var incr:float = Mathf.Sqrt(curPos);
+			if (incr >=40) incr = 40;
+			desiredTime = Random.Range(0.5,2.5-(incr * 0.05));
+			Debug.Log(desiredTime);
 			lastEnemies = Time.time;
-		}else enemies1 = false;
+			descans = false;
+			descans1 = false;
+		}
+		else enemies1 = false;
 	}
 	
 	stepArray[g].transform.position = new Vector3(curPos * dist, height*lvl, 0);
 	var queToca:int;
-	if (lvl == 0) {
+	if (curPos<10) queToca=0;
+	else if (lvl == 0) {
 		if (!up && rand > 90){ lvl--; queToca=2; }                                     //stepD
 		else if (!down && rand > 80){ lvl++; queToca=1;}                               //stepU
 		else queToca=0;                                                                //stepG
@@ -271,7 +275,7 @@ function randomGenerator(g:int) {
 	
 	if (enemies1){
 		Destroy(enemiesArray[enemyInArray]);
-		var alturaE:int = (rand%2==0) ? 0:2;
+		var alturaE:int = (rand%3<2) ? 0:2;
 		if (alturaE == 2)enemiesArray[enemyInArray] = Instantiate(enemy2,new Vector3(curPos* dist, height*lvl, 0.1), Quaternion.identity);
 		else enemiesArray[enemyInArray] = Instantiate(enemy1,new Vector3(curPos* dist, height*lvl, 0.1), Quaternion.identity);
 		enemyInArray = (enemyInArray < 9)? enemyInArray+1 : 0;
