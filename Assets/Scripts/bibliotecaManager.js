@@ -53,13 +53,11 @@ var lastTap:int;
 private var rubArray:Texture[];
 private var rubN:int;
 
-private var timeWait = 5.0;
-private var lastTime = 0.0;
+private var clipN:int = 0;
+private var nextTime:double = 0.0;
+private var audioManager: AudioSource;
 var tos: AudioClip;
 var shh: AudioClip;
-private var soundActive: boolean = true;
-
-
 
 //load game
 var loadingBlack : Texture;
@@ -417,6 +415,8 @@ function Start() {
 	leftDoor.GetComponent(Animation).enabled = false;
 	rightDoor.GetComponent(Animation).enabled = false;
 	bookMat = book.GetComponent(Renderer).material as Material;
+	nextTime = AudioSettings.dspTime+ Random.Range(7.0,15.0);
+	audioManager = this.GetComponent(AudioSource);
 }
 
 function PlayIntro(videoPath:String) {
@@ -474,16 +474,11 @@ function Update() {
 		}
 	}
 	//sound effects
-	var audio: AudioSource = this.GetComponent.<AudioSource>();
-	audio.Stop();
-	if(!audio.isPlaying && audio.clip.isReadyToPlay && soundActive && (timeWait+lastTime) >= Time.time) {
-		timeWait = Time.time;
-		timeWait = Random.Range(10.0,20.0);
-		audio.clip = tos;
-		audio.PlayOneShot(tos);
-		soundActive = false;
+	if(!audioManager.isPlaying && audioManager.clip.loadState == AudioDataLoadState.Loaded && nextTime < AudioSettings.dspTime) {
+		audioManager.clip = (Random.Range(0,2) == 0) ? tos:shh; 
+		audioManager.PlayScheduled(nextTime);
+		nextTime =AudioSettings.dspTime+ Random.Range(10.0,25.0);
 	}
-	
 }
 
 function LoadLevel(lvl:int) {
