@@ -195,12 +195,14 @@ function SetFragment(val:boolean){
 function randomGenerator(g:int) {
 	var rand:int = Random.Range(0, 100);
 	var rand2:int = Random.Range(0, 1000);
+	
 	var up:boolean;
 	var down:boolean;
 	var food:boolean;
 	var enemies1:boolean;
 	var enemies2:boolean;
-	
+	var incr:float = Mathf.Sqrt(curPos);
+	if (incr >=40) incr = 40;
 	var prevArray:int[] = new int[3];
 	if (curPos<30) {
 		food = false;
@@ -220,15 +222,14 @@ function randomGenerator(g:int) {
 			stepArray[prevArray[2]].tag == "GroundU"*/ ) up = true;
 		else up = false;
 		
+		
 		if (curPos<10) food = false;
-		else if (rand2<chanceFood)food = true;
+		else if (rand2<chanceFood+(8-incr/5))food = true;
 		else food = false;
 		
 		if (Time.time >= desiredTime+lastEnemies){
 			enemies1 = true;
 			//numEnemics = Random.Range(1, 2+Mathf.Sqrt(curPos)/20);
-			var incr:float = Mathf.Sqrt(curPos);
-			if (incr >=40) incr = 40;
 			desiredTime = Random.Range(0.5,2.5-(incr * 0.05));
 			Debug.Log(desiredTime);
 			lastEnemies = Time.time;
@@ -276,7 +277,10 @@ function randomGenerator(g:int) {
 	if (enemies1){
 		Destroy(enemiesArray[enemyInArray]);
 		var alturaE:int = (rand%3<2) ? 0:2;
-		if (alturaE == 2)enemiesArray[enemyInArray] = Instantiate(enemy2,new Vector3(curPos* dist, height*lvl, 0.1), Quaternion.identity);
+		var sumaAltura:float = Mathf.Sqrt(curPos);
+		if (sumaAltura >=40) sumaAltura = 40;
+		desiredTime = Random.Range(0.5,2.5-(incr * 0.05));
+		if (alturaE == 2)enemiesArray[enemyInArray] = Instantiate(enemy2,new Vector3(curPos* dist, height*lvl + (0.4 - sumaAltura/100), 0.1), Quaternion.identity);
 		else enemiesArray[enemyInArray] = Instantiate(enemy1,new Vector3(curPos* dist, height*lvl, 0.1), Quaternion.identity);
 		enemyInArray = (enemyInArray < 9)? enemyInArray+1 : 0;
 	}
