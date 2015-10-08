@@ -53,9 +53,13 @@ var lastTap:int;
 private var rubArray:Texture[];
 private var rubN:int;
 
+private var timeWait = 5.0;
+private var lastTime = 0.0;
 var tos: AudioClip;
 var shh: AudioClip;
 private var soundActive: boolean = true;
+
+
 
 //load game
 var loadingBlack : Texture;
@@ -453,7 +457,7 @@ function Update() {
 		}
 		else alpha -= Time.deltaTime*0.6f;
 	}
-	else if (!shopping && !loadingLevel) {
+	else if (!shopping && !loadingLevel && !credits) {
 		if ((Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Began)) {
 				var touchPosition: Vector2 = Input.GetTouch(0).position;
 				if (touchPosition.y<(Screen.height/2)){
@@ -471,7 +475,10 @@ function Update() {
 	}
 	//sound effects
 	var audio: AudioSource = this.GetComponent.<AudioSource>();
-	if(!audio.isPlaying && audio.clip.isReadyToPlay && soundActive) {
+	audio.Stop();
+	if(!audio.isPlaying && audio.clip.isReadyToPlay && soundActive && (timeWait+lastTime) >= Time.time) {
+		timeWait = Time.time;
+		timeWait = Random.Range(10.0,20.0);
 		audio.clip = tos;
 		audio.PlayOneShot(tos);
 		soundActive = false;
