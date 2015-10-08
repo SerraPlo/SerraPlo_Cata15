@@ -30,6 +30,8 @@ var GS_Shop3:GUIStyle;
 var GS_Money:GUIStyle;
 var GS_Back:GUIStyle;
 var GS_Buy:GUIStyle;
+var GS_Info:GUIStyle;
+private var credits:boolean = false;
 var GS_1:GUIStyle;
 var emptyGS:GUIStyle;
 private var shop1:Texture;
@@ -48,6 +50,10 @@ var lastTap:int;
 private var rubArray:Texture[];
 private var rubN:int;
 
+var tos: AudioClip;
+var shh: AudioClip;
+private var soundActive: boolean = true;
+
 //load game
 var loadingBlack : Texture;
 var loadingWhite : Texture;
@@ -55,28 +61,37 @@ private var loadingLevel:boolean = false;
 private var async:AsyncOperation;
 private var pageFlip : Texture[];
 private var pageN:int = 0;
+private var pageC:double = 0;
 
 function OnGUI() {
 	GUI.color.a = alpha;
 	GUI.DrawTexture(new Rect(0,0,Screen.width, Screen.height), blackImage);
 	GUI.color.a = 1.0f;
 	if (loadingLevel && !async.isDone) {
-		if (pageN > 5) pageN =0;
-		else pageN++;
+		if (pageN > 5) pageN = 0;
+		else if (Time.time > pageC + 0.03) {
+			pageN++;
+			pageC = Time.time;
+		}
 		GUI.DrawTexture(Rect (0,0,Screen.width,Screen.height),loadingBlack);
 		GUI.DrawTexture(Rect (Screen.width/2-Screen.width/6,Screen.height/2-Screen.height/3,Screen.width/3,Screen.height/3),pageFlip[pageN]);
 		GUI.DrawTexture(new Rect(Screen.width/20, Screen.height/2+Screen.height/4, Screen.width*async.progress-(Screen.width/20)*2, Screen.height/30), loadingWhite);
 	}
 	else if(endAnimIntro){
-		if (!shopping) {
-			/*if (GUI.Button(Rect (Screen.width*0.5-Screen.height*0.16,Screen.height*0.5+Screen.height*0.26,Screen.width*0.2,Screen.height*0.25), "")) {
-	    		Application.LoadLevel(1);
-	    	}*/if (GUI.Button(Rect (Screen.width-Screen.width*0.15,Screen.height*0.5-Screen.height*0.45,Screen.height*0.15,Screen.height*0.15), "", GS_Buy)) {
+		if (!shopping && !credits) {
+			if (GUI.Button(Rect (Screen.width*0.05,Screen.height*0.5-Screen.height*0.45,Screen.height*0.15,Screen.height*0.15), "", GS_Info)) {
+	    		credits = true;
+	    	}else if (GUI.Button(Rect (Screen.width-Screen.width*0.15,Screen.height*0.5-Screen.height*0.45,Screen.height*0.15,Screen.height*0.15), "", GS_Buy)) {
 	    		shopping = true;
 	    		SwapInMenu();
 	    	}
     	}
-    	else {
+    	else if (credits) {
+    		if (GUI.Button(Rect (Screen.width - Screen.height/20*3,Screen.height/20+Screen.height/12,Screen.height/10,Screen.height/10), "", GS_Back)){
+			    shopping = false;
+			}
+    	}
+    	else if (shopping){
     		if (alpha <= 0.0f)  {
 				alpha = 0.0f;
 	    		if(shopLvl == 0){
@@ -413,11 +428,20 @@ function Update() {
 			LoadLevel(1);
 		}
 	}
+	//sound effects
+	var audio: AudioSource = this.GetComponent.<AudioSource>();
+	if(!audio.isPlaying && audio.clip.isReadyToPlay && soundActive) {
+		audio.clip = tos;
+		audio.PlayOneShot(tos);
+		soundActive = false;
+	}
+	
 }
 
 function LoadLevel(lvl:int) {
 	pageN = 0;
 	loadingLevel = true;
+	pageC = Time.time;
 	async = Application.LoadLevelAsync(lvl);
 }
 

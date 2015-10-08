@@ -46,12 +46,17 @@ private var loadingLevel:boolean = false;
 private var async:AsyncOperation;
 private var pageFlip : Texture[];
 private var pageN:int = 0;
+private var pageC:double = 0;
+
 //---------GUI---------
 function OnGUI (){
 
 	if (loadingLevel && !async.isDone) {
-		if (pageN > 5) pageN =0;
-		else pageN++;
+		if (pageN > 5) pageN = 0;
+		else if (Time.time > pageC + 0.03) {
+			pageN++;
+			pageC = Time.time;
+		}
 		GUI.DrawTexture(Rect (0,0,Screen.width,Screen.height),loadingBlack);
 		GUI.DrawTexture(Rect (Screen.width/2-Screen.width/6,Screen.height/2-Screen.height/3,Screen.width/3,Screen.height/3),pageFlip[pageN]);
 		GUI.DrawTexture(new Rect(Screen.width/20, Screen.height/2+Screen.height/4, Screen.width*async.progress-(Screen.width/20)*2, Screen.height/30), loadingWhite);
@@ -253,6 +258,7 @@ function Start () {
 function LoadLevel(lvl:int) {
 	pageN = 0;
 	loadingLevel = true;
+	pageC = Time.time;
 	async = Application.LoadLevelAsync(lvl);
 }
 
