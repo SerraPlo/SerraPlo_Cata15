@@ -31,6 +31,7 @@ var GS_Money:GUIStyle;
 var GS_Back:GUIStyle;
 var GS_Buy:GUIStyle;
 var GS_Info:GUIStyle;
+var GS_Preu:GUIStyle;
 private var credits:boolean = false;
 var GS_1:GUIStyle;
 var emptyGS:GUIStyle;
@@ -44,6 +45,8 @@ var locked:Texture;
 var equipped:Texture;
 var redCircle:Texture;
 var greenCircle:Texture;
+var alphaBG:Texture;
+var Credits:Texture;
 private var eRect:Rect;
 var shopLvl:int;
 var lastTap:int;
@@ -85,10 +88,15 @@ function OnGUI() {
 	    		shopping = true;
 	    		SwapInMenu();
 	    	}
+	    	else if (GUI.Button(Rect (Screen.width/6,Screen.height*0.6,Screen.width/4,(Screen.height/3)), "", emptyGS)) {
+	    		LoadLevel(1);
+	    	}
     	}
     	else if (credits) {
-    		if (GUI.Button(Rect (Screen.width - Screen.height/20*3,Screen.height/20+Screen.height/12,Screen.height/10,Screen.height/10), "", GS_Back)){
-			    shopping = false;
+    		GUI.DrawTexture(Rect (0,0,Screen.width,Screen.height),alphaBG);
+			GUI.DrawTexture(Rect (Screen.width/4,Screen.height/2-Screen.width/6,Screen.width/2,Screen.width/3),Credits);
+    		if (GUI.Button(Rect (Screen.width-Screen.width*0.15,Screen.height*0.5-Screen.height*0.45,Screen.height*0.15,Screen.height*0.15), "", GS_Back)){
+			    credits = false;
 			}
     	}
     	else if (shopping){
@@ -96,7 +104,7 @@ function OnGUI() {
 				alpha = 0.0f;
 	    		if(shopLvl == 0){
 		    		GUI.DrawTexture(Rect (0,0,Screen.width,Screen.height),shop1);
-    				GUI.Label (new Rect (Screen.width - Screen.height/20, Screen.height/6+Screen.height/14, 1, 1), ""+PlayerPrefs.GetInt("money"), GS_Money);
+    				GUI.Label (new Rect (Screen.width - Screen.height/20, Screen.height/6+Screen.height/14, 1, 1), ""+PlayerPrefs.GetInt("money") + " €", GS_Money);
 		    		if (GUI.Button(Rect (Screen.width - Screen.height/20*3,Screen.height/20+Screen.height/12,Screen.height/10,Screen.height/10), "", GS_Back)){
 			    		shopping = false;
 			    		SwapInMenu();
@@ -128,7 +136,7 @@ function OnGUI() {
 		    			shopLvl = 1;
 		    			lastTap = PlayerPrefs.GetInt("Character");
 		    		}
-					GUI.Label (new Rect (Screen.width - Screen.height/20, Screen.height/6+Screen.height/14, 1, 1), ""+PlayerPrefs.GetInt("money"), GS_Money);
+					GUI.Label (new Rect (Screen.width - Screen.height/20, Screen.height/6+Screen.height/14, 1, 1), ""+PlayerPrefs.GetInt("money")+ " €", GS_Money);
 					if(!PlayerPrefs.GetInt("C1")) GUI.DrawTexture(Rect((147.8*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),locked);
 					if(!PlayerPrefs.GetInt("C2")) GUI.DrawTexture(Rect((271.7*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),locked);
 					if(!PlayerPrefs.GetInt("C3")) GUI.DrawTexture(Rect((396.2*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),locked);
@@ -151,6 +159,39 @@ function OnGUI() {
 					else if (PlayerPrefs.GetInt("Character")==8) eRect = new Rect((396.2*Screen.width)/677.3,(245.6*Screen.height)/381,(104*Screen.width)/677.3,(104*Screen.height)/381);
 					else eRect = new Rect((521.4*Screen.width)/677.3,(245.6*Screen.height)/381,(104*Screen.width)/677.3,(104*Screen.height)/381);
 					
+					/*
+					y1=(126*Screen.height)/381 + (102*Screen.height)/381 + Screen.height/80
+					y2=(245.6*Screen.height)/381 + (102*Screen.height)/381 + Screen.height/80
+					
+					x1=(23.3*Screen.width)/677.3
+					x2=(147.8*Screen.width)/677.3 
+					x3=(271.7*Screen.width)/677.3
+					x4=(396.2*Screen.width)/677.3
+					x5=(521.4*Screen.width)/677.3
+					*/
+					
+					GS_Preu.fontSize = Screen.height/35;
+					
+					if(!PlayerPrefs.GetInt("C1")) GUI.Label (new Rect ((147.8*Screen.width)/677.3,126*Screen.height/381 + (102*Screen.height)/381 + Screen.height/80,
+															(103.7*Screen.width)/677.3,Screen.height/20), preus[1] + " €", GS_Preu);
+					if(!PlayerPrefs.GetInt("C2")) GUI.Label (new Rect ((271.7*Screen.width)/677.3,126*Screen.height/381 + (102*Screen.height)/381 + Screen.height/80,
+															(103.7*Screen.width)/677.3,Screen.height/20), preus[2] + " €", GS_Preu);
+					if(!PlayerPrefs.GetInt("C3")) GUI.Label (new Rect ((396.2*Screen.width)/677.3,126*Screen.height/381 + (102*Screen.height)/381 + Screen.height/80,
+															(103.7*Screen.width)/677.3,Screen.height/20), preus[3] + " €", GS_Preu);
+					if(!PlayerPrefs.GetInt("C4")) GUI.Label (new Rect ((521.4*Screen.width)/677.3,126*Screen.height/381 + (102*Screen.height)/381 + Screen.height/80,
+															(103.7*Screen.width)/677.3,Screen.height/20), preus[4] + " €", GS_Preu);
+					
+					if(!PlayerPrefs.GetInt("C5")) GUI.Label (new Rect ((23.3*Screen.width)/677.3,(245.6*Screen.height)/381 + (102*Screen.height)/381 + Screen.height/80,
+															(103.7*Screen.width)/677.3,Screen.height/20), preus[5] + " €", GS_Preu);
+					if(!PlayerPrefs.GetInt("C6")) GUI.Label (new Rect ((147.8*Screen.width)/677.3,(245.6*Screen.height)/381 + (102*Screen.height)/381 + Screen.height/80,
+															(103.7*Screen.width)/677.3,Screen.height/20), preus[6] + " €", GS_Preu);
+					if(!PlayerPrefs.GetInt("C7")) GUI.Label (new Rect ((271.7*Screen.width)/677.3,(245.6*Screen.height)/381 + (102*Screen.height)/381 + Screen.height/80,
+															(103.7*Screen.width)/677.3,Screen.height/20), preus[7] + " €", GS_Preu);
+					if(!PlayerPrefs.GetInt("C8")) GUI.Label (new Rect ((396.2*Screen.width)/677.3,(245.6*Screen.height)/381 + (102*Screen.height)/381 + Screen.height/80,
+															(103.7*Screen.width)/677.3,Screen.height/20), preus[8] + " €", GS_Preu);
+					if(!PlayerPrefs.GetInt("C9")) GUI.Label (new Rect ((521.4*Screen.width)/677.3,(245.6*Screen.height)/381 + (102*Screen.height)/381 + Screen.height/80,
+															(103.7*Screen.width)/677.3,Screen.height/20), preus[9] + " €", GS_Preu);
+							
 			    	if (PlayerPrefs.GetInt("Character")!=0 && GUI.Button(Rect((23.3*Screen.width)/677.3,(126*Screen.height)/381,(103.7*Screen.width)/677.3,(102*Screen.height)/381),"",GS_Shop2)) {
 			    		lastTap = 0;
 				    	PlayerPrefs.SetInt("Character", 0);
@@ -323,16 +364,16 @@ function Start() {
 	for (var n:int=0; n<21; n++) rubArray[n] = Resources.Load("Rubriques/rub"+(n+1).ToString()) as Texture;
 	// inicialitzar preus
 	preus = new int [10];
-	preus[0]=1;
-	preus[1]=2;
-	preus[2]=3;
-	preus[3]=4;
-	preus[4]=5;
-	preus[5]=6;
-	preus[6]=7;
-	preus[7]=8;
-	preus[8]=9;
-	preus[9]=10;
+	preus[0]=0;
+	preus[1]=500;
+	preus[2]=1000;
+	preus[3]=1714;
+	preus[4]=2015;
+	preus[5]=5000;
+	preus[6]=10000;
+	preus[7]=20000;
+	preus[8]=50000;
+	preus[9]=200000;
 	// inicialitzar characters comprats
 	PlayerPrefs.SetInt("C0", 1);
 	for (var i:int=1; i<10; i++) {

@@ -84,7 +84,7 @@ function OnGUI (){
 	// /tuto	
 
 		if(pause){
-			Debug.Log(monsters);
+			//Debug.Log(monsters);
 			GUI.Box(Rect(0,0,Screen.width,Screen.height), "", pauseBGGuiStyle);
 			GUI.Box(Rect(Screen.width/2-Screen.width/6,Screen.height/2-Screen.height/8,Screen.width/3,Screen.height/4), "", pauseBoxGuiStyle);
 			if (GUI.Button(Rect (Screen.width/2-((Screen.height/16)*3.5),Screen.height/2-(Screen.height/16),Screen.height/8,Screen.height/8), "", continueGuiStyle)) {
@@ -245,6 +245,8 @@ function Awake () {
 function Start () {
 	if(PlayerPrefs.HasKey("Character"))Character = PlayerPrefs.GetInt("Character");
 	else Character = 0;
+	if(PlayerPrefs.HasKey("hS_1")) hScore= PlayerPrefs.GetInt("hS_1");
+	else{ PlayerPrefs.SetInt("hS_1",0);hScore = 0;}
 	improving = false;
 	added = false;
 	monsters=0;

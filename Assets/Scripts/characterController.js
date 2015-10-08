@@ -60,9 +60,9 @@ var markerCharge:GameObject;
 var controlsGuiStyle:GUIStyle;
 
 //---------GUI---------
-/*function OnGUI (){
+function OnGUI (){
     //controls
-    if(!pause && !dead){
+    if(!pause && !dead && !tuto && Application.platform != RuntimePlatform.Android){
 		if (GUI.Button(Rect (0,(Screen.height/20)*3,Screen.width/2,Screen.height-((Screen.height/20)*3)), "", controlsGuiStyle)){
      		if(canJump) bJump = true;
 		}
@@ -71,7 +71,7 @@ var controlsGuiStyle:GUIStyle;
     	}
 	}
 }
-*/
+
 
 function setPosBalaX(pos:float){posBalaX = pos;}
 function setPosBalaY(pos:float){posBalaY = pos;}
