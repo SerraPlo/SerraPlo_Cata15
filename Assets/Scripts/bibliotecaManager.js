@@ -348,6 +348,7 @@ function SwapInMenu() {
 }
 	
 function Awake() {
+	book.GetComponent(AudioSource).enabled = false;
 	shopLvl = 0;
 	if (!restart) PlayIntro("IntroPageFlip4.mp4");
 	else{
@@ -356,6 +357,7 @@ function Awake() {
 		mainCamera.transform.rotation = posCamMain.transform.rotation;
 		endVideo = true;
 		endAnimIntro = true;
+		book.GetComponent(AudioSource).enabled = true;
 	}
 }
 
@@ -503,4 +505,5 @@ function EnterMainMenu() {
 	rightDoor.SetActive(false);
 	endAnimIntro = true;
 	restart = true;
+	book.GetComponent(AudioSource).enabled = true;
 }
