@@ -286,32 +286,32 @@ function OnGUI() {
 		    		GUI.DrawTexture(Rect (0,0,Screen.width,Screen.height),shop4);
 		    		if (GUI.Button(Rect (Screen.width - Screen.height/20*3,Screen.height/20+Screen.height/12,Screen.height/10,Screen.height/10), "", GS_Back)) shopLvl = 1;
 		    		for (var k:int = 0; k< PlayerPrefs.GetInt("Rubriques"); k++) {
-		    			if (k < 7) GUI.DrawTexture(Rect (Screen.width/3 + Screen.width/2.98,Screen.height/10+Screen.height/4.5*3.58-(Screen.height*0.0956)*k,Screen.width/18.8,Screen.height/11.8),redCircle);
-		    			else if (k < 14) GUI.DrawTexture(Rect (Screen.width/3 + Screen.width/50.7,Screen.height/10+Screen.height/4.5*3.58-(Screen.height*0.0956)*(k-7),Screen.width/18.8,Screen.height/11.8),redCircle);
-		    			else if (k < 21) GUI.DrawTexture(Rect (Screen.width/3 - Screen.width/3.35,Screen.height/10+Screen.height/4.5*3.58-(Screen.height*0.0956)*(k-14),Screen.width/18.8,Screen.height/11.8),redCircle);
+		    			if (k < 7) GUI.DrawTexture(Rect (Screen.width/3 + Screen.width/2.95,Screen.height/10+Screen.height/4.5*3.58-(Screen.height*0.0956)*k,Screen.width/18.8,Screen.height/11.8),redCircle);
+		    			else if (k < 14) GUI.DrawTexture(Rect (Screen.width/3 + Screen.width/42,Screen.height/10+Screen.height/4.5*3.58-(Screen.height*0.0956)*(k-7),Screen.width/18.8,Screen.height/11.8),redCircle);
+		    			else if (k < 21) GUI.DrawTexture(Rect (Screen.width/3 - Screen.width/3.38,Screen.height/10+Screen.height/4.5*3.58-(Screen.height*0.0956)*(k-14),Screen.width/18.8,Screen.height/11.8),redCircle);
 		    		}
 		    		for (var j:int = 0; j< 21-PlayerPrefs.GetInt("Rubriques"); j++) {
 		    			if (j < 7) {
-		    				GUI.DrawTexture(Rect (Screen.width/3 - Screen.width/3.35,Screen.height/10+Screen.height/4.5+(Screen.height*0.0956)*j,Screen.width/18.8,Screen.height/11.8),greenCircle);
 		    				if(GUI.Button(Rect (Screen.width/3 - Screen.width/4,Screen.height/10+Screen.height/4.1+(Screen.height*0.0956)*j,Screen.width/4.22,Screen.height/22.5), "", GS_Shop3)) {
 			    				rubN = j;
 			    				shopLvl = 4;
 			    				break;
 		    				}
+		    				GUI.DrawTexture(Rect (Screen.width/3 - Screen.width/3.38,Screen.height/10+Screen.height/4.5+(Screen.height*0.0956)*j,Screen.width/18.8,Screen.height/11.8),greenCircle);
 		    			}else if (j< 14) {
-		    				GUI.DrawTexture(Rect (Screen.width/3 + Screen.width/50.7,Screen.height/10+Screen.height/4.5+(Screen.height*0.0956)*(j-7),Screen.width/18.8,Screen.height/11.8),greenCircle);
 		    				if(GUI.Button(Rect (Screen.width/3 + Screen.width/14.4,Screen.height/10+Screen.height/4.1+(Screen.height*0.0956)*(j-7),Screen.width/4.22,Screen.height/22.5), "", GS_Shop3)) {
 			    				rubN = j;
 			    				shopLvl = 4;
 			    				break;
 		    				}
+		    				GUI.DrawTexture(Rect (Screen.width/3 + Screen.width/42,Screen.height/10+Screen.height/4.5+(Screen.height*0.0956)*(j-7),Screen.width/18.8,Screen.height/11.8),greenCircle);
 		    			}else if (j < 21) {
-		    				GUI.DrawTexture(Rect (Screen.width/3 + Screen.width/2.98,Screen.height/10+Screen.height/4.5+(Screen.height*0.0956)*(j-14),Screen.width/18.8,Screen.height/11.8),greenCircle);
 			    			if (GUI.Button(Rect (Screen.width/3 + Screen.width/2.6, Screen.height/10+Screen.height/4.1+(Screen.height*0.0956)*(j-14),Screen.width/4.22,Screen.height/22.5), "", GS_Shop3)) {
 			    				rubN = j;
 			    				shopLvl = 4;
 			    				break;
 			    			}
+			    			GUI.DrawTexture(Rect (Screen.width/3 + Screen.width/2.95,Screen.height/10+Screen.height/4.5+(Screen.height*0.0956)*(j-14),Screen.width/18.8,Screen.height/11.8),greenCircle);
 		    			}
 		    		}
 		    	}

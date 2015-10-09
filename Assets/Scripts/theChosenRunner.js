@@ -24,6 +24,7 @@ private var tuto2:Texture;
 private var tutoLvl:int;
 
 var deadLion:Texture;
+var record:Texture;
 
 //---------GUIstyles---------
 var pauseGuiStyle:GUIStyle;
@@ -142,6 +143,7 @@ function OnGUI (){
 	    	improving = true;
 	    	hScore=score;
 	    }
+	    GUI.Label (new Rect (Screen.height/20,(Screen.height/20)*17.2, Screen.height/2.5,Screen.height/10), record);
 	    if(improving){
 	    	if (Time.time >= lastShow+showRate){
 	    		show = !show;
@@ -149,14 +151,14 @@ function OnGUI (){
 	    	}
 	    	if (show){
 	    		showRate = 0.7;
-	    		GUI.Label (new Rect (Screen.height/20,(Screen.height/20)*17.2, Screen.height/2.5,Screen.height/10), "  Rècord: "+hScore, hScoreGuiStyle);
+	    		GUI.Label (new Rect ((Screen.width/20)*2.8,(Screen.height/20)*17.2, Screen.height/2.5,Screen.height/10), hScore.ToString(), hScoreGuiStyle);
 	    	}
 	    	else {
 	    		showRate = 0.3;
-	    		GUI.Label (new Rect (Screen.height/20,(Screen.height/20)*17.2, Screen.height/2.5,Screen.height/10), "  Rècord: ", hScoreGuiStyle);
+	    		GUI.Label (new Rect ((Screen.width/20)*2.8,(Screen.height/20)*17.2, Screen.height/2.5,Screen.height/10), "", hScoreGuiStyle);
 	    	}
-	    }else GUI.Label (new Rect (Screen.height/20,(Screen.height/20)*17.2, Screen.height/2.5,Screen.height/10), "  Rècord: "+hScore, hScoreGuiStyle);
-	      
+	    }else GUI.Label (new Rect ((Screen.width/20)*2.8,(Screen.height/20)*17.2, Screen.height/2.5,Screen.height/10), hScore.ToString(), hScoreGuiStyle);
+	     
 	    for(var s = 1; s<=stamina;s++){
 	    	GUI.Box(Rect (Screen.width/20*(20-s)-(Screen.width/60*(s-1))-Screen.height/20,Screen.height/20,Screen.height/10,Screen.height/10), "", staminaGuiStyle);
 	    }
@@ -254,7 +256,8 @@ function Start () {
 	for (var p=0;p<10;p++){
 		pageFlip[p] = Resources.Load("PageFlip/pageFlip" + p.ToString()) as Texture;
 	}
-	//Debug.Log("High score = " + PlayerPrefs.GetInt("hS_1"));
+	//HSGuiStyle.alignment = TextAnchor.MiddleLeft;
+	//HSGuiStyle.font = TextAnchor.MiddleLeft;
 }
 
 function LoadLevel(lvl:int) {
