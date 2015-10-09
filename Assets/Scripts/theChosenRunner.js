@@ -143,7 +143,7 @@ function OnGUI (){
 	    	improving = true;
 	    	hScore=score;
 	    }
-	    GUI.Label (new Rect (Screen.height/20,(Screen.height/20)*17.2, Screen.height/2.5,Screen.height/10), record);
+	    GUI.DrawTexture (new Rect (Screen.height/20,(Screen.height/20)*17.2, Screen.height/2.5,Screen.height/10), record);
 	    if(improving){
 	    	if (Time.time >= lastShow+showRate){
 	    		show = !show;
@@ -151,14 +151,14 @@ function OnGUI (){
 	    	}
 	    	if (show){
 	    		showRate = 0.7;
-	    		GUI.Label (new Rect ((Screen.width/20)*2.8,(Screen.height/20)*17.2, Screen.height/2.5,Screen.height/10), hScore.ToString(), hScoreGuiStyle);
+	    		GUI.Label (new Rect ((Screen.width/20)*2.9,(Screen.height/20)*17.2, Screen.height/2.5,Screen.height/10), hScore.ToString(), hScoreGuiStyle);
 	    	}
 	    	else {
 	    		showRate = 0.3;
-	    		GUI.Label (new Rect ((Screen.width/20)*2.8,(Screen.height/20)*17.2, Screen.height/2.5,Screen.height/10), "", hScoreGuiStyle);
+	    		GUI.Label (new Rect ((Screen.width/20)*2.9,(Screen.height/20)*17.2, Screen.height/2.5,Screen.height/10), "", hScoreGuiStyle);
 	    	}
-	    }else GUI.Label (new Rect ((Screen.width/20)*2.8,(Screen.height/20)*17.2, Screen.height/2.5,Screen.height/10), hScore.ToString(), hScoreGuiStyle);
-	     
+	    }else GUI.Label (new Rect ((Screen.width/20)*2.9,(Screen.height/20)*17.2, Screen.height/2.5,Screen.height/10), "<color=black><size=50>"+hScore.ToString()+"</size></color>");
+	    
 	    for(var s = 1; s<=stamina;s++){
 	    	GUI.Box(Rect (Screen.width/20*(20-s)-(Screen.width/60*(s-1))-Screen.height/20,Screen.height/20,Screen.height/10,Screen.height/10), "", staminaGuiStyle);
 	    }
@@ -231,10 +231,13 @@ function Die(){
 }
 
 function Awake () {
+	if(PlayerPrefs.HasKey("Character"))Character = PlayerPrefs.GetInt("Character");
+	else Character = 0;
 	if (PlayerPrefs.GetInt("Character")==9) stamina = 5;
 	else if (PlayerPrefs.GetInt("Character")==8) stamina = 1;
 	else stamina = 3;
-	hScore= PlayerPrefs.GetInt("hS_1");
+	if(PlayerPrefs.HasKey("hS_1")) hScore= PlayerPrefs.GetInt("hS_1");
+	else{ PlayerPrefs.SetInt("hS_1",0);hScore = 0;}
 	if(hScore==0) {
 		tutoLvl=1;
 		tuto1 = Resources.Load("tuto1") as Texture;
@@ -245,10 +248,7 @@ function Awake () {
 }
 
 function Start () {
-	if(PlayerPrefs.HasKey("Character"))Character = PlayerPrefs.GetInt("Character");
-	else Character = 0;
-	if(PlayerPrefs.HasKey("hS_1")) hScore= PlayerPrefs.GetInt("hS_1");
-	else{ PlayerPrefs.SetInt("hS_1",0);hScore = 0;}
+	
 	improving = false;
 	added = false;
 	monsters=0;
