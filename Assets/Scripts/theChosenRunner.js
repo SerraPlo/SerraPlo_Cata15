@@ -143,22 +143,23 @@ function OnGUI (){
 	    	improving = true;
 	    	hScore=score;
 	    }
-	    GUI.DrawTexture (new Rect (Screen.height/20,(Screen.height/20)*17.2, Screen.height/2.5,Screen.height/10), record);
-	    if(improving){
-	    	if (Time.time >= lastShow+showRate){
-	    		show = !show;
-	    		lastShow = Time.time;
-	    	}
-	    	if (show){
-	    		showRate = 0.7;
-	    		GUI.Label (new Rect ((Screen.width/20)*2.9,(Screen.height/20)*17.2, Screen.height/2.5,Screen.height/10), hScore.ToString(), hScoreGuiStyle);
-	    	}
-	    	else {
-	    		showRate = 0.3;
-	    		GUI.Label (new Rect ((Screen.width/20)*2.9,(Screen.height/20)*17.2, Screen.height/2.5,Screen.height/10), "", hScoreGuiStyle);
-	    	}
-	    }else GUI.Label (new Rect ((Screen.width/20)*2.9,(Screen.height/20)*17.2, Screen.height/2.5,Screen.height/10), "<color=black><size=50>"+hScore.ToString()+"</size></color>");
-	    
+	    if ((dead && Application.platform == RuntimePlatform.Android) || Application.platform != RuntimePlatform.Android) {
+		    GUI.DrawTexture (new Rect (Screen.height/20,(Screen.height/20)*17.2, Screen.height/2.5,Screen.height/10), record);
+		    if(improving){
+		    	if (Time.time >= lastShow+showRate){
+		    		show = !show;
+		    		lastShow = Time.time;
+		    	}
+		    	if (show){
+		    		showRate = 0.7;
+		    		GUI.Label (new Rect ((Screen.width/20)*2.9,(Screen.height/20)*17.2, Screen.height/2.5,Screen.height/10), hScore.ToString(), hScoreGuiStyle);
+		    	}
+		    	else {
+		    		showRate = 0.3;
+		    		GUI.Label (new Rect ((Screen.width/20)*2.9,(Screen.height/20)*17.2, Screen.height/2.5,Screen.height/10), "", hScoreGuiStyle);
+		    	}
+		    }else GUI.Label (new Rect ((Screen.width/20)*2.9,(Screen.height/20)*17.2, Screen.height/2.5,Screen.height/10), hScore.ToString(), hScoreGuiStyle);
+	    }
 	    for(var s = 1; s<=stamina;s++){
 	    	GUI.Box(Rect (Screen.width/20*(20-s)-(Screen.width/60*(s-1))-Screen.height/20,Screen.height/20,Screen.height/10,Screen.height/10), "", staminaGuiStyle);
 	    }

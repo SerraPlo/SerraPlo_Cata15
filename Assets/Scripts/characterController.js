@@ -64,7 +64,7 @@ function OnGUI (){
     //controls
     if(!pause && !dead && !tuto && Application.platform != RuntimePlatform.Android){
 		if (GUI.Button(Rect (0,(Screen.height/20)*3,Screen.width/2,Screen.height-((Screen.height/20)*3)), "", controlsGuiStyle)){
-     		if(canJump) bJump = true;
+     		if(canJump|| (Character == 7 && can2Jump && !canJump)) bJump = true;
 		}
 		if (GUI.Button(Rect (Screen.width/2,(Screen.height/20)*3,Screen.width/2,Screen.height-((Screen.height/20)*3)), "", controlsGuiStyle)){
     		if(!charging && stamina > 0) bCharge = true;
@@ -187,7 +187,7 @@ function Update () {
 			// Move object across XY plane
 			if (touchPosition.y<(Screen.height/20)*17){	
 				if (touchPosition.x<Screen.width/2){
-					if(canJump) bJump = true;
+					if(canJump || (Character == 7 && can2Jump && !canJump)) bJump = true;
 				}else {
 					if(!charging && stamina > 0) bCharge = true;
 				}
@@ -268,6 +268,7 @@ function Update () {
 		speedY = impulseY;
 		canJump= false;
 	}else if (Character == 7 && !canJump && can2Jump && (Input.GetKeyDown('z')||bJump)&& !pause && !dead && !tuto ){
+		bJump=false;
 		speedY = impulseY;
 		can2Jump= false;
 	}

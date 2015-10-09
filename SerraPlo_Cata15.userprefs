@@ -1,13 +1,13 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\theChosenRunner.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\characterController.js">
     <Files>
-      <File FileName="Assets\Scripts\theChosenRunner.js" Line="254" Column="4" />
-      <File FileName="Assets\Scripts\bibliotecaManager.js" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\terrainGenerator.js" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\theChosenRunner.js" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\bibliotecaManager.js" Line="108" Column="43" />
+      <File FileName="Assets\Scripts\terrainGenerator.js" Line="12" Column="28" />
       <File FileName="Assets\Scripts\Enemy2.js" Line="1" Column="1" />
       <File FileName="Assets\Scripts\foodBehaviour.js" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\characterController.js" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\characterController.js" Line="249" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

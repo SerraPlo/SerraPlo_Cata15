@@ -9,7 +9,7 @@ var fragmentSprite:GameObject;
 var enemy1:GameObject;
 var enemy2:GameObject;
 var cartell:GameObject;
-private var chanceFood = 5;     //% food appear over 1000
+private var chanceFood = 10;     //% food appear over 1000
 
 private var lvl:int = 0;			//nivell del terra
 private var dist:float = 0.5f;		//distancia en x entre terra i terra
@@ -224,7 +224,7 @@ function randomGenerator(g:int) {
 		
 		
 		if (curPos<10) food = false;
-		else if (rand2<chanceFood+(8-incr/5))food = true;
+		else if (rand2<chanceFood+(10-incr/4))food = true;
 		else food = false;
 		
 		if (Time.time >= desiredTime+lastEnemies){

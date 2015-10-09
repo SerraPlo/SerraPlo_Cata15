@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+var testBuild:boolean;
+
 private var shopping:boolean = false;
 private var endAnimIntro:boolean = false;
 private var endVideo:boolean = false;
@@ -32,6 +34,7 @@ var GS_Back:GUIStyle;
 var GS_Buy:GUIStyle;
 var GS_Info:GUIStyle;
 var GS_Preu:GUIStyle;
+var testButtGS:GUIStyle;
 private var credits:boolean = false;
 var GS_1:GUIStyle;
 var emptyGS:GUIStyle;
@@ -99,6 +102,20 @@ function OnGUI() {
 			GUI.DrawTexture(Rect (Screen.width/4,Screen.height/2-Screen.width/6,Screen.width/2,Screen.width/3),Credits);
     		if (GUI.Button(Rect (Screen.width-Screen.width*0.15,Screen.height*0.5-Screen.height*0.45,Screen.height*0.15,Screen.height*0.15), "", GS_Back)){
 			    credits = false;
+			}
+			
+			if(testBuild){
+				testButtGS.fontSize = Screen.height/45;
+				if (GUI.Button(Rect (Screen.width/2 + (Screen.width/30)*2,Screen.height*0.8,Screen.width/10,Screen.width/10), "+1M€", testButtGS)){
+			   		PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money")+1000000);
+				}
+				if (GUI.Button(Rect (Screen.width/2 - (Screen.width/30),Screen.height*0.8,Screen.width/10,Screen.width/10), "Desbloquejar\nfragments", testButtGS)){
+			   		PlayerPrefs.SetInt("Rubriques", 0);
+				}
+				if (GUI.Button(Rect (Screen.width/2 - (Screen.width/30)*4,Screen.height*0.8,Screen.width/10,Screen.width/10), "Reset\nTOT", testButtGS)){
+			   		PlayerPrefs.DeleteAll();
+			   		Application.LoadLevel(0);
+				}
 			}
     	}
     	else if (shopping){
